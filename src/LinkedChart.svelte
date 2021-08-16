@@ -1,6 +1,4 @@
 <script>
-  import { onMount } from "svelte"
-
   import { hoveringKey } from "./stores/tinyLinkedCharts.js"
 
   export let data = {}
@@ -10,26 +8,23 @@
   export let grow = false
   export let align = "right"
   export let gap = 1
-  export let fill = "green"
+  export let fill = "#ff3e00"
   export let fadeOpacity = 0.5
   export let linked = false
   export let hover = true
-  export let times // remove me
   
   $: dataLength = Object.keys(data).length
+  $: barWidth = grow ? getBarWidth(dataLength) : barMinWidth
   $: highestValue = dataLength ? getHighestValue() : 0
   $: alignmentOffset = dataLength ? getAlignment() : 0
   $: linkedKey = linked || (Math.random() + 1).toString(36).substring(7)
-  $: barWidth = grow ? getBarWidth(dataLength) : barMinWidth
-
-  onMount(fakeData)
 
   function getHighestValue() {
     return Math.max(...Object.values(data))
   }
 
   function getHeight(value) {
-    return (height / highestValue) * value
+    return Math.round((height / highestValue) * value)
   }
 
   function getBarWidth() {
@@ -39,12 +34,6 @@
   function getAlignment() {
     if (align == "left") return 0
     return (gap + width) - ((gap + barWidth) * dataLength)
-  }
-
-  function fakeData() {
-    for(let i = 0; i < times; i++) {
-      data[i] = Math.floor(Math.random() * 100)
-    }
   }
 </script>
 
@@ -75,6 +64,10 @@
 
 
 <style>
+  svg {
+    display: block;
+  }
+  
   .faded {
     opacity: var(--fade-opacity);
   }

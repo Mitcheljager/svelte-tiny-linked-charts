@@ -1,5 +1,5 @@
 {
-  "name": "svelte-tiny-linked-charts",
+  "name": "svelte-app",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -19,12 +19,5 @@
   },
   "dependencies": {
     "sirv-cli": "^1.0.0"
-  },
-  "description": "*Looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*",
-  "keywords": [],
-  "author": "Mitchel Jager",
-  "license": "MIT",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "svelte": "src/index.js"
+  }
 }

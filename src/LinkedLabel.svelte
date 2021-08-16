@@ -10,12 +10,6 @@
 
 { #if label }
   { label }
+{ :else }
+  &nbsp;
 { /if }
-
-
-
-<style>
-  div {
-    color: red;
-  }
-</style>
