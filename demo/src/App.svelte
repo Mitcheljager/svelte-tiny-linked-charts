@@ -367,9 +367,28 @@ import { onMount } from "svelte";
 
 
 <style>
+	:global(:root) {
+		--primary: #ff3e00;
+		--text-color: #444;
+		--text-color-light: #999;
+		--border-color: #edf3f0;
+		--bg-well: #f6fafd;
+		--bg-body: #fff;
+	}
+	
+	@media (prefers-color-scheme: dark) {
+		:global(:root) {
+			--text-color: #f1f1f1;
+			--text-color-light: #bbb;
+			--border-color: #333;
+			--bg-well: #222;
+			--bg-body: #111;
+		}
+	}
+
 	:global(body) {
-		background: #111;
-		color: #f1f1f1;
+		background: var(--bg-body);
+		color: var(--text-color);
 		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 	}
 
@@ -384,18 +403,18 @@ import { onMount } from "svelte";
 	code {
 		display: block;
 		margin-top: 1rem;
-		color: rgba(255, 255, 255, 0.75);
+		color: var(--text-color-light);
 		font-size: .75rem;
 		line-height: 1.5em;
 	}
 
 	mark {
 		background: none;
-		color: #ff3e00;
+		color: var(--primary);
 	}
 
 	a {
-		color: #ff3e00;
+		color: var(--primary);
 	}
 
 	p:first-child {
@@ -405,8 +424,8 @@ import { onMount } from "svelte";
 	.well {
 		padding: .35rem .5rem;
 		border-radius: .5rem;
-		border: 1px solid #333;
-		background: #222;
+		border: 1px solid var(--border-color);
+		background: var(--bg-well);
 	}
 
 	.header {
@@ -430,7 +449,7 @@ import { onMount } from "svelte";
 		grid-gap: 1.5rem;
 		justify-content: space-between;
 		padding: 3rem 0;
-		border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+		border-bottom: 1px solid var(--border-color);
 	}
 
 	.block--single {
@@ -444,7 +463,7 @@ import { onMount } from "svelte";
 	}
 	
 	.table strong {
-		color: #f1f1f1;
+		color: var(--text-color);
 	}
 
 	.table code {
@@ -463,6 +482,6 @@ import { onMount } from "svelte";
 
 	.label {
 		text-align: right;
-		color: rgba(255, 255, 255, 0.75);
+		color: var(--text-color-light);
 	}
 </style>
