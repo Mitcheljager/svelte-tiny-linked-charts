@@ -14,7 +14,7 @@
   export let hover = true
   
   $: dataLength = Object.keys(data).length
-  $: barWidth = grow ? getBarWidth(dataLength) : barMinWidth
+  $: barWidth = grow ? getBarWidth(dataLength) : parseInt(barMinWidth)
   $: highestValue = dataLength ? getHighestValue() : 0
   $: alignmentOffset = dataLength ? getAlignment() : 0
   $: linkedKey = linked || (Math.random() + 1).toString(36).substring(7)
@@ -24,16 +24,16 @@
   }
 
   function getHeight(value) {
-    return Math.round((height / highestValue) * value)
+    return Math.round((parseInt(height) / highestValue) * value)
   }
 
   function getBarWidth() {
-    return Math.max((width - (dataLength * gap)) / dataLength, barMinWidth)
+    return Math.max((parseInt(width) - (dataLength * parseInt(gap))) / dataLength, parseInt(barMinWidth))
   }
 
   function getAlignment() {
     if (align == "left") return 0
-    return (gap + width) - ((gap + barWidth) * dataLength)
+    return (parseInt(gap) + parseInt(width)) - ((parseInt(gap) + barWidth) * dataLength)
   }
 </script>
 
@@ -42,6 +42,8 @@
 <svg
   { height }
   { width }
+  viewBox="0 0 { width } { height }"
+  preserveAspectRatio="none"
   on:mouseleave={ () => { $hoveringKey[linkedKey] = null } }
   on:blur={ () => { $hoveringKey[linkedKey] = null } }>
 
@@ -50,25 +52,12 @@
       <rect
         on:mouseover={ () => { $hoveringKey[linkedKey] = key } }
         on:focus={ () => { $hoveringKey[linkedKey] = key } }
-        style="--fade-opacity: { fadeOpacity }"
-        class:faded={ hover && $hoveringKey[linkedKey] && $hoveringKey[linkedKey] != key }
+        opacity={ hover && $hoveringKey[linkedKey] && $hoveringKey[linkedKey] != key ? fadeOpacity : 1 }
         width={ barWidth }
         height={ getHeight(value) }
         y={ height - getHeight(value) }
-        x={ (gap + barWidth) * i }
+        x={ (parseInt(gap) + barWidth) * i }
         { fill } />
     { /each }
   </g>
 </svg>
-
-
-
-<style>
-  svg {
-    display: block;
-  }
-  
-  .faded {
-    opacity: var(--fade-opacity);
-  }
-</style>
