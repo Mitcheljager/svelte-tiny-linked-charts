@@ -2,6 +2,8 @@
   import { hoveringKey } from "./stores/tinyLinkedCharts.js"
 
   export let data = {}
+  export let labels = []
+  export let values = []
   export let height = 40
   export let width = 150
   export let barMinWidth = 4
@@ -18,6 +20,7 @@
   $: highestValue = dataLength ? getHighestValue() : 0
   $: alignmentOffset = dataLength ? getAlignment() : 0
   $: linkedKey = linked || (Math.random() + 1).toString(36).substring(7)
+  $: if (labels.length && values.length) data = Object.fromEntries(labels.map((_, i) => [labels[i], values[i]]))
 
   function getHighestValue() {
     return Math.max(...Object.values(data))
