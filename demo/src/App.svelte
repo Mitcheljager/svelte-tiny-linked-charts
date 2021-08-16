@@ -1,5 +1,17 @@
 <script>
+import { onMount } from "svelte";
+
 	import { LinkedChart, LinkedLabel } from "svelte-tiny-linked-charts"
+
+	let transitioningData = fakeData(30)
+	let transitionColor = 50
+
+	onMount(() => {
+		setInterval(() => {
+			transitioningData = fakeData(30)
+			transitionColor = Math.floor(Math.random() * 360)
+		}, 1000)
+	})
 
 	function fakeData(times) {
 		const data = {}
@@ -26,8 +38,82 @@
 <div class="wrapper">
 	<div class="header">
 		<h1>Tiny Linked Charts for <mark>Svelte</mark></h1>
-		<LinkedChart data={ fakeData(108) } width="540" height="5" />
+		<LinkedChart data={ fakeData(108) } width="540" height="5" hover={ false } />
 	</div>
+
+	<div class="block block--single">
+		<p>This is a library to display tiny bar charts. These charts are more so meant for graphical aids, rather than scientific representations. There's no axis labels, no extensive data visualisation, just bars.</p>
+
+		<h2>Installation</h2>
+
+		<p>Install using Yarn or NPM.</p>
+
+		<code class="well">
+			yarn add <mark>svelte-tiny-linked-charts</mark>
+		</code>
+
+		<code class="well">
+			npm install --save <mark>svelte-tiny-linked-charts</mark>
+		</code>
+
+		<p>Include the chart in your app.</p>
+
+		<code class="well">
+			&lt;<mark>LinkedChart</mark> &#123; data &#125; /&gt;
+		</code>
+
+		<code class="well">
+			import &#123; <mark>LinkedChart</mark>, <mark>LinkedLabel</mark> &#125; from "<mark>svelte-tiny-linked-charts</mark>"
+		</code>
+	</div>
+
+	<div class="block block--single">
+		<p>
+			Supply your data in a simple key:value object:
+		</p>
+
+		<code class="well">
+			let data = &#123; <br>
+			&nbsp; "2005-01-01": 25, <br>
+			&nbsp; "2005-01-02": 20, <br>
+			&nbsp; "2005-01-03": 18, <br>
+			&nbsp; "2005-01-04": 17, <br>
+			&nbsp; "2005-01-05": 21 <br>
+			&#125;
+		</code>
+
+		<code class="well">
+			&lt;LinkedChart &#123; data &#125; /&gt;
+		</code>
+
+		<p>Or if you prefer supply the labels and values separately:</p>
+
+		<code class="well">
+			let labels = [ <br>
+			&nbsp; "2005-01-01", <br>
+			&nbsp; "2005-01-02", <br>
+			&nbsp; "2005-01-03", <br>
+			&nbsp; "2005-01-04", <br>
+			&nbsp; "2005-01-05" <br>
+			]
+		</code>
+
+		<code class="well">
+			let values = [ <br>
+			&nbsp; 25, <br>
+			&nbsp; 20, <br>
+			&nbsp; 18, <br>
+			&nbsp; 17, <br>
+			&nbsp; 21 <br>
+			]
+		</code>
+
+		<code class="well">
+			&lt;LinkedChart &#123; labels &#125; &#123; values &#125; /&gt;
+		</code>
+	</div>
+
+	<h2>Usage</h2>
 
 	<div class="block">
 		<div class="description">
@@ -49,7 +135,7 @@
 				&lt;LinkedChart &#123; data &#125; linked="link-1" /&gt; <br>
 				&lt;LinkedChart &#123; data &#125; linked="link-1" /&gt; <br>
 				&lt;LinkedChart &#123; data &#125; linked="link-1" /&gt; <br>
-				&lt;LinkedChart &#123; data &#125; linked="link-1" /&gt; <br>
+				&lt;LinkedChart &#123; data &#125; linked="link-1" /&gt;
 			</code>
 		</div>
 
@@ -69,7 +155,7 @@
 				&lt;LinkedLabel linked="link-2" /&gt; <br>
 				<br>
 				&lt;LinkedChart &#123; data &#125; linked="link-2" /&gt; <br>
-				&lt;LinkedChart &#123; data &#125; linked="link-2" /&gt; <br>
+				&lt;LinkedChart &#123; data &#125; linked="link-2" /&gt; 
 			</code>
 			<br>
 			The label has no styling by default.
@@ -165,11 +251,30 @@
 			The gap in between bars can also be adjusted.
 
 			<code>
-				&lt;LinkedChart &#123; data &#125; gap="11" /&gt;
+				&lt;LinkedChart &#123; data &#125; gap="10" /&gt; <br>
+				&lt;LinkedChart &#123; data &#125; gap="0" /&gt;
 			</code>
 		</div>
 
-		<LinkedChart data={ fakeData(10) } gap="11" />
+		<div>
+			<div class="chart"><LinkedChart data={ fakeData(11) } gap="10" /></div>
+			<div class="chart"><LinkedChart data={ fakeData(36) } gap="0" /></div>
+		</div>
+	</div>
+
+	<div class="block">
+		<div class="description">
+			When the bars do not fill the width of the graph they are aligned to the right by default. This can be set to be left aligned instead.
+
+			<code>
+				&lt;LinkedChart &#123; data &#125; align="left" /&gt;
+			</code>
+		</div>
+
+		<div>
+			<div class="chart"><LinkedChart data={ fakeData(20) } /></div>
+			<div class="chart"><LinkedChart data={ fakeData(20) } align="left" /></div>
+		</div>
 	</div>
 
 	<div class="block">
@@ -179,7 +284,7 @@
 			<code>
 				&lt;LinkedChart fill="#ff00ff" /&gt; <br>
 				&lt;LinkedChart fill="rgb(255, 255, 0)" /&gt; <br>
-				&lt;LinkedChart fill="hsla(290, 55%, 50%, 1)" /&gt; <br>
+				&lt;LinkedChart fill="hsla(290, 55%, 50%, 1)" /&gt;
 			</code>
 		</div>
 
@@ -194,6 +299,69 @@
 			<div class="chart"><LinkedChart data={ fakeData(30) } fill="hsla(290, 55%, 50%, 1)" linked="link-4" /></div>
 		</div>
 	</div>
+
+	<div class="block">
+		<div class="description">
+			The opacity of faded out bars can be adjusted using "fadeOpacity".
+
+			<code>
+				&lt;LinkedChart &#123; data &#125; fadeOpacity="0.15" /&gt;
+			</code>
+		</div>
+
+		<LinkedChart data={ fakeData(30) } fadeOpacity="0.15" />
+	</div>
+
+	<div class="block">
+		<div class="description">
+			The hover effect can be disabled altogether using "hover".
+
+			<code>
+				&lt;LinkedChart &#123; data &#125; hover=&#123; false &#125; /&gt;
+			</code>
+		</div>
+
+		<LinkedChart data={ fakeData(30) } hover={ false } />
+	</div>
+
+	<div class="block">
+		<div class="description">
+			Bars can be set to transition between states. <br>
+			Value is speed in milliseconds.
+
+			<code>
+				&lt;LinkedChart &#123; data &#125; transition="500" /&gt;
+			</code>
+		</div>
+
+		<LinkedChart data={ transitioningData } fill="hsl({ transitionColor }, 60%, 50%)" transition="500" />
+	</div>
+
+	<div class="block block--single">
+		<p>This is a list of all configurable properties on the "LinkedChart" component.</p>
+
+		<div class="table">
+			<strong>Property</strong> <strong>Default</strong> <strong>Description</strong>
+			<code>data</code> <code>&#123;&#125;</code> <div>Data that will be displayed in the chart supplied in key:value object.</div>
+			<code>labels</code> <code>[]</code> <div>Labels supplied separately, to be used together with "values" property.</div>
+			<code>values</code> <code>[]</code> <div>Values supplied separately, to be used together with "labels" property.</div>
+			<code>linked</code> <code>false</code> <div>Key to link this chart to other charts with the same key.</div>
+			<code>height</code> <code>40</code> <div>Height of the chart in pixels.</div>
+			<code>width</code> <code>150</code> <div>Width of the chart in pixels.</div>
+			<code>barMinWidth</code> <code>4</code> <div>Width of the bars in the chart in pixels.</div>
+			<code>grow</code> <code>false</code> <div>Whether or not the bar should grow to fill out the full width of the chart.</div>
+			<code>align</code> <code>right</code> <div>The side the bars should align to when they do not completely fill out the chart.</div>
+			<code>gap</code> <code>1</code> <div>Gap between the bars in pixels.</div>
+			<code>fill</code> <code>#ff3e00</code> <div>Color of the bars, can be any valid CSS color.</div>
+			<code>fadeOpacity</code> <code>0.5</code> <div>The opacity the faded out bars should display in.</div>
+			<code>hover</code> <code>true</code> <div>Boolean whether or not this chart can be hovered at all.</div>
+			<code>transition</code> <code>0</code> <div>Transition the chart between different stats. Value is time in milliseconds.</div>
+			</div>
+	</div>
+
+	<div class="block block--single">
+		Made by <a href="https://github.com/Mitcheljager">Mitchel Jager</a>
+	</div>
 </div>
 
 
@@ -201,7 +369,7 @@
 <style>
 	:global(body) {
 		background: #111;
-		color: white;
+		color: #f1f1f1;
 		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 	}
 
@@ -209,11 +377,16 @@
 		margin: 0;
 	}
 
+	h2 {
+		margin: 3rem 0 1.5rem;
+	}
+
 	code {
 		display: block;
 		margin-top: 1rem;
 		color: rgba(255, 255, 255, 0.75);
 		font-size: .75rem;
+		line-height: 1.5em;
 	}
 
 	mark {
@@ -221,8 +394,23 @@
 		color: #ff3e00;
 	}
 
+	a {
+		color: #ff3e00;
+	}
+
+	p:first-child {
+		margin-top: 0;
+	}
+
+	.well {
+		padding: .35rem .5rem;
+		border-radius: .5rem;
+		border: 1px solid #333;
+		background: #222;
+	}
+
 	.header {
-		margin: 6rem 0 3rem;
+		margin: 6rem 0 0;
 	}
 
 	:global(.header svg) {
@@ -233,7 +421,7 @@
 	.wrapper {
 		max-width: 540px;
 		margin: 0 auto;
-		padding: 0 1.5rem;
+		padding: 0 1.5rem 6rem;
 	}
 
 	.block {
@@ -245,6 +433,25 @@
 		border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 	}
 
+	.block--single {
+		display: block;
+	}
+
+	.table {
+		display: grid;
+		grid-template-columns: 1fr 1fr 3fr;
+		grid-gap: 1rem .5rem;
+	}
+	
+	.table strong {
+		color: #f1f1f1;
+	}
+
+	.table code {
+		margin-top: 0;
+		line-height: 1.3rem;
+	}
+
 	.chart {
 		margin-top: .5rem;
 	}
@@ -252,10 +459,6 @@
 	:global(.chart--responsive svg) {
 		width: 100%;
 		height: auto;
-	}
-
-	:global(svg g) {
-		fill: blue;
 	}
 
 	.label {
