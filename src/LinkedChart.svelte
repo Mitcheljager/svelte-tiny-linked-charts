@@ -14,6 +14,7 @@
   export let fadeOpacity = 0.5
   export let linked = false
   export let hover = true
+  export let transition = 0
   
   $: dataLength = Object.keys(data).length
   $: barWidth = grow ? getBarWidth(dataLength) : parseInt(barMinWidth)
@@ -55,6 +56,7 @@
       <rect
         on:mouseover={ () => { $hoveringKey[linkedKey] = key } }
         on:focus={ () => { $hoveringKey[linkedKey] = key } }
+        style={ transition ? `transition: all ${ transition }ms` : "" }
         opacity={ hover && $hoveringKey[linkedKey] && $hoveringKey[linkedKey] != key ? fadeOpacity : 1 }
         width={ barWidth }
         height={ getHeight(value) }
