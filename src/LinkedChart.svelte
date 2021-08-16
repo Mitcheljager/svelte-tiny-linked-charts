@@ -51,18 +51,17 @@
   on:mouseleave={ () => { $hoveringKey[linkedKey] = null } }
   on:blur={ () => { $hoveringKey[linkedKey] = null } }>
 
-  <g transform="translate({ alignmentOffset }, 0)">
+  <g transform="translate({ alignmentOffset }, 0)" { fill }>
     { #each Object.entries(data) as [key, value], i }
       <rect
         on:mouseover={ () => { $hoveringKey[linkedKey] = key } }
         on:focus={ () => { $hoveringKey[linkedKey] = key } }
-        style={ transition ? `transition: all ${ transition }ms` : "" }
+        style={ transition ? `transition: all ${ transition }ms` : null }
         opacity={ hover && $hoveringKey[linkedKey] && $hoveringKey[linkedKey] != key ? fadeOpacity : 1 }
         width={ barWidth }
         height={ getHeight(value) }
         y={ height - getHeight(value) }
-        x={ (parseInt(gap) + barWidth) * i }
-        { fill } />
+        x={ (parseInt(gap) + barWidth) * i } />
     { /each }
   </g>
 </svg>
