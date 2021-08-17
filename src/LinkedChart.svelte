@@ -1,6 +1,7 @@
 <script>
   import { hoveringKey, hoveringValue } from "./stores/tinyLinkedCharts.js"
 
+  export let uid = (Math.random() + 1).toString(36).substring(7)
   export let data = {}
   export let labels = []
   export let values = []
@@ -20,7 +21,6 @@
   export let labelPrepend = ""
   export let labelAppend = ""
 
-  let uid = (Math.random() + 1).toString(36).substring(7)
   
   $: dataLength = Object.keys(data).length
   $: barWidth = grow ? getBarWidth(dataLength) : parseInt(barMinWidth)
@@ -28,7 +28,13 @@
   $: alignmentOffset = dataLength ? getAlignment() : 0
   $: linkedKey = linked || (Math.random() + 1).toString(36).substring(7)
   $: if (labels.length && values.length) data = Object.fromEntries(labels.map((_, i) => [labels[i], values[i]]))
-  $: if (showLabel && $hoveringKey[linkedKey]) $hoveringValue[uid] = data[$hoveringKey[linkedKey]]
+  $: {
+    if ($hoveringKey[linkedKey]) {
+      $hoveringValue[uid] = data[$hoveringKey[linkedKey]]
+    } else { 
+      $hoveringValue[uid] = null
+    }
+  }
 
   function getHighestValue() {
     return Math.max(...Object.values(data))
@@ -86,7 +92,7 @@
 
 { #if showLabel }
   <div class="tiny-linked-charts-label">
-    { #if $hoveringKey[linkedKey] }
+    { #if $hoveringValue[uid] }
       { labelPrepend }
       { $hoveringValue[uid] }
       { labelAppend }
