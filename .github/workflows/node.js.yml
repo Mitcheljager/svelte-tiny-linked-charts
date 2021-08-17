@@ -9,7 +9,9 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: "14.x"
+      
+      - uses: comchangs/action-yarn@v0.1-beta
 
       - name: Run tests
         run: |
-          npm run test
+          yarn test
