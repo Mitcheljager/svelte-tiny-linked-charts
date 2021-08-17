@@ -20,7 +20,7 @@
   "dependencies": {
     "sirv-cli": "^1.0.0"
   },
-  "description": "*Looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*",
+  "description": "A library to display tiny bar charts using Svelte. These charts are more so meant for graphical aids, rather than scientific representations. There's no axis labels, no extensive data visualisation, just bars.",
   "keywords": [
     "svelte",
     "tiny",
