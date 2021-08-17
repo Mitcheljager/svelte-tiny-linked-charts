@@ -191,10 +191,10 @@
 
 	<div class="block">
 		<div class="description">
-			You can enable a the value you're hovering using "showLabel".
+			You can enable a the value you're hovering using "showValue".
 
 			<code>
-				&lt;LinkedChart &#123; data &#125; showLabel=&#123; true &#125; /&gt;
+				&lt;LinkedChart &#123; data &#125; showValue=&#123; true &#125; /&gt;
 			</code>
 
 			<br>

@@ -508,9 +508,9 @@ supports-color@^7.0.0:
   dependencies:
     has-flag "^4.0.0"
 
-svelte-tiny-linked-charts@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/svelte-tiny-linked-charts/-/svelte-tiny-linked-charts-1.0.1.tgz#d809e84f5d166bbcb9ff42c938bc8a452e891d11"
+svelte-tiny-linked-charts@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/svelte-tiny-linked-charts/-/svelte-tiny-linked-charts-1.0.3.tgz#8c4eaea7f1f6835e4b0d549ecc4a16ea10f23e47"
   dependencies:
     sirv-cli "^1.0.0"
 
