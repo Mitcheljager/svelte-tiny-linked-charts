@@ -514,11 +514,11 @@
 	
 	@media (prefers-color-scheme: dark) {
 		:global(:root) {
-			--text-color: #f1f1f1;
-			--text-color-light: #bbb;
-			--border-color: #333;
-			--bg-well: #222;
-			--bg-body: #111;
+			--text-color: #b7c0d1;
+			--text-color-light: #8e99af;
+			--border-color: #363d49;
+			--bg-well: #21242c;
+			--bg-body: #16181d;
 		}
 	}
 
@@ -532,10 +532,12 @@
 
 	h1 {
 		margin: 0;
+		color: white;
 	}
 
 	h2 {
 		margin: 3rem 0 1.5rem;
+		color: white;
 	}
 
 	code {
