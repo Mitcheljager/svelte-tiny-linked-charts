@@ -16,7 +16,7 @@ npm install --save svelte-tiny-linked-charts
 
 Include the chart in your app.
 ```
-import { LinkedChart, LinkedLabel } from "svelte-tiny-linked-charts"
+import { LinkedChart, LinkedLabel, LinkedValue } from "svelte-tiny-linked-charts"
 ```
 ```
 <LinkedChart { data } />

@@ -65,7 +65,7 @@
 		</code>
 
 		<code class="well">
-			import &#123; <mark>LinkedChart</mark>, <mark>LinkedLabel</mark> &#125; from "<mark>svelte-tiny-linked-charts</mark>"
+			import &#123; <mark>LinkedChart</mark>, <mark>LinkedLabel</mark>, <mark>LinkedValue</mark> &#125; from "<mark>svelte-tiny-linked-charts</mark>"
 		</code>
 	</div>
 
