@@ -1,6 +1,7 @@
 {
   "name": "svelte-tiny-linked-charts",
   "version": "1.0.0",
+  "private": false,
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
@@ -20,10 +21,28 @@
     "sirv-cli": "^1.0.0"
   },
   "description": "*Looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*",
-  "keywords": [],
-  "author": "Mitchel Jager",
+  "keywords": [
+    "svelte",
+    "tiny",
+    "charts",
+    "linked",
+    "linked-charts",
+    "tiny-linked-charts"
+  ],
+  "files": [
+    "src/"
+  ],
   "license": "MIT",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
-  "svelte": "src/index.js"
+  "svelte": "src/index.js",
+  "author": {
+    "email": "mitchel_jager@hotmail.com",
+    "name": "mitcheljager"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Mitcheljager/svelte-tiny-linked-charts"
+  },
+  "homepage": "https://mitcheljager.github.io/svelte-tiny-linked-charts/"
 }
