@@ -1,7 +1,7 @@
 <script>
 import { onMount } from "svelte";
 
-	import { LinkedChart, LinkedLabel } from "svelte-tiny-linked-charts"
+	import { LinkedChart, LinkedLabel, LinkedValue } from "svelte-tiny-linked-charts"
 
 	let transitioningData = fakeData(30)
 	let transitionColor = 50
@@ -147,6 +147,8 @@ import { onMount } from "svelte";
 		</div>
 	</div>
 
+	<h2>Label</h2>
+
 	<div class="block">
 		<div class="description">
 			You can optionally display a label, which will display the label of what you're currently hovering.
@@ -162,12 +164,97 @@ import { onMount } from "svelte";
 		</div>
 
 		<div>
-			<div class="label"><LinkedLabel linked="link-2" empty="Start hovering" /></div>
+			<LinkedLabel linked="link-2" empty="Start hovering" />
 
 			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-2" /></div>
 			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-2" /></div>
 		</div>
 	</div>
+
+	<div class="block">
+		<div class="description">
+			You can enable a the value you're hovering using "showLabel".
+
+			<code>
+				&lt;LinkedChart &#123; data &#125; showLabel=&#123; true &#125; /&gt;
+			</code>
+
+			<br>
+			This can be further enhanced with "valueDefault", "valuePrepend", and "valueAppend".
+
+			<code>
+				&lt;LinkedChart &#123; <br>
+				&nbsp; data &#125;  <br>
+				&nbsp; showValue=&#123; true &#125; <br>
+				&nbsp; valueDefault="Empty label" <br>
+				&nbsp; valuePrepend="Thing:" <br>
+				&nbsp; valueAppend="views" /&gt;
+			</code>
+			<br>
+			This value has no styling by default.
+		</div>
+
+		<div>
+			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-5" showValue={ true } /></div>
+			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-5" showValue={ true } valueDefault="Empty label" valuePrepend="Thing:" valueAppend="views" /></div>
+		</div>
+	</div>
+
+	<div class="block">
+		<div class="description">
+			The value can be position at the location of the hover using "valuePosition".
+
+			<code>
+				&lt;LinkedChart &#123; data &#125; showLabel=&#123; true &#125; /&gt;
+			</code>
+
+			<br>
+			This can be further enhanced with "labelDefault", "labelPrepend", and "labelAppend".
+
+			<code>
+				&lt;LinkedChart &#123; <br>
+				&nbsp; data &#125;  <br>
+				&nbsp; showValue=&#123; true &#125; <br>
+				&nbsp; valuePosition="Floating" /&gt;
+			</code>
+			<br>
+			You're expected to style this value further yourself.
+		</div>
+
+		<div>
+			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-7" showValue={ true } valuePosition="floating" /></div>
+			<br>
+			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-7" showValue={ true } valuePosition="floating" /></div>
+		</div>
+	</div>
+
+	<div class="block block--single">
+		Alternatively you can show the value as a separate element wherever you like using the "LinkedValue" component. Use "uid" to link the chart and value together.
+
+		<code>
+			&lt;LinkedChart &#123; data &#125; uid="some-id" /&gt;
+			<br>
+			&lt;LinkedValue uid="some-id" /&gt; <br>
+		</code>
+		<br>
+		This value has no styling by default.
+
+		<br><br>
+
+		<div>
+			<LinkedChart data={ fakeData(30) } linked="link-6" uid="test" />
+
+			<strong><LinkedValue empty="Separate value" uid="test" /></strong>
+		</div>
+
+		<div>
+			<LinkedChart data={ fakeData(30) } linked="link-6" uid="test-2" />
+
+			<strong><LinkedValue empty="Separate value" uid="test-2" /></strong>
+		</div>
+	</div>
+
+	<h2>Styling</h2>
 
 	<div class="block">
 		<div class="description">
@@ -183,19 +270,23 @@ import { onMount } from "svelte";
 
 	<div class="block">
 		<div class="description">
-			To make the bars smaller you can set the "barMinWidth" property.
+			To change the size of the bars set the "barMinWidth" property.
 
 			<code>
-				&lt;LinkedChart data=&#123 ... &#125; barMinWidth="2" /&gt;
+				&lt;LinkedChart data=&#123 ... &#125; barMinWidth="2" /&gt; <br>
+				&lt;LinkedChart data=&#123 ... &#125; barMinWidth="14" /&gt;
 			</code>
 		</div>
 
-		<LinkedChart data={ fakeData(50) } barMinWidth="2" />
+		<div>
+			<div class="chart"><LinkedChart data={ fakeData(50) } barMinWidth="2" /></div>
+			<div class="chart"><LinkedChart data={ fakeData(10) } barMinWidth="14" /></div>
+		</div>
 	</div>
 
 	<div class="block">
 		<div class="description">
-			To always fill out the content, growing and shrinking, you can set both the "grow" and "barMinWidth" properties.
+			To always fill out the content, giving the bars a dynamic width, you can set both the "grow" and "barMinWidth" properties.
 
 			<code>
 				&lt;LinkedChart<br>
@@ -207,7 +298,7 @@ import { onMount } from "svelte";
 
 		<div>
 			<div class="chart"><LinkedChart data={ fakeData(75) } grow={ true } barMinWidth="0" /></div>
-			<div class="chart"><LinkedChart data={ fakeData(10) } grow={ true } barMinWidth="0" /></div>
+			<div class="chart"><LinkedChart data={ fakeData(7) } grow={ true } barMinWidth="0" /></div>
 		</div>
 	</div>
 
@@ -345,7 +436,8 @@ import { onMount } from "svelte";
 			<code>data</code> <code>&#123;&#125;</code> <div>Data that will be displayed in the chart supplied in key:value object.</div>
 			<code>labels</code> <code>[]</code> <div>Labels supplied separately, to be used together with "values" property.</div>
 			<code>values</code> <code>[]</code> <div>Values supplied separately, to be used together with "labels" property.</div>
-			<code>linked</code> <code>false</code> <div>Key to link this chart to other charts with the same key.</div>
+			<code>linked</code> <code></code> <div>Key to link this chart to other charts with the same key.</div>
+			<code>uid</code> <code></code> <div>Unique ID to link this chart to a LinkedValue component with the same uid.</div>
 			<code>height</code> <code>40</code> <div>Height of the chart in pixels.</div>
 			<code>width</code> <code>150</code> <div>Width of the chart in pixels.</div>
 			<code>barMinWidth</code> <code>4</code> <div>Width of the bars in the chart in pixels.</div>
@@ -356,7 +448,32 @@ import { onMount } from "svelte";
 			<code>fadeOpacity</code> <code>0.5</code> <div>The opacity the faded out bars should display in.</div>
 			<code>hover</code> <code>true</code> <div>Boolean whether or not this chart can be hovered at all.</div>
 			<code>transition</code> <code>0</code> <div>Transition the chart between different stats. Value is time in milliseconds.</div>
-			</div>
+			<code>showValue</code> <code>false</code> <div>Boolean whether or not a value will be shown.</div>
+			<code>valueDefault</code> <code>"&nbsp;"</code> <div>Default value when not hovering.</div>
+			<code>valuePrepend</code> <code></code> <div>String to prepend the value.</div>
+			<code>valueAppend</code> <code></code> <div>String to append to the value.</div>
+			<code>valuePosition</code> <code>static</code> <div>Can be set to "floating" to follow the position of the hover.</div>
+		</div>
+	</div>
+
+	<div class="block block--single">
+		<p>This is a list of all configurable properties on the "LinkedLabel" component.</p>
+
+		<div class="table">
+			<strong>Property</strong> <strong>Default</strong> <strong>Description</strong>
+			<code>linked</code> <code></code> <div>Key to link this label to charts with the same key.</div>
+			<code>empty</code> <code>&amp;nbsp;</code> <div>String that will be displayed when no bar is being hovered.</div>
+		</div>
+	</div>
+
+	<div class="block block--single">
+		<p>This is a list of all configurable properties on the "LinkedValue" component.</p>
+
+		<div class="table">
+			<strong>Property</strong> <strong>Default</strong> <strong>Description</strong>
+			<code>uid</code> <code></code> <div>Unique ID to link this value to a chart with the same uid.</div>
+			<code>empty</code> <code>&amp;nbsp;</code> <div>String that will be displayed when no bar is being hovered.</div>
+		</div>
 	</div>
 
 	<div class="block block--single">
@@ -387,6 +504,8 @@ import { onMount } from "svelte";
 	}
 
 	:global(body) {
+		padding: 0;
+		margin: 0;
 		background: var(--bg-body);
 		color: var(--text-color);
 		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -440,20 +559,35 @@ import { onMount } from "svelte";
 	.wrapper {
 		max-width: 540px;
 		margin: 0 auto;
-		padding: 0 1.5rem 6rem;
+		padding: 0 1rem 6rem;
 	}
 
 	.block {
-		display: grid;
-		grid-template-columns: 1fr auto;
-		grid-gap: 1.5rem;
-		justify-content: space-between;
 		padding: 3rem 0;
 		border-bottom: 1px solid var(--border-color);
 	}
 
+	@media (min-width: 600px) {
+		.block {
+			display: grid;
+			grid-template-columns: 1fr auto;
+			grid-gap: 1.5rem;
+			justify-content: space-between;
+		}
+	}
+
 	.block--single {
 		display: block;
+	}
+
+	.description {
+		margin-bottom: 1rem;
+	}
+
+	@media (min-width: 600px) {
+		.description {
+			margin-bottom: 0;
+		}
 	}
 
 	.table {
@@ -478,10 +612,5 @@ import { onMount } from "svelte";
 	:global(.chart--responsive svg) {
 		width: 100%;
 		height: auto;
-	}
-
-	.label {
-		text-align: right;
-		color: var(--text-color-light);
 	}
 </style>
