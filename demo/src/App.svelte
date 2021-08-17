@@ -1,5 +1,5 @@
 <script>
-import { onMount } from "svelte";
+	import { onMount } from "svelte"
 
 	import { LinkedChart, LinkedLabel, LinkedValue } from "svelte-tiny-linked-charts"
 
