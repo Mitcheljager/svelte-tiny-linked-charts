@@ -1,7 +1,10 @@
 # Tiny Linked Charts for Svelte
 
 This is a library to display tiny bar charts. These charts are more so meant for graphical aids, rather than scientific representations. There's no axis labels, no extensive data visualisation, just bars.
-Installation
+
+**Demo and Docs**: https://mitcheljager.github.io/svelte-tiny-linked-charts/
+
+### Installation
 
 Install using Yarn or NPM.
 ```
@@ -81,6 +84,7 @@ valueDefault | "\&nbsp;" | Default value when not hovering.
 valuePrepend | | String to prepend the value.
 valueAppend | | String to append to the value.
 valuePosition | static | Can be set to "floating" to follow the position of the hover.
+scaleMax | 0 | Use this to overwrite the automatic scale set to the highest value in your array.
 
 `<LinkedLabel />` component.
 Property | Default | Description

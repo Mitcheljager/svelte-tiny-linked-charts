@@ -13,7 +13,7 @@ import { onMount } from "svelte";
 		}, 1000)
 	})
 
-	function fakeData(times) {
+	function fakeData(times, maxValue = 100, minValue = 50) {
 		const data = {}
 		const date = new Date("1985-05-01T00:00:00Z")
 
@@ -21,7 +21,7 @@ import { onMount } from "svelte";
 			const setDate = date.setDate(date.getDate() - 1)
 			const formattedDate = new Date(setDate).toISOString().substring(0, 10)
 
-      data[formattedDate] = Math.floor(Math.random() * 50) + 50
+      data[formattedDate] = Math.floor(Math.random() * (maxValue - minValue)) + minValue
     }
 
 		const reversedData = {}
@@ -43,6 +43,8 @@ import { onMount } from "svelte";
 
 	<div class="block block--single">
 		<p>This is a library to display tiny bar charts. These charts are more so meant for graphical aids, rather than scientific representations. There's no axis labels, no extensive data visualisation, just bars.</p>
+
+		<p><a href="https://github.com/Mitcheljager/svelte-tiny-linked-charts">GitHub</a></p>
 
 		<h2>Installation</h2>
 
@@ -144,6 +146,22 @@ import { onMount } from "svelte";
 			<div class="chart"><LinkedChart data={ fakeData(10) } linked="link-1" /></div>
 			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-1" /></div>
 			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-1" /></div>
+		</div>
+	</div>
+
+	<div class="block">
+		<div class="description">
+			The highest value in the chart is automatically determined by the highest value in your data. To overwrite this use "scaleMax".
+
+			<code>
+				&lt;LinkedChart &#123; data &#125; scaleMax="100" /&gt; <br>
+				&lt;LinkedChart &#123; data &#125; scaleMax="100" /&gt;
+			</code>
+		</div>
+
+		<div>
+			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-8" scaleMax="100" /></div>
+			<div class="chart"><LinkedChart data={ fakeData(30, 30, 10) } linked="link-8" scaleMax="100" /></div>
 		</div>
 	</div>
 
@@ -453,6 +471,7 @@ import { onMount } from "svelte";
 			<code>valuePrepend</code> <code></code> <div>String to prepend the value.</div>
 			<code>valueAppend</code> <code></code> <div>String to append to the value.</div>
 			<code>valuePosition</code> <code>static</code> <div>Can be set to "floating" to follow the position of the hover.</div>
+			<code>scaleMax</code> <code>0</code> <div>Use this to overwrite the automatic scale set to the highest value in your array.</div>
 		</div>
 	</div>
 
