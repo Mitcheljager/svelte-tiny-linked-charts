@@ -21,12 +21,13 @@
   export let valuePrepend = ""
   export let valueAppend = ""
   export let valuePosition = "static"
+  export let scaleMax = 0
 
   let valuePositionOffset = 0
   
   $: dataLength = Object.keys(data).length
   $: barWidth = grow ? getBarWidth(dataLength) : parseInt(barMinWidth)
-  $: highestValue = dataLength ? getHighestValue() : 0
+  $: highestValue = getHighestValue(dataLength)
   $: alignmentOffset = dataLength ? getAlignment() : 0
   $: linkedKey = linked || (Math.random() + 1).toString(36).substring(7)
   $: if (labels.length && values.length) data = Object.fromEntries(labels.map((_, i) => [labels[i], values[i]]))
@@ -40,7 +41,9 @@
   }
 
   function getHighestValue() {
-    return Math.max(...Object.values(data))
+    if (scaleMax) return scaleMax
+    if (dataLength) return Math.max(...Object.values(data))
+    return 0
   }
 
   function getHeight(value) {
