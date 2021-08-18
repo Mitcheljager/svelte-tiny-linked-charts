@@ -85,6 +85,8 @@ valuePrepend | | String to prepend the value.
 valueAppend | | String to append to the value.
 valuePosition | static | Can be set to "floating" to follow the position of the hover.
 scaleMax | 0 | Use this to overwrite the automatic scale set to the highest value in your array.
+type | bar | Can be set to "line" to display a line chart instead.
+lineColor | fill | Color of the line if used with type="line".
 
 `<LinkedLabel />` component.
 Property | Default | Description
