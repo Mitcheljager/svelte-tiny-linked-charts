@@ -1,6 +1,6 @@
 # Tiny Linked Charts for Svelte
 
-This is a library to display tiny bar charts. These charts are more so meant for graphical aids, rather than scientific representations. There's no axis labels, no extensive data visualisation, just bars.
+This is a library to display tiny bar charts. These charts are more so meant for graphic aids, rather than scientific representations. There's no axis labels, no extensive data visualisation, just bars.
 
 **Demo and Docs**: https://mitcheljager.github.io/svelte-tiny-linked-charts/
 

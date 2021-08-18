@@ -42,7 +42,7 @@
 	</div>
 
 	<div class="block block--single">
-		<p>This is a library to display tiny bar charts. These charts are more so meant for graphical aids, rather than scientific representations. There's no axis labels, no extensive data visualisation, just bars.</p>
+		<p>This is a library to display tiny bar charts. These charts are more so meant for graphic aids, rather than scientific representations. There's no axis labels, no extensive data visualisation, just bars.</p>
 
 		<p><a href="https://github.com/Mitcheljager/svelte-tiny-linked-charts">GitHub</a></p>
 
