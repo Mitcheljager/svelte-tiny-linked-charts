@@ -56,3 +56,11 @@ test("If showValue is enabled and valueDefault is set, a default text should sho
 
   expect(getByText("test")).toBeInTheDocument()
 })
+
+test("If type is set to line, display a line", async () => {
+  const data = fakeData(20)
+
+  render(LinkedChart, { data: data, type: "line" })
+
+  expect(document.querySelector("polyline")).toBeInTheDocument()
+})

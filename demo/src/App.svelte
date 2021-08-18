@@ -201,8 +201,8 @@
 			This can be further enhanced with "valueDefault", "valuePrepend", and "valueAppend".
 
 			<code>
-				&lt;LinkedChart &#123; <br>
-				&nbsp; data &#125;  <br>
+				&lt;LinkedChart <br>
+				&nbsp; &#123; data &#125;  <br>
 				&nbsp; showValue=&#123; true &#125; <br>
 				&nbsp; valueDefault="Empty label" <br>
 				&nbsp; valuePrepend="Thing:" <br>
@@ -230,8 +230,8 @@
 			This can be further enhanced with "labelDefault", "labelPrepend", and "labelAppend".
 
 			<code>
-				&lt;LinkedChart &#123; <br>
-				&nbsp; data &#125;  <br>
+				&lt;LinkedChart <br>
+				&nbsp; &#123; data &#125;  <br>
 				&nbsp; showValue=&#123; true &#125; <br>
 				&nbsp; valuePosition="Floating" /&gt;
 			</code>
@@ -446,6 +446,28 @@
 		<LinkedChart data={ transitioningData } fill="hsl({ transitionColor }, 60%, 50%)" transition="500" />
 	</div>
 
+	<div class="block">
+		<div class="description">
+			Instead of bars you can also opt for a line-chart using "type=line". "lineColor" can be used to color the line, "fill" to color the points. This can have all of the bar properties as well.
+
+			<code>
+				&lt;LinkedChart &#123; data &#125; type="line" /&gt; <br>
+				&lt;LinkedChart <br>
+				&nbsp; &#123; data &#125; <br>
+				&nbsp; type="line" <br>
+				&nbsp; lineColor="#4355db" <br>
+				&nbsp; fill="white" /&gt;
+			</code>
+		</div>
+
+		<div>
+			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-9" type="line" /></div>
+			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-9" type="line" /></div>
+			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-9" type="line" /></div>
+			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-9" type="line" lineColor="#4355db" fill="white" showValue="true" valuePosition="floating" /></div>
+		</div>
+	</div>
+
 	<div class="block block--single">
 		<p>This is a list of all configurable properties on the "LinkedChart" component.</p>
 
@@ -472,6 +494,8 @@
 			<code>valueAppend</code> <code></code> <div>String to append to the value.</div>
 			<code>valuePosition</code> <code>static</code> <div>Can be set to "floating" to follow the position of the hover.</div>
 			<code>scaleMax</code> <code>0</code> <div>Use this to overwrite the automatic scale set to the highest value in your array.</div>
+			<code>type</code> <code>bar</code> <div>Can be set to "line" to display a line chart instead.</div>
+			<code>lineColor</code> <code>fill</code> <div>Color of the line if used with type="line".</div>
 		</div>
 	</div>
 
