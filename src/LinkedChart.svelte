@@ -51,7 +51,7 @@
   }
 
   function getHeight(value) {
-    return Math.round((parseInt(height) / highestValue) * value - (type == "line" ? barWidth / 2 : 0))
+    return Math.round((parseInt(height) / highestValue) * value - (type == "line" ? barWidth / 2 : 0)) || 0
   }
 
   function getBarWidth() {

@@ -1,6 +1,6 @@
 {
   "name": "svelte-tiny-linked-charts",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "private": false,
   "scripts": {
     "build": "rollup -c",
@@ -40,8 +40,8 @@
     "src/"
   ],
   "license": "MIT",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
+  "main": "src/index.js",
+  "module": "src/index.mjs",
   "svelte": "src/index.js",
   "author": {
     "email": "mitchel_jager@hotmail.com",

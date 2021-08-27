@@ -233,7 +233,7 @@
 				&lt;LinkedChart <br>
 				&nbsp; &#123; data &#125;  <br>
 				&nbsp; showValue=&#123; true &#125; <br>
-				&nbsp; valuePosition="Floating" /&gt;
+				&nbsp; valuePosition="floating" /&gt;
 			</code>
 			<br>
 			You're expected to style this value further yourself.
