@@ -253,13 +253,6 @@
 			The value can be position at the location of the hover using "valuePosition".
 
 			<code>
-				&lt;LinkedChart &#123; data &#125; showLabel=&#123; true &#125; /&gt;
-			</code>
-
-			<br>
-			This can be further enhanced with "labelDefault", "labelPrepend", and "labelAppend".
-
-			<code>
 				&lt;LinkedChart <br>
 				&nbsp; &#123; data &#125;  <br>
 				&nbsp; showValue=&#123; true &#125; <br>
