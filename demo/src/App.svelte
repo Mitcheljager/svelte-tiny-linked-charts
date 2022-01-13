@@ -15,7 +15,7 @@
 
 	function fakeData(times, maxValue = 100, minValue = 50) {
 		const data = {}
-		const date = new Date("1985-05-01T00:00:00Z")
+		const date = new Date("2005-05-01T00:00:00Z")
 
     for(let i = 0; i < times; i++) {
 			const setDate = date.setDate(date.getDate() - 1)
@@ -44,7 +44,37 @@
 	<div class="block block--single">
 		<p>This is a library to display tiny bar charts. These charts are more so meant for graphic aids, rather than scientific representations. There's no axis labels, no extensive data visualisation, just bars.</p>
 
+		<p><em>Inspired by steamcharts.com</em></p>
+
 		<p><a href="https://github.com/Mitcheljager/svelte-tiny-linked-charts">GitHub</a></p>
+
+		<h2>Demo</h2>
+
+		<table class="preview-table">
+			<tr>
+				<th>Name</th>
+				<th width="150"><LinkedLabel linked="table" empty="30 day period" /></th>
+				<th>Value</th>
+			</tr>
+
+			<tr>
+				<td class="label">I am a thing</td>
+				<td><LinkedChart data={ fakeData(30) } linked="table" uid="table-1" /></td>
+				<td><LinkedValue uid="table-1" empty={ Object.values(fakeData(30)).reduce((a, b) => a + b) } /></td>
+			</tr>
+
+			<tr>
+				<td class="label">I am another thing</td>
+				<td><LinkedChart data={ fakeData(30) } linked="table" uid="table-2" /></td>
+				<td><LinkedValue uid="table-2" empty={ Object.values(fakeData(30)).reduce((a, b) => a + b) } /></td>
+			</tr>
+
+			<tr>
+				<td class="label">I am third thing</td>
+				<td><LinkedChart data={ fakeData(30) } linked="table" uid="table-3" /></td>
+				<td><LinkedValue uid="table-3" empty={ Object.values(fakeData(30)).reduce((a, b) => a + b) }  /></td>
+			</tr>
+		</table>
 
 		<h2>Installation</h2>
 
@@ -175,7 +205,7 @@
 				&lt;LinkedLabel linked="link-2" /&gt; <br>
 				<br>
 				&lt;LinkedChart &#123; data &#125; linked="link-2" /&gt; <br>
-				&lt;LinkedChart &#123; data &#125; linked="link-2" /&gt; 
+				&lt;LinkedChart &#123; data &#125; linked="link-2" /&gt;
 			</code>
 			<br>
 			The label has no styling by default.
@@ -448,6 +478,20 @@
 
 	<div class="block">
 		<div class="description">
+			To improve accessibility you can set "tabindex=0", allowing navigating to each data point using the keyboard.
+
+			<code>
+				&lt;LinkedChart &#123; data &#125; tabindex="0" /&gt; <br>
+			</code>
+		</div>
+
+		<div>
+			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-10" showValue valuePosition="floating" tabindex="0" /></div>
+		</div>
+	</div>
+
+	<div class="block">
+		<div class="description">
 			Instead of bars you can also opt for a line-chart using "type=line". "lineColor" can be used to color the line, "fill" to color the points. This can have all of the bar properties as well.
 
 			<code>
@@ -467,6 +511,88 @@
 			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-9" type="line" lineColor="#4355db" fill="white" showValue="true" valuePosition="floating" /></div>
 		</div>
 	</div>
+
+	<h2>Events</h2>
+
+	<div class="block">
+		<div class="description">
+			By enable "dispatchEvents" on the LinkedChart component you can dispatch several events when the state of the chart changes.
+
+			<code class="well">
+				&lt;LinkedChart <br>
+				&nbsp; dispatchEvents=&#123; true &#125; <br>
+				&nbsp; on:hover=&#123; event =&gt; console.log(event.detail) &#125; <br>
+				&nbsp; on:blur=&#123; event =&gt; console.log(event.detail) &#125; <br>
+				&nbsp; on:value-update=&#123; event =&gt; console.log(event.detail) &#125; /&gt;
+			</code>
+
+			<p>This could be used to construct your own value element that can be formatted as you wish. For example in this example the values are given as cents, but the value is formatted as dollars.</p>
+
+			<div>
+				<LinkedChart
+					data={ fakeData(30, 100000, 10000) }
+					dispatchEvents
+					on:hover={ event => document.querySelector("[data-role='currency']").innerHTML = (event.detail.value / 100).toLocaleString("en-US", { style: "currency", currency: "USD" }) }
+					on:blur={ event => document.querySelector("[data-role='currency']").innerHTML = "&nbsp;" } />
+
+				<span data-role="currency">&nbsp;</span>
+			</div>
+
+			<code class="well">
+				&lt;LinkedChart <br>
+				&nbsp; dispatchEvents <br>
+				&nbsp; on:hover=&#123; event =&gt; <br>
+				&nbsp;&nbsp;&nbsp	document.querySelector("[data-role='currency']") <br>
+				&nbsp;&nbsp;&nbsp .innerHTML = (event.detail.value / 100).toLocaleString("en-US", &#123; <br>
+				&nbsp;&nbsp;&nbsp&nbsp;&nbsp; style: "currency", currency: "USD"<br>
+				&nbsp;&nbsp;&nbsp &#125;) <br>
+				&nbsp; &#125; <br>
+				&nbsp; on:blur=&#123; event =&gt; <br>
+				&nbsp;&nbsp;&nbsp document.querySelector("[data-role='currency']").innerHTML = "&nbsp;" <br>
+				&nbsp; &#125; /&gt;
+			</code>
+
+			<br>
+
+			<p>In this example we format the value element inside the chart directly to make use of "toLocaleString()" to format the number. Ideally you would supply the value already formatted to avoid having to do this, but that's not always possible.</p>
+
+			<div>
+				<LinkedChart
+					data={ fakeData(30, 100000, 10000) }
+					dispatchEvents
+					showValue
+					valuePosition="floating"
+					valuePrepend="Value: "
+					on:value-update={ event => { if (event.detail.valueElement) event.detail.valueElement.innerText = event.detail.value?.toLocaleString() } } />
+			</div>
+
+			<code class="well">
+				&lt;LinkedChart <br>
+				&nbsp; dispatchEvents <br>
+				&nbsp; showValue <br>
+				&nbsp; valuePosition="floating" <br>
+				&nbsp; valuePrepend="Value: " <br>
+				&nbsp; on:value-update=&#123; event => &#123; <br>
+				&nbsp;&nbsp;&nbsp; if (event.detail.valueElement) <br>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; event.detail.valueElement.innerText = <br>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; event.detail.value?.toLocaleString() <br>
+				&nbsp; &#125; &#125; /&gt;
+			</code>
+
+			<br>
+
+			<h3>All events</h3>
+
+			<div class="table">
+				<strong>Property</strong> <strong>Description</strong> <strong>Return</strong>
+				<code>on:hover</code> <div>On hover of bars</div> <code>uid, key, index, linkedKey, value, valueElement, eventElement</code>
+				<code>on:blur</code> <div>On blur of the chart</div> <code>uid, linkedKey, valueElement, eventElement</code>
+				<code>on:value-update</code> <div>Any time the value updates</div> <code>value, uid, linkedKey, valueElement</code>
+			</div>
+		</div>
+	</div>
+
+	<h2>Properties</h2>
 
 	<div class="block block--single">
 		<p>This is a list of all configurable properties on the "LinkedChart" component.</p>
@@ -496,6 +622,8 @@
 			<code>scaleMax</code> <code>0</code> <div>Use this to overwrite the automatic scale set to the highest value in your array.</div>
 			<code>type</code> <code>bar</code> <div>Can be set to "line" to display a line chart instead.</div>
 			<code>lineColor</code> <code>fill</code> <div>Color of the line if used with type="line".</div>
+			<code>tabindex</code> <code>-1</code> <div>Sets the tabindex of each bar.</div>
+			<code>dispatchEvents</code> <code>false</code> <div>Boolean whether or not to dispatch events on certain actions (explained above).</div>
 		</div>
 	</div>
 
@@ -535,7 +663,7 @@
 		--bg-well: #f6fafd;
 		--bg-body: #fff;
 	}
-	
+
 	@media (prefers-color-scheme: dark) {
 		:global(:root) {
 			--text-color: #b7c0d1;
@@ -640,7 +768,7 @@
 		grid-template-columns: 1fr 1fr 3fr;
 		grid-gap: 1rem .5rem;
 	}
-	
+
 	.table strong {
 		color: var(--text-color);
 	}
@@ -657,5 +785,37 @@
 	:global(.chart--responsive svg) {
 		width: 100%;
 		height: auto;
+	}
+
+	table {
+		width: 100%;
+		border: 1px solid var(--border-color);
+		border-radius: .5rem;
+		border-collapse: collapse;
+		background: var(--bg-well);
+		font-size: clamp(0.75rem, 3vw, 1rem);
+		color: var(--text-color-light);
+		font-style: italic;
+	}
+
+	table tr:nth-child(even) td {
+		background: var(--bg-body);
+	}
+
+	table tr td,
+	table tr th {
+		border: 0;
+		padding: 0.5rem 0 0.5rem 1rem;
+		text-align: left;
+	}
+
+	table :global(svg) {
+		max-width: 100%;
+		height: auto;
+	}
+
+	table .label {
+		color: var(--text-color);
+		font-style: normal;
 	}
 </style>

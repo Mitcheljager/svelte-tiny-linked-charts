@@ -1,4 +1,5 @@
 <script>
+  import { createEventDispatcher, tick } from "svelte"
   import { hoveringKey, hoveringValue } from "./stores/tinyLinkedCharts.js"
 
   export let uid = (Math.random() + 1).toString(36).substring(7)
@@ -24,22 +25,28 @@
   export let scaleMax = 0
   export let type = "bar"
   export let lineColor = fill
+  export let tabindex = -1
+  export let dispatchEvents = false
+
+  const dispatch = createEventDispatcher()
 
   let valuePositionOffset = 0
   let polyline = []
-  
+  let valueElement
+
   $: dataLength = Object.keys(data).length
   $: barWidth = grow ? getBarWidth(dataLength) : parseInt(barMinWidth)
   $: highestValue = getHighestValue(dataLength)
   $: alignmentOffset = dataLength ? getAlignment() : 0
   $: linkedKey = linked || (Math.random() + 1).toString(36).substring(7)
   $: if (labels.length && values.length) data = Object.fromEntries(labels.map((_, i) => [labels[i], values[i]]))
-  $: if (valuePosition == "floating") valuePositionOffset = (parseInt(gap) + barWidth) * Object.keys(data).indexOf($hoveringKey[linkedKey])
+  $: if (valuePosition == "floating") valuePositionOffset = (parseInt(gap) + barWidth) * Object.keys(data).indexOf($hoveringKey[linkedKey]) + alignmentOffset
   $: if (type == "line") polyline = getPolyLinePoints(data)
+  $: if (dispatchEvents) dispatch('value-update', { value: $hoveringValue[uid], uid, linkedKey, valueElement })
   $: {
     if ($hoveringKey[linkedKey]) {
       $hoveringValue[uid] = data[$hoveringKey[linkedKey]]
-    } else { 
+    } else {
       $hoveringValue[uid] = null
     }
   }
@@ -73,14 +80,22 @@
     return points
   }
 
-  function startHover(key, index) {
+  async function startHover(key, index) {
     if (!hover) return
     $hoveringKey[linkedKey] = key
+
+    await tick()
+
+    if (dispatchEvents) dispatch('hover', { uid, key, index, linkedKey, value: $hoveringValue[uid], valueElement, eventElement: event.target })
   }
 
-  function endHover() {
+  async function endHover() {
     if (!hover) return
     $hoveringKey[linkedKey] = null
+
+    await tick()
+
+    if (dispatchEvents) dispatch('blur', { uid, linkedKey, valueElement, eventElement: event.target })
   }
 </script>
 
@@ -110,7 +125,8 @@
         width={ barWidth }
         height={ type == "line" ? height : getHeight(value) }
         y={ type == "line" ? 0 : (height - getHeight(value)) }
-        x={ (parseInt(gap) + barWidth) * i } />
+        x={ (parseInt(gap) + barWidth) * i }
+        { tabindex } />
 
       { #if type == "line" }
         <circle
@@ -123,11 +139,11 @@
   </g>
 </svg>
 
-{ #if showValue }
+{ #if showValue && ($hoveringValue[uid] || valueDefault) }
   <div class="tiny-linked-charts-value" style={ valuePosition == "floating" ? `position: absolute; transform: translateX(${ valuePositionOffset }px)` : null }>
     { #if $hoveringValue[uid] !== null }
       { valuePrepend }
-      { $hoveringValue[uid] }
+      <span bind:this={valueElement}>{ $hoveringValue[uid] }</span>
       { valueAppend }
     { :else }
       { @html valueDefault }
