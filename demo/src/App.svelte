@@ -70,7 +70,7 @@
 			</tr>
 
 			<tr>
-				<td class="label">I am third thing</td>
+				<td class="label">I am a third thing</td>
 				<td><LinkedChart data={ fakeData(30) } linked="table" uid="table-3" /></td>
 				<td><LinkedValue uid="table-3" empty={ Object.values(fakeData(30)).reduce((a, b) => a + b) }  /></td>
 			</tr>
