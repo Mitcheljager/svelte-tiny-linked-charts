@@ -572,7 +572,7 @@
 				&nbsp; showValue <br>
 				&nbsp; valuePosition="floating" <br>
 				&nbsp; valuePrepend="Value: " <br>
-				&nbsp; on:value-update=&#123; event => &#123; <br>
+				&nbsp; on:value-update=&#123; event =&gt; &#123; <br>
 				&nbsp;&nbsp;&nbsp; if (event.detail.valueElement) <br>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; event.detail.valueElement.innerText = <br>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; event.detail.value?.toLocaleString() <br>
