@@ -250,7 +250,7 @@
 
 	<div class="block">
 		<div class="description">
-			The value can be position at the location of the hover using "valuePosition".
+			The value can be positioned at the location of the hovered bar using "valuePosition".
 
 			<code>
 				&lt;LinkedChart <br>
