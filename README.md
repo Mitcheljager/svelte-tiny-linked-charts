@@ -7,25 +7,25 @@ This is a library to display tiny bar charts. These charts are more so meant for
 ### Installation
 
 Install using Yarn or NPM.
-```
+```js
 yarn add svelte-tiny-linked-charts
 ```
-```
+```js
 npm install --save svelte-tiny-linked-charts
 ```
 
 Include the chart in your app.
-```
+```js
 import { LinkedChart, LinkedLabel, LinkedValue } from "svelte-tiny-linked-charts"
 ```
-```
-<LinkedChart { data } />
+```svelte
+<LinkedChart />
 <LinkedLabel />
 <LinkedValue />
 ```
 
 Supply your data in a simple key:value object:
-```
+```js
 let data = {
   "2005-01-01": 25,
   "2005-01-02": 20,
@@ -33,11 +33,13 @@ let data = {
   "2005-01-04": 17,
   "2005-01-05": 21
 }
+```
+```svelte
 <LinkedChart { data } />
 ```
 
 Or if you prefer supply the labels and values separately:
-```
+```js
 let labels = [
   "2005-01-01",
   "2005-01-02",
@@ -52,6 +54,8 @@ let values = [
   17,
   21
 ]
+```
+```svelte
 <LinkedChart { labels } { values } />
 ```
 
