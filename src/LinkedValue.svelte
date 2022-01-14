@@ -10,7 +10,7 @@
 
 
 
-{ #if value !== null }
+{ #if uid in $hoveringValue && value !== null }
   { value || valueUndefined }
 { :else }
   { @html empty }
