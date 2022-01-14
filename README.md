@@ -81,6 +81,7 @@ hover | true | Boolean whether or not this chart can be hovered at all.
 transition | 0 | Transition the chart between different stats. Value is time in milliseconds.
 showValue | false | Boolean whether or not a value will be shown.
 valueDefault | "\&nbsp;" | Default value when not hovering.
+valueUndefined | 0 | For when the hovering value returns undefined.
 valuePrepend | | String to prepend the value.
 valueAppend | | String to append to the value.
 valuePosition | static | Can be set to "floating" to follow the position of the hover.
@@ -101,3 +102,4 @@ Property | Default | Description
 --- | --- | ---
 uid | | Unique ID to link this value to a chart with the same uid.
 empty | \&nbsp; | String that will be displayed when no bar is being hovered.
+valueUndefined | 0 | For when the hovering value returns undefined.

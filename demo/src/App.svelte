@@ -58,21 +58,39 @@
 			</tr>
 
 			<tr>
-				<td class="label">I am a thing</td>
+				<td class="label">A thing</td>
 				<td><LinkedChart data={ fakeData(30) } linked="table" uid="table-1" /></td>
 				<td><LinkedValue uid="table-1" empty={ Object.values(fakeData(30)).reduce((a, b) => a + b) } /></td>
 			</tr>
 
 			<tr>
-				<td class="label">I am another thing</td>
+				<td class="label">Another thing</td>
 				<td><LinkedChart data={ fakeData(30) } linked="table" uid="table-2" /></td>
 				<td><LinkedValue uid="table-2" empty={ Object.values(fakeData(30)).reduce((a, b) => a + b) } /></td>
 			</tr>
 
 			<tr>
-				<td class="label">I am a third thing</td>
+				<td class="label">A third thing</td>
 				<td><LinkedChart data={ fakeData(30) } linked="table" uid="table-3" /></td>
 				<td><LinkedValue uid="table-3" empty={ Object.values(fakeData(30)).reduce((a, b) => a + b) }  /></td>
+			</tr>
+
+			<tr>
+				<td class="label">An incomplete thing</td>
+				<td><LinkedChart data={ fakeData(15) } linked="table" uid="table-4" /></td>
+				<td><LinkedValue uid="table-4" empty={ Object.values(fakeData(15)).reduce((a, b) => a + b) }  /></td>
+			</tr>
+
+			<tr>
+				<td class="label">A changing thing</td>
+				<td><LinkedChart data={ transitioningData } linked="table" uid="table-5" transition=100 fill="hsl({ transitionColor }, 60%, 50%)" /></td>
+				<td><LinkedValue uid="table-5" empty={ Object.values(transitioningData).reduce((a, b) => a + b) }  /></td>
+			</tr>
+
+			<tr>
+				<td class="label">A thing using lines</td>
+				<td><LinkedChart data={ fakeData(30) } linked="table" uid="table-6" type="line" /></td>
+				<td><LinkedValue uid="table-6" empty={ Object.values(fakeData(30)).reduce((a, b) => a + b) }  /></td>
 			</tr>
 		</table>
 
@@ -221,7 +239,7 @@
 
 	<div class="block">
 		<div class="description">
-			You can enable a the value you're hovering using "showValue".
+			You can enable the value you're hovering using "showValue".
 
 			<code>
 				&lt;LinkedChart &#123; data &#125; showValue=&#123; true &#125; /&gt;
@@ -493,7 +511,7 @@
 				&nbsp; &#123; data &#125; <br>
 				&nbsp; type="line" <br>
 				&nbsp; lineColor="#4355db" <br>
-				&nbsp; fill="white" /&gt;
+				&nbsp; fill="var(--text-color)" /&gt;
 			</code>
 		</div>
 
@@ -501,7 +519,7 @@
 			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-9" type="line" /></div>
 			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-9" type="line" /></div>
 			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-9" type="line" /></div>
-			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-9" type="line" lineColor="#4355db" fill="white" showValue="true" valuePosition="floating" /></div>
+			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-9" type="line" lineColor="#4355db" fill="var(--text-color)" showValue="true" valuePosition="floating" /></div>
 		</div>
 	</div>
 
@@ -609,6 +627,7 @@
 			<code>transition</code> <code>0</code> <div>Transition the chart between different stats. Value is time in milliseconds.</div>
 			<code>showValue</code> <code>false</code> <div>Boolean whether or not a value will be shown.</div>
 			<code>valueDefault</code> <code>"&nbsp;"</code> <div>Default value when not hovering.</div>
+			<code>valueUndefined</code> <code>0</code> <div>For when the hovering value returns undefined.</div>
 			<code>valuePrepend</code> <code></code> <div>String to prepend the value.</div>
 			<code>valueAppend</code> <code></code> <div>String to append to the value.</div>
 			<code>valuePosition</code> <code>static</code> <div>Can be set to "floating" to follow the position of the hover.</div>
@@ -637,6 +656,7 @@
 			<strong>Property</strong> <strong>Default</strong> <strong>Description</strong>
 			<code>uid</code> <code></code> <div>Unique ID to link this value to a chart with the same uid.</div>
 			<code>empty</code> <code>&amp;nbsp;</code> <div>String that will be displayed when no bar is being hovered.</div>
+			<code>valueUndefined</code> <code>0</code> <div>For when the hovering value returns undefined.</div>
 		</div>
 	</div>
 
