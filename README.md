@@ -1,8 +1,9 @@
 # Tiny Linked Charts for Svelte
 
 [![tests passing](https://github.com/MitchelJager/svelte-tiny-linked-charts/actions/workflows/node.js.yml/badge.svg)](https://github.com/Mitcheljager/svelte-tiny-linked-charts/actions/workflows/node.js.yml)
-[![npm version](https://badge.fury.io/js/svelte-tiny-linked-charts.svg)](https://badge.fury.io/js/svelte-tiny-linked-charts)
+[![npm version](https://badge.fury.io/js/svelte-tiny-linked-charts.svg)](https://www.npmjs.com/package/svelte-tiny-linked-charts)
 [![npm downloads](https://img.shields.io/npm/dm/svelte-tiny-linked-charts.svg)](https://www.npmjs.com/package/svelte-tiny-linked-charts)
+[![MadeWithSvelte.com shield](https://madewithsvelte.com/storage/repo-shields/3278-shield.svg)](https://madewithsvelte.com/p/tiny-linked-charts/shield-link)
 
 This is a library to display tiny bar charts. These charts are more so meant for graphic aids, rather than scientific representations. There's no axis labels, no extensive data visualisation, just bars.
 
