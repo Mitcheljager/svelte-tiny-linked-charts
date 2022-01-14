@@ -3,14 +3,15 @@
 
   export let uid
   export let empty = "&nbsp;"
+  export let valueUndefined = 0
 
   $: value = $hoveringValue[uid]
 </script>
 
 
 
-{ #if value }
-  { value }
+{ #if value !== null }
+  { value || valueUndefined }
 { :else }
   { @html empty }
 { /if }

@@ -22,6 +22,7 @@
   export let valuePrepend = ""
   export let valueAppend = ""
   export let valuePosition = "static"
+  export let valueUndefined = 0
   export let scaleMax = 0
   export let type = "bar"
   export let lineColor = fill
@@ -143,7 +144,7 @@
   <div class="tiny-linked-charts-value" style={ valuePosition == "floating" ? `position: absolute; transform: translateX(${ valuePositionOffset }px)` : null }>
     { #if $hoveringValue[uid] !== null }
       { valuePrepend }
-      <span bind:this={valueElement}>{ $hoveringValue[uid] }</span>
+      <span bind:this={valueElement}>{ $hoveringValue[uid] || valueUndefined }</span>
       { valueAppend }
     { :else }
       { @html valueDefault }
