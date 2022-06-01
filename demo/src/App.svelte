@@ -672,6 +672,7 @@
 		--primary: #ff3e00;
 		--text-color: #444;
 		--text-color-light: #999;
+		--text-color-lightest: black;
 		--border-color: #edf3f0;
 		--bg-well: #f6fafd;
 		--bg-body: #fff;
@@ -681,6 +682,7 @@
 		:global(:root) {
 			--text-color: #b7c0d1;
 			--text-color-light: #8e99af;
+			--text-color-lightest: white;
 			--border-color: #363d49;
 			--bg-well: #21242c;
 			--bg-body: #16181d;
@@ -697,12 +699,12 @@
 
 	h1 {
 		margin: 0;
-		color: white;
+		color: var(--text-color-lightest);
 	}
 
 	h2 {
 		margin: 3rem 0 1.5rem;
-		color: white;
+		color: var(--text-color-lightest);
 	}
 
 	code {
