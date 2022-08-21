@@ -28,6 +28,7 @@
   export let lineColor = fill
   export let tabindex = -1
   export let dispatchEvents = false
+  export let clickHandler = (key, i) => null
 
   const dispatch = createEventDispatcher()
 
@@ -120,6 +121,7 @@
         on:mouseover={ () => startHover(key, i) }
         on:focus={ () => startHover(key, i) }
         on:touchstart={ () => startHover(key, i) }
+        on:click={ () => clickHandler(key, i) }
         style={ transition ? `transition: all ${ transition }ms` : null }
         opacity={ hover && $hoveringKey[linkedKey] && $hoveringKey[linkedKey] != key ? fadeOpacity : 1 }
         fill={ type == "line" ? "transparent" : fill }
