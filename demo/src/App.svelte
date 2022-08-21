@@ -636,6 +636,7 @@
 			<code>lineColor</code> <code>fill</code> <div>Color of the line if used with type="line".</div>
 			<code>tabindex</code> <code>-1</code> <div>Sets the tabindex of each bar.</div>
 			<code>dispatchEvents</code> <code>false</code> <div>Boolean whether or not to dispatch events on certain actions (explained above).</div>
+			<code>clickHandler</code> <code>null</code> <div>Function that executes on click and returns the key and index for the clicked data.</div>
 		</div>
 	</div>
 
