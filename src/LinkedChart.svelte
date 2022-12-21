@@ -45,6 +45,7 @@
   $: if (valuePosition == "floating") valuePositionOffset = (parseInt(gap) + barWidth) * Object.keys(data).indexOf($hoveringKey[linkedKey]) + alignmentOffset
   $: if (type == "line") polyline = getPolyLinePoints(data)
   $: if (dispatchEvents) dispatch('value-update', { value: $hoveringValue[uid], uid, linkedKey, valueElement })
+  $: if (tabindex > 0) console.warn("Tabindex should not be higher than 0")
   $: {
     if ($hoveringKey[linkedKey]) {
       $hoveringValue[uid] = data[$hoveringKey[linkedKey]]
@@ -117,6 +118,7 @@
     { /if }
 
     { #each Object.entries(data) as [key, value], i }
+      <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
       <rect
         on:mouseover={ () => startHover(key, i) }
         on:focus={ () => startHover(key, i) }
