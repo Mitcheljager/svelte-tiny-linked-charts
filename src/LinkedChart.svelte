@@ -122,6 +122,7 @@
         on:focus={ () => startHover(key, i) }
         on:touchstart={ () => startHover(key, i) }
         on:click={ () => clickHandler(key, i) }
+        on:keypress={ () => clickHandler(key, i) }
         style={ transition ? `transition: all ${ transition }ms` : null }
         opacity={ hover && $hoveringKey[linkedKey] && $hoveringKey[linkedKey] != key ? fadeOpacity : 1 }
         fill={ type == "line" ? "transparent" : fill }
