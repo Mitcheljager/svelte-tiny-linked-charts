@@ -13,9 +13,9 @@
 		}, 1000)
 	})
 
-	function fakeData(times, maxValue = 100, minValue = 50) {
+	function fakeData(times, maxValue = 100, minValue = 50, startDate = "2005-05-01T00:00:00Z") {
 		const data = {}
-		const date = new Date("2005-05-01T00:00:00Z")
+		const date = new Date(startDate)
 
     for(let i = 0; i < times; i++) {
 			const setDate = date.setDate(date.getDate() - 1)
@@ -345,6 +345,22 @@
 
 	<div class="block">
 		<div class="description">
+			A minimum height can be set using the "barMinHeight" property. Bars will never be lower than this value, even if it's zero.
+
+			<code>
+				&lt;LinkedChart data=&#123 ... &#125; barMinHeight="0" /&gt; <br>
+				&lt;LinkedChart data=&#123 ... &#125; barMinHeight="5" /&gt;
+			</code>
+		</div>
+
+		<div>
+			<div class="chart"><LinkedChart data={ { ...fakeData(10), ...fakeData(20, 0, 0, "2005-06-01T00:00:00Z") } } barMinHeight="0" showValue valuePosition="floating" /></div>
+			<div class="chart"><LinkedChart data={ { ...fakeData(10), ...fakeData(20, 0, 0, "2005-06-01T00:00:00Z") } } barMinHeight="5" showValue valuePosition="floating" /></div>
+		</div>
+	</div>
+
+	<div class="block">
+		<div class="description">
 			To always fill out the content, giving the bars a dynamic width, you can set both the "grow" and "barMinWidth" properties.
 
 			<code>
@@ -618,6 +634,7 @@
 			<code>height</code> <code>40</code> <div>Height of the chart in pixels.</div>
 			<code>width</code> <code>150</code> <div>Width of the chart in pixels.</div>
 			<code>barMinWidth</code> <code>4</code> <div>Width of the bars in the chart in pixels.</div>
+			<code>barMinHeight</code> <code>0</code> <div>Mimumum height of the bars in the chart in pixels.</div>
 			<code>grow</code> <code>false</code> <div>Whether or not the bar should grow to fill out the full width of the chart.</div>
 			<code>align</code> <code>right</code> <div>The side the bars should align to when they do not completely fill out the chart.</div>
 			<code>gap</code> <code>1</code> <div>Gap between the bars in pixels.</div>
