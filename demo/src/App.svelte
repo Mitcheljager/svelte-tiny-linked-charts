@@ -634,7 +634,7 @@
 			<code>height</code> <code>40</code> <div>Height of the chart in pixels.</div>
 			<code>width</code> <code>150</code> <div>Width of the chart in pixels.</div>
 			<code>barMinWidth</code> <code>4</code> <div>Width of the bars in the chart in pixels.</div>
-			<code>barMinHeight</code> <code>0</code> <div>Mimumum height of the bars in the chart in pixels.</div>
+			<code>barMinHeight</code> <code>0</code> <div>Minimum height of the bars in the chart in pixels.</div>
 			<code>grow</code> <code>false</code> <div>Whether or not the bar should grow to fill out the full width of the chart.</div>
 			<code>align</code> <code>right</code> <div>The side the bars should align to when they do not completely fill out the chart.</div>
 			<code>gap</code> <code>1</code> <div>Gap between the bars in pixels.</div>

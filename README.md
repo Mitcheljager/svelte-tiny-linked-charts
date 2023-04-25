@@ -81,7 +81,7 @@ uid | | Unique ID to link this chart to a LinkedValue component with the same ui
 height | 40 | Height of the chart in pixels.
 width | 150 | Width of the chart in pixels.
 barMinWidth | 4 | Width of the bars in the chart in pixels.
-barMinHeight | 0 | Mimumum height of the bars in the chart in pixels.
+barMinHeight | 0 | Minimum height of the bars in the chart in pixels.
 grow | false | Whether or not the bar should grow to fill out the full width of the chart.
 align | right | The side the bars should align to when they do not completely fill out the chart.
 gap | 1 | Gap between the bars in pixels.
