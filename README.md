@@ -82,6 +82,7 @@ height | 40 | Height of the chart in pixels.
 width | 150 | Width of the chart in pixels.
 barMinWidth | 4 | Width of the bars in the chart in pixels.
 barMinHeight | 0 | Minimum height of the bars in the chart in pixels.
+hideBarBelow | 0 | Bars below this value will be hidden, showing as 0 height.
 grow | false | Whether or not the bar should grow to fill out the full width of the chart.
 align | right | The side the bars should align to when they do not completely fill out the chart.
 gap | 1 | Gap between the bars in pixels.

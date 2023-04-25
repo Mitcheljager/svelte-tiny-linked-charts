@@ -11,6 +11,7 @@
   export let width = 150
   export let barMinWidth = 4
   export let barMinHeight = 0
+  export let hideBarBelow = 0
   export let grow = false
   export let align = "right"
   export let gap = 1
@@ -62,7 +63,8 @@
   }
 
   function getHeight(value) {
-    return Math.max(Math.round((parseInt(height) / highestValue) * value - (type == "line" ? barWidth / 2 : 0)) || 0, barMinHeight)
+    if (value < hideBarBelow) return 0
+    return Math.max(Math.ceil((parseInt(height) / highestValue) * value - (type == "line" ? barWidth / 2 : 0)) || 0, barMinHeight)
   }
 
   function getBarWidth() {

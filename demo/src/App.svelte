@@ -361,6 +361,23 @@
 
 	<div class="block">
 		<div class="description">
+			In some cases you may want to hide bars below a certain number. An empty space will be shown instead. We can use this in combination with "barMinHeight" to make sure tiny numbers still render, but 0 is not shown.
+
+			<code>
+				&lt;LinkedChart<br>
+				&nbsp;&nbsp;data=&#123 ... &#125;<br>
+				&nbsp;&nbsp;barMinHeight="2"<br>
+				&nbsp;&nbsp;hideBarBelow="1" /&gt;
+			</code>
+		</div>
+
+		<div>
+			<div class="chart"><LinkedChart data={ { ...fakeData(10, 60000, 50000), ...fakeData(10, 0, 0, "2005-06-01T00:00:00Z"), ...fakeData(10, 500, 0, "2005-07-01T00:00:00Z") } } barMinHeight="0" hideBarBelow="1" showValue valuePosition="floating" /></div>
+		</div>
+	</div>
+
+	<div class="block">
+		<div class="description">
 			To always fill out the content, giving the bars a dynamic width, you can set both the "grow" and "barMinWidth" properties.
 
 			<code>
@@ -635,6 +652,7 @@
 			<code>width</code> <code>150</code> <div>Width of the chart in pixels.</div>
 			<code>barMinWidth</code> <code>4</code> <div>Width of the bars in the chart in pixels.</div>
 			<code>barMinHeight</code> <code>0</code> <div>Minimum height of the bars in the chart in pixels.</div>
+			<code>hideBarBelow</code> <code>0</code> <div>Bars below this value will be hidden, showing as 0 height.</div>
 			<code>grow</code> <code>false</code> <div>Whether or not the bar should grow to fill out the full width of the chart.</div>
 			<code>align</code> <code>right</code> <div>The side the bars should align to when they do not completely fill out the chart.</div>
 			<code>gap</code> <code>1</code> <div>Gap between the bars in pixels.</div>
