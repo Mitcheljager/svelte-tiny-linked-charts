@@ -361,7 +361,7 @@
 
 	<div class="block">
 		<div class="description">
-			In some cases you may want to hide bars below a certain number. An empty space will be shown instead. We can use this in combination with "barMinHeight" to make sure tiny numbers still render, but 0 is not shown.
+			In some cases you may want to hide bars below a certain number. An empty space will be shown instead. For this we can use "hideBarBelow". We can use this in combination with "barMinHeight" to make sure tiny numbers still render, but 0 is not shown.
 
 			<code>
 				&lt;LinkedChart<br>
@@ -372,7 +372,7 @@
 		</div>
 
 		<div>
-			<div class="chart"><LinkedChart data={ { ...fakeData(10, 60000, 50000), ...fakeData(10, 0, 0, "2005-06-01T00:00:00Z"), ...fakeData(10, 500, 0, "2005-07-01T00:00:00Z") } } barMinHeight="0" hideBarBelow="1" showValue valuePosition="floating" /></div>
+			<div class="chart"><LinkedChart data={ { ...fakeData(10, 5000, 4000), ...fakeData(10, 0, 0, "2005-06-01T00:00:00Z"), ...fakeData(10, 500, 0, "2005-07-01T00:00:00Z") } } barMinHeight="2" hideBarBelow="1" showValue valuePosition="floating" /></div>
 		</div>
 	</div>
 
