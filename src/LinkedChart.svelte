@@ -121,6 +121,23 @@
     { /if }
 
     { #each Object.entries(data) as [key, value], i }
+      { #if type == "bar" }
+        <rect
+          style={ transition ? `transition: all ${ transition }ms` : null }
+          opacity={ hover && $hoveringKey[linkedKey] && $hoveringKey[linkedKey] != key ? fadeOpacity : 1 }
+          fill={ fill }
+          width={ barWidth }
+          height={ type == "line" ? height : getHeight(value) }
+          x={ (parseInt(gap) + barWidth) * i }
+          y={ (height - getHeight(value)) } />
+      { :else if type == "line" }
+        <circle
+          fill={ hover && $hoveringKey[linkedKey] !== null && $hoveringKey[linkedKey] == key ? fill : "transparent" }
+          r={ barWidth / 2 }
+          cy={ height - getHeight(value) }
+          cx={ ((parseInt(gap) + barWidth) * i) } />
+      { /if }
+
       <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
       <rect
         on:mouseover={ () => startHover(key, i) }
@@ -128,22 +145,11 @@
         on:touchstart={ () => startHover(key, i) }
         on:click={ () => clickHandler(key, i) }
         on:keypress={ () => clickHandler(key, i) }
-        style={ transition ? `transition: all ${ transition }ms` : null }
-        opacity={ hover && $hoveringKey[linkedKey] && $hoveringKey[linkedKey] != key ? fadeOpacity : 1 }
-        fill={ type == "line" ? "transparent" : fill }
         width={ barWidth }
-        height={ type == "line" ? height : getHeight(value) }
-        y={ type == "line" ? 0 : (height - getHeight(value)) }
+        height={ height }
+        fill="transparent"
         x={ (parseInt(gap) + barWidth) * i }
         { tabindex } />
-
-      { #if type == "line" }
-        <circle
-          fill={ hover && $hoveringKey[linkedKey] !== null && $hoveringKey[linkedKey] == key ? fill : "transparent" }
-          r={ barWidth / 2 }
-          cy={ height - getHeight(value) }
-          cx={ ((parseInt(gap) + barWidth) * i) } />
-      { /if }
     { /each }
   </g>
 </svg>
