@@ -20,7 +20,7 @@ test("Basic chart with data should render rect equal to length of data given", (
   render(LinkedChart, { data: data })
 
   expect(document.querySelector("svg")).toBeInTheDocument()
-  expect(document.querySelectorAll("rect").length).toBe(randomLength)
+  expect(document.querySelectorAll("rect[tabindex]").length).toBe(randomLength)
 })
 
 test("If labels and values are given instead of data it should still render", () => {
@@ -29,7 +29,7 @@ test("If labels and values are given instead of data it should still render", ()
   render(LinkedChart, { labels: Object.keys(data), values: Object.values(data) })
 
   expect(document.querySelector("svg")).toBeInTheDocument()
-  expect(document.querySelectorAll("rect").length).toBe(20)
+  expect(document.querySelectorAll("rect[tabindex]").length).toBe(20)
 })
 
 test("If showValue is enabled a value should show when a rect is hovered and no value when no longer hovered", async () => {
@@ -37,7 +37,7 @@ test("If showValue is enabled a value should show when a rect is hovered and no 
 
   const { getByText } = render(LinkedChart, { data: data, showValue: true })
 
-  const elements = document.querySelectorAll("rect")
+  const elements = document.querySelectorAll("rect[tabindex]")
 
   await fireEvent.focus(elements[0])
   expect(getByText(data[0])).toBeInTheDocument()
