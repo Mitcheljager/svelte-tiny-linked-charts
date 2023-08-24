@@ -241,7 +241,7 @@
 			You can enable the value you're hovering using "showValue".
 
 			<code>
-				&lt;LinkedChart &#123; data &#125; showValue=&#123; true &#125; /&gt;
+				&lt;LinkedChart &#123; data &#125; showValue /&gt;
 			</code>
 
 			<br>
@@ -250,7 +250,7 @@
 			<code>
 				&lt;LinkedChart <br>
 				&nbsp; &#123; data &#125;  <br>
-				&nbsp; showValue=&#123; true &#125; <br>
+				&nbsp; showValue <br>
 				&nbsp; valueDefault="Empty label" <br>
 				&nbsp; valuePrepend="Thing:" <br>
 				&nbsp; valueAppend="views" /&gt;
@@ -260,8 +260,8 @@
 		</div>
 
 		<div>
-			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-5" showValue={ true } /></div>
-			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-5" showValue={ true } valueDefault="Empty label" valuePrepend="Thing:" valueAppend="views" /></div>
+			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-5" showValue /></div>
+			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-5" showValue valueDefault="Empty label" valuePrepend="Thing:" valueAppend="views" /></div>
 		</div>
 	</div>
 
@@ -272,7 +272,7 @@
 			<code>
 				&lt;LinkedChart <br>
 				&nbsp; &#123; data &#125;  <br>
-				&nbsp; showValue=&#123; true &#125; <br>
+				&nbsp; showValue <br>
 				&nbsp; valuePosition="floating" /&gt;
 			</code>
 			<br>
@@ -280,9 +280,9 @@
 		</div>
 
 		<div>
-			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-7" showValue={ true } valuePosition="floating" /></div>
+			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-7" showValue valuePosition="floating" /></div>
 			<br>
-			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-7" showValue={ true } valuePosition="floating" /></div>
+			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-7" showValue valuePosition="floating" /></div>
 		</div>
 	</div>
 
@@ -382,14 +382,14 @@
 			<code>
 				&lt;LinkedChart<br>
 				&nbsp; data=&#123 ... &#125; <br>
-				&nbsp; grow=&#123 true &#125; <br>
+				&nbsp; grow <br>
 				&nbsp; barMinWidth="0" /&gt;
 			</code>
 		</div>
 
 		<div>
-			<div class="chart"><LinkedChart data={ fakeData(75) } grow={ true } barMinWidth="0" /></div>
-			<div class="chart"><LinkedChart data={ fakeData(7) } grow={ true } barMinWidth="0" /></div>
+			<div class="chart"><LinkedChart data={ fakeData(75) } grow barMinWidth="0" /></div>
+			<div class="chart"><LinkedChart data={ fakeData(7) } grow barMinWidth="0" /></div>
 		</div>
 	</div>
 
@@ -563,7 +563,7 @@
 
 			<code class="well">
 				&lt;LinkedChart <br>
-				&nbsp; dispatchEvents=&#123; true &#125; <br>
+				&nbsp; dispatchEvents <br>
 				&nbsp; on:hover=&#123; event =&gt; console.log(event.detail) &#125; <br>
 				&nbsp; on:blur=&#123; event =&gt; console.log(event.detail) &#125; <br>
 				&nbsp; on:value-update=&#123; event =&gt; console.log(event.detail) &#125; /&gt;
