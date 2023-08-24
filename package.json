@@ -1,6 +1,6 @@
 {
 	"name": "svelte-tiny-linked-charts",
-	"version": "1.4.0",
+	"version": "1.4.1",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
@@ -12,7 +12,7 @@
 		"test": "vitest",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write .",
-		"publish-pages": "git subtree push --prefix build origin gh-pages"
+		"publish-pages": "npm run build && git subtree push --prefix build origin gh-pages"
 	},
 	"exports": {
 		".": {
