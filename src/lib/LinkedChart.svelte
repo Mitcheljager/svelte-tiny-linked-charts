@@ -30,6 +30,7 @@
   export let lineColor = fill
   export let tabindex = -1
   export let dispatchEvents = false
+  export let preserveAspectRatio = false
   export let clickHandler = (key, i) => null
 
   const dispatch = createEventDispatcher()
@@ -80,7 +81,7 @@
     let points = []
 
     for (let i = 0; i < Object.keys(data).length; i++) {
-      points.push([i * (barWidth + gap), height - getHeight(Object.values(data)[i])])
+      points.push([i * ((barWidth + parseInt(gap)) + (barWidth / (Object.keys(data).length))), height - getHeight(Object.values(data)[i])])
     }
 
     return points
@@ -110,7 +111,7 @@
   { width }
   height={ type == "line" ? height + barWidth / 2 : height }
   viewBox="0 0 { width } { height }"
-  preserveAspectRatio="none"
+  preserveAspectRatio={ preserveAspectRatio ? "true" : "none" }
   on:mouseleave={ endHover }
   on:blur={ endHover }>
 
@@ -132,9 +133,9 @@
       { :else if type == "line" }
         <circle
           fill={ hover && $hoveringKey[linkedKey] !== null && $hoveringKey[linkedKey] == key ? fill : "transparent" }
-          r={ barWidth / 2 }
+          r={ grow ? parseInt(barMinWidth) : barWidth / 2 }
           cy={ height - getHeight(value) }
-          cx={ ((parseInt(gap) + barWidth) * i) } />
+          cx={ ((parseInt(gap) + barWidth) + (barWidth / (Object.keys(data).length))) * i } />
       { /if }
 
       <!-- svelte-ignore a11y-no-noninteractive-tabindex -->

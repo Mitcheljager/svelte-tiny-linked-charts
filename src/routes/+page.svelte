@@ -319,11 +319,11 @@
 			The width of the bars is fixed by default, but can be set to grow to fill the chart.
 
 			<code>
-				&lt;LinkedChart data=&#123 ... &#125; grow=&#123 true &#125; /&gt;
+				&lt;LinkedChart data=&#123 ... &#125; grow /&gt;
 			</code>
 		</div>
 
-		<LinkedChart data={ fakeData(5) } grow={ true } />
+    <LinkedChart data={ fakeData(5) } grow />
 	</div>
 
 	<div class="block">
@@ -669,6 +669,7 @@
 			<code>type</code> <code>bar</code> <div>Can be set to "line" to display a line chart instead.</div>
 			<code>lineColor</code> <code>fill</code> <div>Color of the line if used with type="line".</div>
 			<code>tabindex</code> <code>-1</code> <div>Sets the tabindex of each bar.</div>
+      <code>preserveAspectRatio</code> <code>false</code> <div>Sets whether or not the SVG will preserve it's aspect ratio</div>
 			<code>dispatchEvents</code> <code>false</code> <div>Boolean whether or not to dispatch events on certain actions (explained above).</div>
 			<code>clickHandler</code> <code>null</code> <div>Function that executes on click and returns the key and index for the clicked data.</div>
 		</div>
