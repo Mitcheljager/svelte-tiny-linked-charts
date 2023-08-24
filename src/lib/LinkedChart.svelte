@@ -1,6 +1,6 @@
 <script>
   import { createEventDispatcher, tick } from "svelte"
-  import { hoveringKey, hoveringValue } from "./stores/tinyLinkedCharts.js"
+  import { hoveringKey, hoveringValue } from "$lib/stores/tinyLinkedCharts.js"
 
   export let uid = (Math.random() + 1).toString(36).substring(7)
   export let data = {}
@@ -105,8 +105,7 @@
   }
 </script>
 
-
-
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <svg
   { width }
   height={ type == "line" ? height + barWidth / 2 : height }
@@ -139,6 +138,7 @@
       { /if }
 
       <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
       <rect
         on:mouseover={ () => startHover(key, i) }
         on:focus={ () => startHover(key, i) }

@@ -14,10 +14,10 @@ This is a library to display tiny bar charts. These charts are more so meant for
 
 Install using Yarn or NPM.
 ```js
-yarn add svelte-tiny-linked-charts
+yarn add svelte-tiny-linked-charts --dev
 ```
 ```js
-npm install --save svelte-tiny-linked-charts
+npm install svelte-tiny-linked-charts --save-dev
 ```
 
 Include the chart in your app.

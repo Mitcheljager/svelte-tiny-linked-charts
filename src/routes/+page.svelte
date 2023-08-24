@@ -1,7 +1,8 @@
 <script>
+  import LinkedChart from "$lib/LinkedChart.svelte"
+  import LinkedLabel from "$lib/LinkedLabel.svelte"
+  import LinkedValue from "$lib/LinkedValue.svelte"
 	import { onMount } from "svelte"
-
-	import { LinkedChart, LinkedLabel, LinkedValue } from "svelte-tiny-linked-charts"
 
 	let transitioningData = fakeData(30)
 	let transitionColor = 50
@@ -32,8 +33,6 @@
 		return reversedData
   }
 </script>
-
-
 
 <div class="wrapper">
 	<div class="header">
