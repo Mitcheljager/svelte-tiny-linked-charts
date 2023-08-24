@@ -112,6 +112,7 @@
   height={ type == "line" ? height + barWidth / 2 : height }
   viewBox="0 0 { width } { height }"
   preserveAspectRatio={ preserveAspectRatio ? "true" : "none" }
+  {...$$restProps}
   on:mouseleave={ endHover }
   on:blur={ endHover }>
 
