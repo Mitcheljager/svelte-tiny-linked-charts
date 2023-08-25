@@ -112,7 +112,9 @@
 		</code>
 
 		<code class="well">
-			import &#123; <mark>LinkedChart</mark>, <mark>LinkedLabel</mark>, <mark>LinkedValue</mark> &#125; from "<mark>svelte-tiny-linked-charts</mark>"
+			import <mark>LinkedChart</mark> from "<mark>svelte-tiny-linked-charts</mark>"<br>
+			import <mark>LinkedLabel</mark> from "<mark>svelte-tiny-linked-charts</mark>"<br>
+			import <mark>LinkedValue</mark> from "<mark>svelte-tiny-linked-charts</mark>"
 		</code>
 	</div>
 
