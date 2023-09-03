@@ -44,18 +44,12 @@
   $: highestValue = getHighestValue(dataLength)
   $: alignmentOffset = dataLength ? getAlignment() : 0
   $: linkedKey = linked || (Math.random() + 1).toString(36).substring(7)
+  $: $hoveringValue[uid] = $hoveringKey[linkedKey] ? data[$hoveringKey[linkedKey]] : null
   $: if (labels.length && values.length) data = Object.fromEntries(labels.map((_, i) => [labels[i], values[i]]))
   $: if (valuePosition == "floating") valuePositionOffset = (parseInt(gap) + barWidth) * Object.keys(data).indexOf($hoveringKey[linkedKey]) + alignmentOffset
   $: if (type == "line") polyline = getPolyLinePoints(data)
   $: if (dispatchEvents) dispatch('value-update', { value: $hoveringValue[uid], uid, linkedKey, valueElement })
   $: if (tabindex > 0) console.warn("Tabindex should not be higher than 0")
-  $: {
-    if ($hoveringKey[linkedKey]) {
-      $hoveringValue[uid] = data[$hoveringKey[linkedKey]]
-    } else {
-      $hoveringValue[uid] = null
-    }
-  }
 
   function getHighestValue() {
     if (scaleMax) return scaleMax
