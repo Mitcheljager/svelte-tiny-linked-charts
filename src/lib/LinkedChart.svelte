@@ -41,7 +41,7 @@
 
   $: dataLength = Object.keys(data).length
   $: barWidth = grow ? getBarWidth(dataLength) : parseInt(barMinWidth)
-  $: highestValue = getHighestValue(dataLength)
+  $: highestValue = getHighestValue(data)
   $: alignmentOffset = dataLength ? getAlignment() : 0
   $: linkedKey = linked || (Math.random() + 1).toString(36).substring(7)
   $: $hoveringValue[uid] = $hoveringKey[linkedKey] ? data[$hoveringKey[linkedKey]] : null
