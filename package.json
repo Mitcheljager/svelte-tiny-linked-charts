@@ -1,6 +1,6 @@
 {
 	"name": "svelte-tiny-linked-charts",
-	"version": "1.4.1",
+	"version": "1.4.2",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
@@ -53,17 +53,17 @@
 	"main": "./dist/index.js",
 	"type": "module",
 	"description": "A library to display tiny bar charts using Svelte. These charts are more so meant for graphic aids, rather than scientific representations. There's no axis labels, no extensive data visualisation, just bars.",
-  "keywords": [
-    "svelte",
-    "tiny",
-    "charts",
-    "linked",
-    "linked-charts",
-    "tiny-linked-charts"
-  ],
+	"keywords": [
+		"svelte",
+		"tiny",
+		"charts",
+		"linked",
+		"linked-charts",
+		"tiny-linked-charts"
+	],
 	"repository": {
-    "type": "git",
-    "url": "https://github.com/Mitcheljager/svelte-tiny-linked-charts"
-  },
-  "homepage": "https://mitcheljager.github.io/svelte-tiny-linked-charts/"
+		"type": "git",
+		"url": "https://github.com/Mitcheljager/svelte-tiny-linked-charts"
+	},
+	"homepage": "https://mitcheljager.github.io/svelte-tiny-linked-charts/"
 }
