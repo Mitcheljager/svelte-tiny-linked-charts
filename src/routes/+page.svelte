@@ -216,6 +216,22 @@
 		</div>
 	</div>
 
+	<div class="block">
+		<div class="description">
+			In some cases you might be working with very precise values in a specific range. By default the bar will always scale from 0. This can be overwritten using "scaleMin".
+
+			<code>
+				&lt;LinkedChart &#123; data &#125; scaleMin="30" scaleMax="31" /&gt; <br>
+				&lt;LinkedChart &#123; data &#125; scaleMin="5000" scaleMax="5010" /&gt;
+			</code>
+		</div>
+
+		<div>
+			<div class="chart"><LinkedChart showValue valuePosition="floating" data={{ 1: 30.1, 2: 30.2, 3: 30.3, 4: 30.2, 5: 30.5, 6: 30.6, 7: 30.7, 8: 30.8, 9: 30.9, 10: 30.4 }} grow linked="link-20" scaleMin="30" scaleMax="31" /></div>
+			<div class="chart"><LinkedChart showValue valuePosition="floating" data={{ 1: 5001, 2: 5002, 3: 5001, 4: 5005, 5: 5001, 6: 5003, 7: 5004, 8: 5006, 9: 5007, 10: 5008 }} grow linked="link-20" scaleMin="5000" scaleMax="5010" /></div>
+		</div>
+	</div>
+
 	<h2>Label</h2>
 
 	<div class="block">
@@ -670,6 +686,7 @@
 			<code>valueAppend</code> <code></code> <div>String to append to the value.</div>
 			<code>valuePosition</code> <code>static</code> <div>Can be set to "floating" to follow the position of the hover.</div>
 			<code>scaleMax</code> <code>0</code> <div>Use this to overwrite the automatic scale set to the highest value in your array.</div>
+			<code>scaleMax</code> <code>0</code> <div>Use this to overwrite the default value floor of 0.</div>
 			<code>type</code> <code>bar</code> <div>Can be set to "line" to display a line chart instead.</div>
 			<code>lineColor</code> <code>fill</code> <div>Color of the line if used with type="line".</div>
 			<code>tabindex</code> <code>-1</code> <div>Sets the tabindex of each bar.</div>

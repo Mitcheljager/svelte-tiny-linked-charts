@@ -26,6 +26,7 @@
   export let valuePosition = "static"
   export let valueUndefined = 0
   export let scaleMax = 0
+  export let scaleMin = 0
   export let type = "bar"
   export let lineColor = fill
   export let tabindex = -1
@@ -58,8 +59,13 @@
   }
 
   function getHeight(value) {
-    if (value < hideBarBelow) return 0
-    return Math.max(Math.ceil((parseInt(height) / highestValue) * value - (type == "line" ? barWidth / 2 : 0)) || 0, barMinHeight)
+    if (value < hideBarBelow || value < scaleMin) return 0
+
+    const maxValue = scaleMax || highestValue
+    const minValue = scaleMin || 0
+
+    const scaledValue = (value - minValue) / (maxValue - minValue)
+    return Math.max(Math.ceil(scaledValue * parseInt(height)), barMinHeight)
   }
 
   function getBarWidth() {
