@@ -111,6 +111,7 @@ Property | Default | Description
 --- | --- | ---
 linked | | Key to link this label to charts with the same key.
 empty | \&nbsp; | String that will be displayed when no bar is being hovered.
+transform | (label) => label | Transform the given label to format it differently from how it was supplied.
 
 `<LinkedValue />` component.
 Property | Default | Description
@@ -118,3 +119,4 @@ Property | Default | Description
 uid | | Unique ID to link this value to a chart with the same uid.
 empty | \&nbsp; | String that will be displayed when no bar is being hovered.
 valueUndefined | 0 | For when the hovering value returns undefined.
+transform | (value) => value | Transform the given value to format it differently from how it was supplied.

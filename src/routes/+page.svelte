@@ -330,6 +330,20 @@
 
 			<strong><LinkedValue empty="Separate value" uid="test-2" /></strong>
 		</div>
+
+		<p>The value can be transformed in order to append, prepend, or otherwise format the value. This is done using the transform prop.</p>
+
+		<code>
+			&lt;LinkedValue uid="some-id" transform=&#123;(value) => value.toLocaleString() + "%"&#125; /&gt; <br>
+		</code>
+
+		<br>
+
+		<div>
+			<LinkedChart data={ fakeData(30, 3000, 5000) } linked="link-6" uid="test-3" />
+
+			<strong><LinkedValue uid="test-3" transform={(value) => value.toLocaleString() + "%"} /></strong>
+		</div>
 	</div>
 
 	<h2>Styling</h2>
@@ -703,6 +717,7 @@
 			<strong>Property</strong> <strong>Default</strong> <strong>Description</strong>
 			<code>linked</code> <code></code> <div>Key to link this label to charts with the same key.</div>
 			<code>empty</code> <code>&amp;nbsp;</code> <div>String that will be displayed when no bar is being hovered.</div>
+			<code>transform</code> <code>(label) => label</code> <div>Transform the given label to format it differently from how it was supplied.</div>
 		</div>
 	</div>
 
@@ -714,6 +729,7 @@
 			<code>uid</code> <code></code> <div>Unique ID to link this value to a chart with the same uid.</div>
 			<code>empty</code> <code>&amp;nbsp;</code> <div>String that will be displayed when no bar is being hovered.</div>
 			<code>valueUndefined</code> <code>0</code> <div>For when the hovering value returns undefined.</div>
+			<code>transform</code> <code>(value) => value</code> <div>Transform the given value to format it differently from how it was supplied.</div>
 		</div>
 	</div>
 
