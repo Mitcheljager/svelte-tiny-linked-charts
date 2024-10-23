@@ -108,62 +108,62 @@
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <svg
-  { width }
-  height={ type == "line" ? height + barWidth / 2 : height }
-  viewBox="0 0 { width } { height }"
-  preserveAspectRatio={ preserveAspectRatio ? "true" : "none" }
+  {width}
+  height={type == "line" ? height + barWidth / 2 : height}
+  viewBox="0 0 {width } {height }"
+  preserveAspectRatio={preserveAspectRatio ? "true" : "none"}
   {...$$restProps}
-  on:mouseleave={ endHover }
-  on:blur={ endHover }>
+  on:mouseleave={endHover}
+  on:blur={endHover}>
 
-  <g transform="translate({ alignmentOffset }, 0)">
+  <g transform="translate({alignmentOffset}, 0)">
     {#if type == "line"}
-      <polyline points={ polyline.join(" ") } stroke={ lineColor } fill="transparent" />
+      <polyline points={polyline.join(" ")} stroke={lineColor} fill="transparent" />
     {/if}
 
     {#each Object.entries(data) as [key, value], i}
       {#if type == "bar"}
         <rect
-          style={ transition ? `transition: all ${ transition }ms` : null }
-          opacity={ hover && $hoveringKey[linkedKey] && $hoveringKey[linkedKey] != key ? fadeOpacity : 1 }
-          fill={ fill }
-          width={ barWidth }
-          height={ type == "line" ? height : getHeight(value) }
-          x={ (parseInt(gap) + barWidth) * i }
-          y={ (height - getHeight(value)) } />
+          style={transition ? `transition: all ${ transition }ms` : null}
+          opacity={hover && $hoveringKey[linkedKey] && $hoveringKey[linkedKey] != key ? fadeOpacity : 1}
+          fill={fill}
+          width={barWidth}
+          height={type == "line" ? height : getHeight(value)}
+          x={(parseInt(gap) + barWidth) * i}
+          y={(height - getHeight(value))} />
       {:else if type == "line"}
         <circle
-          fill={ hover && $hoveringKey[linkedKey] !== null && $hoveringKey[linkedKey] == key ? fill : "transparent" }
-          r={ grow ? parseInt(barMinWidth) : barWidth / 2 }
-          cy={ height - getHeight(value) }
-          cx={ ((parseInt(gap) + barWidth) + (barWidth / (Object.keys(data).length))) * i } />
+          fill={hover && $hoveringKey[linkedKey] !== null && $hoveringKey[linkedKey] == key ? fill : "transparent"}
+          r={grow ? parseInt(barMinWidth) : barWidth / 2}
+          cy={height - getHeight(value)}
+          cx={((parseInt(gap) + barWidth) + (barWidth / (Object.keys(data).length))) * i} />
       {/if}
 
       <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
       <!-- svelte-ignore a11y-no-static-element-interactions -->
       <rect
-        on:mouseover={ () => startHover(key, i) }
-        on:focus={ () => startHover(key, i) }
-        on:touchstart={ () => startHover(key, i) }
-        on:click={ () => clickHandler(key, i) }
-        on:keypress={ () => clickHandler(key, i) }
-        width={ barWidth }
-        height={ height }
+        on:mouseover={() => startHover(key, i)}
+        on:focus={() => startHover(key, i)}
+        on:touchstart={() => startHover(key, i)}
+        on:click={() => clickHandler(key, i)}
+        on:keypress={() => clickHandler(key, i)}
+        width={barWidth}
+        height={height}
         fill="transparent"
-        x={ (parseInt(gap) + barWidth) * i }
-        { tabindex } />
+        x={(parseInt(gap) + barWidth) * i}
+        {tabindex} />
     {/each}
   </g>
 </svg>
 
 {#if showValue && ($hoveringValue[uid] || valueDefault)}
-  <div class="tiny-linked-charts-value" style={ valuePosition == "floating" ? `position: absolute; transform: translateX(${ valuePositionOffset }px)` : null }>
+  <div class="tiny-linked-charts-value" style={valuePosition == "floating" ? `position: absolute; transform: translateX(${valuePositionOffset}px)` : null}>
     {#if $hoveringValue[uid] !== null}
-      { valuePrepend }
-      <span bind:this={valueElement}>{ $hoveringValue[uid] || valueUndefined }</span>
-      { valueAppend }
+      {valuePrepend}
+      <span bind:this={valueElement}>{$hoveringValue[uid] || valueUndefined}</span>
+      {valueAppend}
     {:else}
-      { @html valueDefault }
+      {@html valueDefault}
     {/if}
   </div>
 {/if}
