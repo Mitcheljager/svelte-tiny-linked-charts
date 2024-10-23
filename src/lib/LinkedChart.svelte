@@ -117,12 +117,12 @@
   on:blur={ endHover }>
 
   <g transform="translate({ alignmentOffset }, 0)">
-    { #if type == "line" }
+    {#if type == "line"}
       <polyline points={ polyline.join(" ") } stroke={ lineColor } fill="transparent" />
-    { /if }
+    {/if}
 
-    { #each Object.entries(data) as [key, value], i }
-      { #if type == "bar" }
+    {#each Object.entries(data) as [key, value], i}
+      {#if type == "bar"}
         <rect
           style={ transition ? `transition: all ${ transition }ms` : null }
           opacity={ hover && $hoveringKey[linkedKey] && $hoveringKey[linkedKey] != key ? fadeOpacity : 1 }
@@ -131,13 +131,13 @@
           height={ type == "line" ? height : getHeight(value) }
           x={ (parseInt(gap) + barWidth) * i }
           y={ (height - getHeight(value)) } />
-      { :else if type == "line" }
+      {:else if type == "line"}
         <circle
           fill={ hover && $hoveringKey[linkedKey] !== null && $hoveringKey[linkedKey] == key ? fill : "transparent" }
           r={ grow ? parseInt(barMinWidth) : barWidth / 2 }
           cy={ height - getHeight(value) }
           cx={ ((parseInt(gap) + barWidth) + (barWidth / (Object.keys(data).length))) * i } />
-      { /if }
+      {/if}
 
       <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
       <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -152,18 +152,18 @@
         fill="transparent"
         x={ (parseInt(gap) + barWidth) * i }
         { tabindex } />
-    { /each }
+    {/each}
   </g>
 </svg>
 
-{ #if showValue && ($hoveringValue[uid] || valueDefault) }
+{#if showValue && ($hoveringValue[uid] || valueDefault)}
   <div class="tiny-linked-charts-value" style={ valuePosition == "floating" ? `position: absolute; transform: translateX(${ valuePositionOffset }px)` : null }>
-    { #if $hoveringValue[uid] !== null }
+    {#if $hoveringValue[uid] !== null}
       { valuePrepend }
       <span bind:this={valueElement}>{ $hoveringValue[uid] || valueUndefined }</span>
       { valueAppend }
-    { :else }
+    {:else}
       { @html valueDefault }
-    { /if }
+    {/if}
   </div>
-{ /if }
+{/if}
