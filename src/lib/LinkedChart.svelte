@@ -110,7 +110,7 @@
 <svg
   {width}
   height={type == "line" ? height + barWidth / 2 : height}
-  viewBox="0 0 {width } {height }"
+  viewBox="0 0 {width } {height}"
   preserveAspectRatio={preserveAspectRatio ? "true" : "none"}
   {...$$restProps}
   on:mouseleave={endHover}
@@ -124,7 +124,7 @@
     {#each Object.entries(data) as [key, value], i}
       {#if type == "bar"}
         <rect
-          style={transition ? `transition: all ${ transition }ms` : null}
+          style={transition ? `transition: all ${transition}ms` : null}
           opacity={hover && $hoveringKey[linkedKey] && $hoveringKey[linkedKey] != key ? fadeOpacity : 1}
           fill={fill}
           width={barWidth}
