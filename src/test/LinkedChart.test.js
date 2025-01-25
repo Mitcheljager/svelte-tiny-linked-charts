@@ -3,7 +3,11 @@ import { describe, expect, it } from 'vitest'
 
 import LinkedChart from "$lib/LinkedChart.svelte"
 
+/**
+ * @param {number} times
+ */
 function fakeData(times) {
+  /** @type {Record<string, number>} */
   let data = {}
 
   for(let i = 0; i < times; i++) {
@@ -46,7 +50,7 @@ describe("LinkedChart.svelte", () => {
     await fireEvent.focus(elements[10])
     expect(getByText(data[10])).toBeTruthy()
 
-    await fireEvent.blur(document.querySelector("svg"))
+    await fireEvent.blur(/** @type {SVGElement} */(document.querySelector("svg")))
     expect(() => getByText(data[10])).toThrow()
   })
 
