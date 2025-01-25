@@ -4,8 +4,8 @@
   import LinkedValue from "$lib/LinkedValue.svelte"
 	import { onMount } from "svelte"
 
-	let transitioningData = fakeData(30)
-	let transitionColor = 50
+	let transitioningData = $state(fakeData(30))
+	let transitionColor = $state(50)
 
 	onMount(() => {
 		setInterval(() => {
@@ -14,7 +14,15 @@
 		}, 1000)
 	})
 
+	/**
+	 * @param {number} times
+	 * @param {number} maxValue
+	 * @param {number} minValue
+	 * @param {string} startDate
+	 * @returns {Record<string, number>}
+	 */
 	function fakeData(times, maxValue = 100, minValue = 50, startDate = "2005-05-01T00:00:00Z") {
+		/** @type {Record<string, number>} */
 		const data = {}
 		const date = new Date(startDate)
 
@@ -25,6 +33,7 @@
       data[formattedDate] = Math.floor(Math.random() * (maxValue - minValue)) + minValue
     }
 
+		/** @type {Record<string, number>} */
 		const reversedData = {}
 		for(let i = 0; i < times; i++) {
 			reversedData[Object.keys(data)[times - 1 - i]] = Object.values(data)[times - 1 - i]
@@ -37,8 +46,8 @@
 <div class="wrapper">
 	<div class="header">
 		<h1>Tiny Linked Charts for <mark>Svelte</mark></h1>
-		<LinkedChart data={ fakeData(108) } width="540" height="5" hover={ false } />
 	</div>
+	<LinkedChart data={fakeData(108)} width={540} height={5} hover={false} />
 
 	<div class="block block--single">
 		<p>This is a library to display tiny bar charts. These charts are more so meant for graphic aids, rather than scientific representations. There's no axis labels, no extensive data visualisation, just bars.</p>
@@ -53,7 +62,7 @@
 			<thead>
 				<tr>
 					<th>Name</th>
-					<th width="150"><LinkedLabel linked="table" empty="30 day period" /></th>
+					<th><LinkedLabel linked="table" empty="30 day period" /></th>
 					<th>Value</th>
 				</tr>
 			</thead>
@@ -61,38 +70,38 @@
 			<tbody>
 				<tr>
 					<td class="label">A thing</td>
-					<td><LinkedChart data={ fakeData(30) } linked="table" uid="table-1" /></td>
-					<td><LinkedValue uid="table-1" empty={ Object.values(fakeData(30)).reduce((a, b) => a + b) } /></td>
+					<td width="150"><LinkedChart data={fakeData(30)} linked="table" uid="table-1" /></td>
+					<td><LinkedValue uid="table-1" empty={Object.values(fakeData(30)).reduce((a, b) => a + b).toString()} /></td>
 				</tr>
 
 				<tr>
 					<td class="label">Another thing</td>
-					<td><LinkedChart data={ fakeData(30) } linked="table" uid="table-2" /></td>
-					<td><LinkedValue uid="table-2" empty={ Object.values(fakeData(30)).reduce((a, b) => a + b) } /></td>
+					<td width="150"><LinkedChart data={fakeData(30)} linked="table" uid="table-2" /></td>
+					<td><LinkedValue uid="table-2" empty={Object.values(fakeData(30)).reduce((a, b) => a + b).toString()} /></td>
 				</tr>
 
 				<tr>
 					<td class="label">A third thing</td>
-					<td><LinkedChart data={ fakeData(30) } linked="table" uid="table-3" /></td>
-					<td><LinkedValue uid="table-3" empty={ Object.values(fakeData(30)).reduce((a, b) => a + b) }  /></td>
+					<td width="150"><LinkedChart data={fakeData(30)} linked="table" uid="table-3" /></td>
+					<td><LinkedValue uid="table-3" empty={Object.values(fakeData(30)).reduce((a, b) => a + b).toString()}  /></td>
 				</tr>
 
 				<tr>
 					<td class="label">An incomplete thing</td>
-					<td><LinkedChart data={ fakeData(15) } linked="table" uid="table-4" /></td>
-					<td><LinkedValue uid="table-4" empty={ Object.values(fakeData(15)).reduce((a, b) => a + b) }  /></td>
+					<td width="150"><LinkedChart data={fakeData(15)} linked="table" uid="table-4" /></td>
+					<td><LinkedValue uid="table-4" empty={Object.values(fakeData(15)).reduce((a, b) => a + b).toString()}  /></td>
 				</tr>
 
 				<tr>
 					<td class="label">A changing thing</td>
-					<td><LinkedChart data={ transitioningData } linked="table" uid="table-5" transition=100 fill="hsl({ transitionColor }, 60%, 50%)" /></td>
-					<td><LinkedValue uid="table-5" empty={ Object.values(transitioningData).reduce((a, b) => a + b) }  /></td>
+					<td width="150"><LinkedChart data={transitioningData} linked="table" uid="table-5" transition={100} fill="hsl({ transitionColor }, 60%, 50%)" /></td>
+					<td><LinkedValue uid="table-5" empty={Object.values(transitioningData).reduce((a, b) => a + b).toString()} /></td>
 				</tr>
 
 				<tr>
 					<td class="label">A thing using lines</td>
-					<td><LinkedChart data={ fakeData(30) } linked="table" uid="table-6" type="line" /></td>
-					<td><LinkedValue uid="table-6" empty={ Object.values(fakeData(30)).reduce((a, b) => a + b) }  /></td>
+					<td width="150"><LinkedChart data={fakeData(30)} linked="table" uid="table-6" type="line" /></td>
+					<td><LinkedValue uid="table-6" empty={Object.values(fakeData(30)).reduce((a, b) => a + b).toString()} /></td>
 				</tr>
 			</tbody>
 		</table>
@@ -112,7 +121,7 @@
 		<p>Include the chart in your app.</p>
 
 		<code class="well">
-			&lt;<mark>LinkedChart</mark> &#123; data &#125; /&gt;
+			&lt;<mark>LinkedChart</mark> &#123;data&#125; /&gt;
 		</code>
 
 		<code class="well">
@@ -140,7 +149,7 @@
 		</code>
 
 		<code class="well">
-			&lt;LinkedChart &#123; data &#125; /&gt;
+			&lt;LinkedChart &#123;<mark>data</mark>&#125; /&gt;
 		</code>
 
 		<p>Or if you prefer supply the labels and values separately:</p>
@@ -166,7 +175,7 @@
 		</code>
 
 		<code class="well">
-			&lt;LinkedChart &#123; labels &#125; &#123; values &#125; /&gt;
+			&lt;LinkedChart &#123;<mark>labels</mark>&#125; &#123;<mark>values</mark>&#125; /&gt;
 		</code>
 	</div>
 
@@ -177,11 +186,11 @@
 			The chart in it's most basic form.
 
 			<code>
-				&lt;LinkedChart &#123; data &#125; /&gt;
+				&lt;LinkedChart &#123;<mark>data</mark>&#125; /&gt;
 			</code>
 		</div>
 
-		<LinkedChart data={ fakeData(30) } />
+		<LinkedChart data={fakeData(30)} />
 	</div>
 
 	<div class="block">
@@ -189,18 +198,18 @@
 			You can link multiple charts together, hovering one will also highlight others.
 
 			<code>
-				&lt;LinkedChart &#123; data &#125; linked="link-1" /&gt; <br>
-				&lt;LinkedChart &#123; data &#125; linked="link-1" /&gt; <br>
-				&lt;LinkedChart &#123; data &#125; linked="link-1" /&gt; <br>
-				&lt;LinkedChart &#123; data &#125; linked="link-1" /&gt;
+				&lt;LinkedChart &#123;data&#125; <mark>linked</mark>="link-1" /&gt; <br>
+				&lt;LinkedChart &#123;data&#125; <mark>linked</mark>="link-1" /&gt; <br>
+				&lt;LinkedChart &#123;data&#125; <mark>linked</mark>="link-1" /&gt; <br>
+				&lt;LinkedChart &#123;data&#125; <mark>linked</mark>="link-1" /&gt;
 			</code>
 		</div>
 
 		<div>
-			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-1" /></div>
-			<div class="chart"><LinkedChart data={ fakeData(10) } linked="link-1" /></div>
-			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-1" /></div>
-			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-1" /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} linked="link-1" /></div>
+			<div class="chart"><LinkedChart data={fakeData(10)} linked="link-1" /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} linked="link-1" /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} linked="link-1" /></div>
 		</div>
 	</div>
 
@@ -209,14 +218,14 @@
 			The highest value in the chart is automatically determined by the highest value in your data. To overwrite this use "scaleMax".
 
 			<code>
-				&lt;LinkedChart &#123; data &#125; scaleMax="100" /&gt; <br>
-				&lt;LinkedChart &#123; data &#125; scaleMax="100" /&gt;
+				&lt;LinkedChart &#123;data&#125; <mark>scaleMax</mark>=&#123;100&#125; /&gt; <br>
+				&lt;LinkedChart &#123;data&#125; <mark>scaleMax</mark>=&#123;100&#125; /&gt;
 			</code>
 		</div>
 
 		<div>
-			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-8" scaleMax="100" /></div>
-			<div class="chart"><LinkedChart data={ fakeData(30, 30, 10) } linked="link-8" scaleMax="100" /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} linked="link-8" scaleMax={100} /></div>
+			<div class="chart"><LinkedChart data={fakeData(30, 30, 10)} linked="link-8" scaleMax={100} /></div>
 		</div>
 	</div>
 
@@ -225,14 +234,14 @@
 			In some cases you might be working with very precise values in a specific range. By default the bar will always scale from 0. This can be overwritten using "scaleMin".
 
 			<code>
-				&lt;LinkedChart &#123; data &#125; scaleMin="30" scaleMax="31" /&gt; <br>
-				&lt;LinkedChart &#123; data &#125; scaleMin="5000" scaleMax="5010" /&gt;
+				&lt;LinkedChart &#123;data&#125; <mark>scaleMin</mark>=&#123;30&#125; <mark>scaleMax</mark>=&#123;31&#125; /&gt; <br>
+				&lt;LinkedChart &#123;data&#125; <mark>scaleMin</mark>=&#123;5000&#125; <mark>scaleMax</mark>=&#123;5010&#125; /&gt;
 			</code>
 		</div>
 
 		<div>
-			<div class="chart"><LinkedChart showValue valuePosition="floating" data={{ 1: 30.1, 2: 30.2, 3: 30.3, 4: 30.2, 5: 30.5, 6: 30.6, 7: 30.7, 8: 30.8, 9: 30.9, 10: 30.4 }} grow linked="link-20" scaleMin="30" scaleMax="31" /></div>
-			<div class="chart"><LinkedChart showValue valuePosition="floating" data={{ 1: 5001, 2: 5002, 3: 5001, 4: 5005, 5: 5001, 6: 5003, 7: 5004, 8: 5006, 9: 5007, 10: 5008 }} grow linked="link-20" scaleMin="5000" scaleMax="5010" /></div>
+			<div class="chart"><LinkedChart showValue valuePosition="floating" data={{ 1: 30.1, 2: 30.2, 3: 30.3, 4: 30.2, 5: 30.5, 6: 30.6, 7: 30.7, 8: 30.8, 9: 30.9, 10: 30.4 }} grow linked="link-20" scaleMin={30} scaleMax={31} /></div>
+			<div class="chart"><LinkedChart showValue valuePosition="floating" data={{ 1: 5001, 2: 5002, 3: 5001, 4: 5005, 5: 5001, 6: 5003, 7: 5004, 8: 5006, 9: 5007, 10: 5008 }} grow linked="link-20" scaleMin={5000} scaleMax={5010} /></div>
 		</div>
 	</div>
 
@@ -243,10 +252,10 @@
 			You can optionally display a label, which will display the label of what you're currently hovering.
 
 			<code>
-				&lt;LinkedLabel linked="link-2" /&gt; <br>
+				&lt;<mark>LinkedLabel</mark> <mark>linked</mark>="link-2" /&gt; <br>
 				<br>
-				&lt;LinkedChart &#123; data &#125; linked="link-2" /&gt; <br>
-				&lt;LinkedChart &#123; data &#125; linked="link-2" /&gt;
+				&lt;LinkedChart &#123;data&#125; <mark>linked</mark>="link-2" /&gt; <br>
+				&lt;LinkedChart &#123;data&#125; <mark>linked</mark>="link-2" /&gt;
 			</code>
 			<br>
 			The label has no styling by default.
@@ -255,8 +264,8 @@
 		<div>
 			<LinkedLabel linked="link-2" empty="Start hovering" />
 
-			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-2" /></div>
-			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-2" /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} linked="link-2" /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} linked="link-2" /></div>
 		</div>
 	</div>
 
@@ -265,7 +274,7 @@
 			You can enable the value you're hovering using "showValue".
 
 			<code>
-				&lt;LinkedChart &#123; data &#125; showValue /&gt;
+				&lt;LinkedChart &#123;data&#125; showValue /&gt;
 			</code>
 
 			<br>
@@ -273,19 +282,19 @@
 
 			<code>
 				&lt;LinkedChart <br>
-				&nbsp; &#123; data &#125;  <br>
-				&nbsp; showValue <br>
-				&nbsp; valueDefault="Empty label" <br>
-				&nbsp; valuePrepend="Thing:" <br>
-				&nbsp; valueAppend="views" /&gt;
+				&nbsp; &#123;data&#125;  <br>
+				&nbsp; <mark>showValue</mark> <br>
+				&nbsp; <mark>valueDefault</mark>="Empty label" <br>
+				&nbsp; <mark>valuePrepend</mark>="Thing:" <br>
+				&nbsp; <mark>valueAppend</mark>="views" /&gt;
 			</code>
 			<br>
 			This value has no styling by default.
 		</div>
 
 		<div>
-			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-5" showValue /></div>
-			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-5" showValue valueDefault="Empty label" valuePrepend="Thing:" valueAppend="views" /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} linked="link-5" showValue /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} linked="link-5" showValue valueDefault="Empty label" valuePrepend="Thing:" valueAppend="views" /></div>
 		</div>
 	</div>
 
@@ -295,18 +304,18 @@
 
 			<code>
 				&lt;LinkedChart <br>
-				&nbsp; &#123; data &#125;  <br>
+				&nbsp; &#123;data&#125;  <br>
 				&nbsp; showValue <br>
-				&nbsp; valuePosition="floating" /&gt;
+				&nbsp; <mark>valuePosition</mark>="floating" /&gt;
 			</code>
 			<br>
 			You're expected to style this value further yourself.
 		</div>
 
 		<div>
-			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-7" showValue valuePosition="floating" /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} linked="link-7" showValue valuePosition="floating" /></div>
 			<br>
-			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-7" showValue valuePosition="floating" /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} linked="link-7" showValue valuePosition="floating" /></div>
 		</div>
 	</div>
 
@@ -314,9 +323,9 @@
 		Alternatively you can show the value as a separate element wherever you like using the "LinkedValue" component. Use "uid" to link the chart and value together.
 
 		<code>
-			&lt;LinkedChart &#123; data &#125; uid="some-id" /&gt;
+			&lt;LinkedChart &#123;data&#125; <mark>uid</mark>="some-id" /&gt;
 			<br>
-			&lt;LinkedValue uid="some-id" /&gt; <br>
+			&lt;LinkedValue <mark>uid</mark>="some-id" /&gt; <br>
 		</code>
 		<br>
 		This value has no styling by default.
@@ -324,13 +333,13 @@
 		<br><br>
 
 		<div>
-			<LinkedChart data={ fakeData(30) } linked="link-6" uid="test" />
+			<LinkedChart data={fakeData(30)} linked="link-6" uid="test" />
 
 			<strong><LinkedValue empty="Separate value" uid="test" /></strong>
 		</div>
 
 		<div>
-			<LinkedChart data={ fakeData(30) } linked="link-6" uid="test-2" />
+			<LinkedChart data={fakeData(30)} linked="link-6" uid="test-2" />
 
 			<strong><LinkedValue empty="Separate value" uid="test-2" /></strong>
 		</div>
@@ -338,13 +347,15 @@
 		<p>The value can be transformed in order to append, prepend, or otherwise format the value. This is done using the transform prop.</p>
 
 		<code>
-			&lt;LinkedValue uid="some-id" transform=&#123;(value) => value.toLocaleString() + "%"&#125; /&gt; <br>
+			&lt;LinkedValue<br>
+			&nbsp; uid="some-id"<br>
+			&nbsp; <mark>transform</mark>=&#123;(value) =&gt; value.toLocaleString() + "%"&#125; /&gt;
 		</code>
 
 		<br>
 
 		<div>
-			<LinkedChart data={ fakeData(30, 3000, 5000) } linked="link-6" uid="test-3" />
+			<LinkedChart data={fakeData(30, 3000, 5000)} linked="link-6" uid="test-3" />
 
 			<strong><LinkedValue uid="test-3" transform={(value) => value.toLocaleString() + "%"} /></strong>
 		</div>
@@ -357,11 +368,11 @@
 			The width of the bars is fixed by default, but can be set to grow to fill the chart.
 
 			<code>
-				&lt;LinkedChart data=&#123 ... &#125; grow /&gt;
+				&lt;LinkedChart data=&#123...&#125; <mark>grow</mark> /&gt;
 			</code>
 		</div>
 
-    <LinkedChart data={ fakeData(5) } grow />
+    <LinkedChart data={fakeData(5)} grow />
 	</div>
 
 	<div class="block">
@@ -369,14 +380,14 @@
 			To change the size of the bars set the "barMinWidth" property.
 
 			<code>
-				&lt;LinkedChart data=&#123 ... &#125; barMinWidth="2" /&gt; <br>
-				&lt;LinkedChart data=&#123 ... &#125; barMinWidth="14" /&gt;
+				&lt;LinkedChart data=&#123...&#125; <mark>barMinWidth</mark>=&#123;2&#125; /&gt; <br>
+				&lt;LinkedChart data=&#123...&#125; <mark>barMinWidth</mark>=&#123;14&#125; /&gt;
 			</code>
 		</div>
 
 		<div>
-			<div class="chart"><LinkedChart data={ fakeData(50) } barMinWidth="2" /></div>
-			<div class="chart"><LinkedChart data={ fakeData(10) } barMinWidth="14" /></div>
+			<div class="chart"><LinkedChart data={fakeData(50)} barMinWidth={2} /></div>
+			<div class="chart"><LinkedChart data={fakeData(10)} barMinWidth={14} /></div>
 		</div>
 	</div>
 
@@ -385,14 +396,14 @@
 			A minimum height can be set using the "barMinHeight" property. Bars will never be lower than this value, even if it's zero.
 
 			<code>
-				&lt;LinkedChart data=&#123 ... &#125; barMinHeight="0" /&gt; <br>
-				&lt;LinkedChart data=&#123 ... &#125; barMinHeight="5" /&gt;
+				&lt;LinkedChart data=&#123...&#125; <mark>barMinHeight</mark>=&#123;0&#125; /&gt; <br>
+				&lt;LinkedChart data=&#123...&#125; <mark>barMinHeight</mark>=&#123;5&#125; /&gt;
 			</code>
 		</div>
 
 		<div>
-			<div class="chart"><LinkedChart data={ { ...fakeData(10), ...fakeData(20, 0, 0, "2005-06-01T00:00:00Z") } } barMinHeight="0" showValue valuePosition="floating" /></div>
-			<div class="chart"><LinkedChart data={ { ...fakeData(10), ...fakeData(20, 0, 0, "2005-06-01T00:00:00Z") } } barMinHeight="5" showValue valuePosition="floating" /></div>
+			<div class="chart"><LinkedChart data={{ ...fakeData(10), ...fakeData(20, 0, 0, "2005-06-01T00:00:00Z")} } barMinHeight={0} showValue valuePosition="floating" /></div>
+			<div class="chart"><LinkedChart data={{ ...fakeData(10), ...fakeData(20, 0, 0, "2005-06-01T00:00:00Z")} } barMinHeight={5} showValue valuePosition="floating" /></div>
 		</div>
 	</div>
 
@@ -402,14 +413,14 @@
 
 			<code>
 				&lt;LinkedChart<br>
-				&nbsp;&nbsp;data=&#123 ... &#125;<br>
-				&nbsp;&nbsp;barMinHeight="2"<br>
-				&nbsp;&nbsp;hideBarBelow="1" /&gt;
+				&nbsp;&nbsp;data=&#123...&#125;<br>
+				&nbsp;&nbsp;<mark>barMinHeight</mark>=&#123;2&#125;<br>
+				&nbsp;&nbsp;<mark>hideBarBelow</mark>=&#123;1&#125; /&gt;
 			</code>
 		</div>
 
 		<div>
-			<div class="chart"><LinkedChart data={ { ...fakeData(10, 5000, 4000), ...fakeData(10, 0, 0, "2005-06-01T00:00:00Z"), ...fakeData(10, 500, 0, "2005-07-01T00:00:00Z") } } barMinHeight="2" hideBarBelow="1" showValue valuePosition="floating" /></div>
+			<div class="chart"><LinkedChart data={{ ...fakeData(10, 5000, 4000), ...fakeData(10, 0, 0, "2005-06-01T00:00:00Z"), ...fakeData(10, 500, 0, "2005-07-01T00:00:00Z")} } barMinHeight={2} hideBarBelow={1} showValue valuePosition="floating" /></div>
 		</div>
 	</div>
 
@@ -419,15 +430,15 @@
 
 			<code>
 				&lt;LinkedChart<br>
-				&nbsp; data=&#123 ... &#125; <br>
-				&nbsp; grow <br>
-				&nbsp; barMinWidth="0" /&gt;
+				&nbsp; data=&#123...&#125; <br>
+				&nbsp; <mark>grow</mark> <br>
+				&nbsp; <mark>barMinWidth</mark>=&#123;0&#125; /&gt;
 			</code>
 		</div>
 
 		<div>
-			<div class="chart"><LinkedChart data={ fakeData(75) } grow barMinWidth="0" /></div>
-			<div class="chart"><LinkedChart data={ fakeData(7) } grow barMinWidth="0" /></div>
+			<div class="chart"><LinkedChart data={fakeData(75)} grow barMinWidth={0} /></div>
+			<div class="chart"><LinkedChart data={fakeData(7)} grow barMinWidth={0} /></div>
 		</div>
 	</div>
 
@@ -437,9 +448,9 @@
 
 			<code>
 				&lt;LinkedChart<br>
-				&nbsp; data=&#123 ... &#125; <br>
-				&nbsp; width="250" <br>
-				&nbsp; height="100" /&gt;
+				&nbsp; data=&#123...&#125; <br>
+				&nbsp; width=&#123;250&#125; <br>
+				&nbsp; height=&#123;100&#125; /&gt;
 			</code>
 
 			<code>
@@ -461,8 +472,8 @@
 		</div>
 
 		<div>
-			<div class="chart chart--responsive"><LinkedChart data={ fakeData(50) } height="100" width="250" linked="linked-3" /></div>
-			<div class="chart chart--responsive"><LinkedChart data={ fakeData(50) } height="10" width="250" linked="linked-3" /></div>
+			<div class="chart chart--responsive"><LinkedChart data={fakeData(50)} height={100} width={250} linked="linked-3" /></div>
+			<div class="chart chart--responsive"><LinkedChart data={fakeData(50)} height={10} width={250} linked="linked-3" /></div>
 		</div>
 	</div>
 
@@ -471,14 +482,14 @@
 			The gap in between bars can also be adjusted.
 
 			<code>
-				&lt;LinkedChart &#123; data &#125; gap="10" /&gt; <br>
-				&lt;LinkedChart &#123; data &#125; gap="0" /&gt;
+				&lt;LinkedChart &#123;data&#125; <mark>gap</mark>=&#123;10&#125; /&gt; <br>
+				&lt;LinkedChart &#123;data&#125; <mark>gap</mark>=&#123;0&#125; /&gt;
 			</code>
 		</div>
 
 		<div>
-			<div class="chart"><LinkedChart data={ fakeData(11) } gap="10" /></div>
-			<div class="chart"><LinkedChart data={ fakeData(36) } gap="0" /></div>
+			<div class="chart"><LinkedChart data={fakeData(11)} gap={10} /></div>
+			<div class="chart"><LinkedChart data={fakeData(36)} gap={0} /></div>
 		</div>
 	</div>
 
@@ -487,13 +498,13 @@
 			When the bars do not fill the width of the graph they are aligned to the right by default. This can be set to be left aligned instead.
 
 			<code>
-				&lt;LinkedChart &#123; data &#125; align="left" /&gt;
+				&lt;LinkedChart &#123;data&#125; <mark>align</mark>="left" /&gt;
 			</code>
 		</div>
 
 		<div>
-			<div class="chart"><LinkedChart data={ fakeData(20) } /></div>
-			<div class="chart"><LinkedChart data={ fakeData(20) } align="left" /></div>
+			<div class="chart"><LinkedChart data={fakeData(20)} /></div>
+			<div class="chart"><LinkedChart data={fakeData(20)} align="left" /></div>
 		</div>
 	</div>
 
@@ -502,21 +513,21 @@
 			The bars can be colored any way you wish.
 
 			<code>
-				&lt;LinkedChart fill="#ff00ff" /&gt; <br>
-				&lt;LinkedChart fill="rgb(255, 255, 0)" /&gt; <br>
-				&lt;LinkedChart fill="hsla(290, 55%, 50%, 1)" /&gt;
+				&lt;LinkedChart <mark>fill</mark>="#ff00ff" /&gt; <br>
+				&lt;LinkedChart <mark>fill</mark>="rgb(255, 255, 0)" /&gt; <br>
+				&lt;LinkedChart <mark>fill</mark>="hsla(290, 55%, 50%, 1)" /&gt;
 			</code>
 		</div>
 
 		<div>
-			<div class="chart"><LinkedChart data={ fakeData(30) } fill="#e6261f" linked="link-4" /></div>
-			<div class="chart"><LinkedChart data={ fakeData(30) } fill="#eb7532" linked="link-4" /></div>
-			<div class="chart"><LinkedChart data={ fakeData(30) } fill="#f7d038" linked="link-4" /></div>
-			<div class="chart"><LinkedChart data={ fakeData(30) } fill="#a3e048" linked="link-4" /></div>
-			<div class="chart"><LinkedChart data={ fakeData(30) } fill="#49da9a" linked="link-4" /></div>
-			<div class="chart"><LinkedChart data={ fakeData(30) } fill="#34bbe6" linked="link-4" /></div>
-			<div class="chart"><LinkedChart data={ fakeData(30) } fill="#4355db" linked="link-4" /></div>
-			<div class="chart"><LinkedChart data={ fakeData(30) } fill="hsla(290, 55%, 50%, 1)" linked="link-4" /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} fill="#e6261f" linked="link-4" /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} fill="#eb7532" linked="link-4" /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} fill="#f7d038" linked="link-4" /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} fill="#a3e048" linked="link-4" /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} fill="#49da9a" linked="link-4" /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} fill="#34bbe6" linked="link-4" /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} fill="#4355db" linked="link-4" /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} fill="hsla(290, 55%, 50%, 1)" linked="link-4" /></div>
 		</div>
 	</div>
 
@@ -525,11 +536,11 @@
 			The opacity of faded out bars can be adjusted using "fadeOpacity".
 
 			<code>
-				&lt;LinkedChart &#123; data &#125; fadeOpacity="0.15" /&gt;
+				&lt;LinkedChart &#123;data&#125; <mark>fadeOpacity</mark>=&#123;0.15&#125; /&gt;
 			</code>
 		</div>
 
-		<LinkedChart data={ fakeData(30) } fadeOpacity="0.15" />
+		<LinkedChart data={fakeData(30)} fadeOpacity={0.15} />
 	</div>
 
 	<div class="block">
@@ -537,11 +548,11 @@
 			The hover effect can be disabled altogether using "hover".
 
 			<code>
-				&lt;LinkedChart &#123; data &#125; hover=&#123; false &#125; /&gt;
+				&lt;LinkedChart &#123;data&#125; <mark>hover</mark>=&#123;false&#125; /&gt;
 			</code>
 		</div>
 
-		<LinkedChart data={ fakeData(30) } hover={ false } />
+		<LinkedChart data={fakeData(30)} hover={false} />
 	</div>
 
 	<div class="block">
@@ -550,11 +561,11 @@
 			Value is speed in milliseconds.
 
 			<code>
-				&lt;LinkedChart &#123; data &#125; transition="500" /&gt;
+				&lt;LinkedChart &#123;data&#125; <mark>transition</mark>=&#123;500&#125; /&gt;
 			</code>
 		</div>
 
-		<LinkedChart data={ transitioningData } fill="hsl({ transitionColor }, 60%, 50%)" transition="500" />
+		<LinkedChart data={transitioningData } fill="hsl({ transitionColor }, 60%, 50%)" transition={500} />
 	</div>
 
 	<div class="block">
@@ -562,34 +573,34 @@
 			To improve accessibility you can set "tabindex=0", allowing navigating to each data point using the keyboard.
 
 			<code>
-				&lt;LinkedChart &#123; data &#125; tabindex="0" /&gt; <br>
+				&lt;LinkedChart &#123;data&#125; <mark>tabindex</mark>="0" /&gt; <br>
 			</code>
 		</div>
 
 		<div>
-			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-10" showValue valuePosition="floating" tabindex="0" /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} linked="link-10" showValue valuePosition="floating" tabindex={0} /></div>
 		</div>
 	</div>
 
 	<div class="block">
 		<div class="description">
-			Instead of bars you can also opt for a line-chart using "type=line". "lineColor" can be used to color the line, "fill" to color the points. This can have all of the bar properties as well.
+			<p>Instead of bars you can also opt for a line-chart using "type=line". "lineColor" can be used to color the line, "fill" to color the points. This can have all of the bar properties as well.</p>
 
 			<code>
-				&lt;LinkedChart &#123; data &#125; type="line" /&gt; <br>
+				&lt;LinkedChart &#123;data&#125; type="line" /&gt; <br>
 				&lt;LinkedChart <br>
-				&nbsp; &#123; data &#125; <br>
-				&nbsp; type="line" <br>
-				&nbsp; lineColor="#4355db" <br>
-				&nbsp; fill="var(--text-color)" /&gt;
+				&nbsp; &#123;data&#125; <br>
+				&nbsp; <mark>type</mark>="line" <br>
+				&nbsp; <mark>lineColor</mark>="#4355db" <br>
+				&nbsp; <mark>fill</mark>="var(--text-color)" /&gt;
 			</code>
 		</div>
 
 		<div>
-			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-9" type="line" /></div>
-			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-9" type="line" /></div>
-			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-9" type="line" /></div>
-			<div class="chart"><LinkedChart data={ fakeData(30) } linked="link-9" type="line" lineColor="#4355db" fill="var(--text-color)" showValue="true" valuePosition="floating" /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} linked="link-9" type="line" /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} linked="link-9" type="line" /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} linked="link-9" type="line" /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} linked="link-9" type="line" lineColor="#4355db" fill="var(--text-color)" showValue valuePosition="floating" /></div>
 		</div>
 	</div>
 
@@ -597,40 +608,41 @@
 
 	<div class="block">
 		<div class="description">
-			By enable "dispatchEvents" on the LinkedChart component you can dispatch several events when the state of the chart changes.
+			<p>Several events are available to use the chart data on various user interactions or updates.</p>
 
 			<code class="well">
 				&lt;LinkedChart <br>
-				&nbsp; dispatchEvents <br>
-				&nbsp; on:hover=&#123; event =&gt; console.log(event.detail) &#125; <br>
-				&nbsp; on:blur=&#123; event =&gt; console.log(event.detail) &#125; <br>
-				&nbsp; on:value-update=&#123; event =&gt; console.log(event.detail) &#125; /&gt;
+				&nbsp; <mark>onhover</mark>=&#123;(options) =&gt; console.log(options)&#125; <br>
+				&nbsp; <mark>onblur</mark>=&#123;(options) =&gt; console.log(options)&#125; <br>
+				&nbsp; <mark>onvalueupdate</mark>=&#123;(options) =&gt; console.log(options)&#125; /&gt; <br>
 			</code>
 
 			<p>This could be used to construct your own value element that can be formatted as you wish. For example in this example the values are given as cents, but the value is formatted as dollars.</p>
 
 			<div>
 				<LinkedChart
-					data={ fakeData(30, 100000, 10000) }
-					dispatchEvents
-					on:hover={ event => document.querySelector("[data-role='currency']").innerHTML = (event.detail.value / 100).toLocaleString("en-US", { style: "currency", currency: "USD" }) }
-					on:blur={ event => document.querySelector("[data-role='currency']").innerHTML = "&nbsp;" } />
+					data={fakeData(30, 100000, 10000)}
+					onhover={({ value }) => {
+						const element = /** @type {HTMLElement} */ (document.querySelector("[data-role='currency']"))
+						element.innerHTML = (value || 0 / 100).toLocaleString("en-US", { style: "currency", currency: "USD" })
+					}}
+					onblur={() => /** @type {HTMLElement} */ (document.querySelector("[data-role='currency']")).innerHTML = "&nbsp;"} />
 
 				<span data-role="currency">&nbsp;</span>
 			</div>
 
 			<code class="well">
 				&lt;LinkedChart <br>
-				&nbsp; dispatchEvents <br>
-				&nbsp; on:hover=&#123; event =&gt; <br>
-				&nbsp;&nbsp;&nbsp	document.querySelector("[data-role='currency']") <br>
-				&nbsp;&nbsp;&nbsp .innerHTML = (event.detail.value / 100).toLocaleString("en-US", &#123; <br>
+				&nbsp; <mark>onhover</mark>=&#123;(&#123; <mark>value</mark> &#125;) =&gt; &#123; <br>
+				&nbsp;&nbsp;&nbsp	const element = document.querySelector("[data-role='currency']") <br>
+				<br>
+				&nbsp;&nbsp;&nbsp element.innerHTML = (<mark>value</mark> || 0 / 100).toLocaleString("en-US", &#123; <br>
 				&nbsp;&nbsp;&nbsp&nbsp;&nbsp; style: "currency", currency: "USD"<br>
 				&nbsp;&nbsp;&nbsp &#125;) <br>
-				&nbsp; &#125; <br>
-				&nbsp; on:blur=&#123; event =&gt; <br>
-				&nbsp;&nbsp;&nbsp document.querySelector("[data-role='currency']").innerHTML = "&nbsp;" <br>
-				&nbsp; &#125; /&gt;
+				&nbsp; &#125;&#125; <br>
+				&nbsp; <mark>onblur</mark>=&#123;() =&gt; document.querySelector("[data-role='currency']").innerHTML = "&nbsp;"&#125; /&gt;<br>
+				<br>
+				&lt;span data-role="currency"&gt;&lt;/span&gt;
 			</code>
 
 			<br>
@@ -639,25 +651,23 @@
 
 			<div>
 				<LinkedChart
-					data={ fakeData(30, 100000, 10000) }
-					dispatchEvents
+					data={ fakeData(30, 100000, 10000)}
 					showValue
 					valuePosition="floating"
 					valuePrepend="Value: "
-					on:value-update={ event => { if (event.detail.valueElement) event.detail.valueElement.innerText = event.detail.value?.toLocaleString() } } />
+					onvalueupdate={({ valueElement, value }) => {
+						if (valueElement) valueElement.innerText = (value || 0).toLocaleString()
+					}} />
 			</div>
 
 			<code class="well">
 				&lt;LinkedChart <br>
-				&nbsp; dispatchEvents <br>
 				&nbsp; showValue <br>
 				&nbsp; valuePosition="floating" <br>
 				&nbsp; valuePrepend="Value: " <br>
-				&nbsp; on:value-update=&#123; event =&gt; &#123; <br>
-				&nbsp;&nbsp;&nbsp; if (event.detail.valueElement) <br>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; event.detail.valueElement.innerText = <br>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; event.detail.value?.toLocaleString() <br>
-				&nbsp; &#125; &#125; /&gt;
+				&nbsp; <mark>onvalueupdate</mark>=&#123;(&#123; <mark>valueElement</mark>, <mark>value</mark> &#125;) =&gt; &#123; <br>
+				&nbsp;&nbsp; if (<mark>valueElement</mark>) <mark>valueElement</mark>.innerText = (<mark>value</mark> || 0).toLocaleString() <br>
+				&nbsp; &#125;&#125; /&gt;
 			</code>
 
 			<br>
@@ -666,9 +676,9 @@
 
 			<div class="table">
 				<strong>Property</strong> <strong>Description</strong> <strong>Return</strong>
-				<code>on:hover</code> <div>On hover of bars</div> <code>uid, key, index, linkedKey, value, valueElement, eventElement</code>
-				<code>on:blur</code> <div>On blur of the chart</div> <code>uid, linkedKey, valueElement, eventElement</code>
-				<code>on:value-update</code> <div>Any time the value updates</div> <code>value, uid, linkedKey, valueElement</code>
+				<code>onhover</code> <div>On hover of bars</div> <code>uid, key, index, linkedKey, value, valueElement, eventElement</code>
+				<code>onblur</code> <div>On blur of the chart</div> <code>uid, linkedKey, valueElement, eventElement</code>
+				<code>onvalueupdate</code> <div>Any time the value updates</div> <code>value, uid, linkedKey, valueElement</code>
 			</div>
 		</div>
 	</div>
@@ -709,7 +719,6 @@
 			<code>lineColor</code> <code>fill</code> <div>Color of the line if used with type="line".</div>
 			<code>tabindex</code> <code>-1</code> <div>Sets the tabindex of each bar.</div>
       <code>preserveAspectRatio</code> <code>false</code> <div>Sets whether or not the SVG will preserve it's aspect ratio</div>
-			<code>dispatchEvents</code> <code>false</code> <div>Boolean whether or not to dispatch events on certain actions (explained above).</div>
 			<code>clickHandler</code> <code>null</code> <div>Function that executes on click and returns the key and index for the clicked data.</div>
 		</div>
 	</div>
@@ -806,17 +815,20 @@
 	}
 
 	.well {
+		max-width: 540px;
 		padding: .35rem .5rem;
 		border-radius: .5rem;
 		border: 1px solid var(--border-color);
 		background: var(--bg-well);
+		overflow: auto;
+		white-space: nowrap;
 	}
 
 	.header {
 		margin: 6rem 0 0;
 	}
 
-	:global(.header svg) {
+	.header :global(svg) {
 		width: 100%;
 		height: 5px;
 	}

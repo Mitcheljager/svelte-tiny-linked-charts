@@ -103,8 +103,9 @@ type | bar | Can be set to "line" to display a line chart instead.
 lineColor | fill | Color of the line if used with type="line".
 tabindex | -1 | Sets the tabindex of each bar.
 preserveAspectRatio | false | Sets whether or not the SVG will preserve it's aspect ratio
-dispatchEvents | false | Boolean whether or not to dispatch events on certain actions.
-clickHandler | null | Function that executes on click and returns the key and index for the clicked data.
+onclick | null | Function that executes on click and returns the key and index for the clicked data.
+onhover | null | Function that executes on hover of each bar.
+onblur | null | Function that executes when focus leaves the chart.
 
 `<LinkedLabel />` component.
 Property | Default | Description
