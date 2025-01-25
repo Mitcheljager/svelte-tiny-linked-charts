@@ -50,47 +50,51 @@
 		<h2>Demo</h2>
 
 		<table class="preview-table">
-			<tr>
-				<th>Name</th>
-				<th width="150"><LinkedLabel linked="table" empty="30 day period" /></th>
-				<th>Value</th>
-			</tr>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th width="150"><LinkedLabel linked="table" empty="30 day period" /></th>
+					<th>Value</th>
+				</tr>
+			</thead>
 
-			<tr>
-				<td class="label">A thing</td>
-				<td><LinkedChart data={ fakeData(30) } linked="table" uid="table-1" /></td>
-				<td><LinkedValue uid="table-1" empty={ Object.values(fakeData(30)).reduce((a, b) => a + b) } /></td>
-			</tr>
+			<tbody>
+				<tr>
+					<td class="label">A thing</td>
+					<td><LinkedChart data={ fakeData(30) } linked="table" uid="table-1" /></td>
+					<td><LinkedValue uid="table-1" empty={ Object.values(fakeData(30)).reduce((a, b) => a + b) } /></td>
+				</tr>
 
-			<tr>
-				<td class="label">Another thing</td>
-				<td><LinkedChart data={ fakeData(30) } linked="table" uid="table-2" /></td>
-				<td><LinkedValue uid="table-2" empty={ Object.values(fakeData(30)).reduce((a, b) => a + b) } /></td>
-			</tr>
+				<tr>
+					<td class="label">Another thing</td>
+					<td><LinkedChart data={ fakeData(30) } linked="table" uid="table-2" /></td>
+					<td><LinkedValue uid="table-2" empty={ Object.values(fakeData(30)).reduce((a, b) => a + b) } /></td>
+				</tr>
 
-			<tr>
-				<td class="label">A third thing</td>
-				<td><LinkedChart data={ fakeData(30) } linked="table" uid="table-3" /></td>
-				<td><LinkedValue uid="table-3" empty={ Object.values(fakeData(30)).reduce((a, b) => a + b) }  /></td>
-			</tr>
+				<tr>
+					<td class="label">A third thing</td>
+					<td><LinkedChart data={ fakeData(30) } linked="table" uid="table-3" /></td>
+					<td><LinkedValue uid="table-3" empty={ Object.values(fakeData(30)).reduce((a, b) => a + b) }  /></td>
+				</tr>
 
-			<tr>
-				<td class="label">An incomplete thing</td>
-				<td><LinkedChart data={ fakeData(15) } linked="table" uid="table-4" /></td>
-				<td><LinkedValue uid="table-4" empty={ Object.values(fakeData(15)).reduce((a, b) => a + b) }  /></td>
-			</tr>
+				<tr>
+					<td class="label">An incomplete thing</td>
+					<td><LinkedChart data={ fakeData(15) } linked="table" uid="table-4" /></td>
+					<td><LinkedValue uid="table-4" empty={ Object.values(fakeData(15)).reduce((a, b) => a + b) }  /></td>
+				</tr>
 
-			<tr>
-				<td class="label">A changing thing</td>
-				<td><LinkedChart data={ transitioningData } linked="table" uid="table-5" transition=100 fill="hsl({ transitionColor }, 60%, 50%)" /></td>
-				<td><LinkedValue uid="table-5" empty={ Object.values(transitioningData).reduce((a, b) => a + b) }  /></td>
-			</tr>
+				<tr>
+					<td class="label">A changing thing</td>
+					<td><LinkedChart data={ transitioningData } linked="table" uid="table-5" transition=100 fill="hsl({ transitionColor }, 60%, 50%)" /></td>
+					<td><LinkedValue uid="table-5" empty={ Object.values(transitioningData).reduce((a, b) => a + b) }  /></td>
+				</tr>
 
-			<tr>
-				<td class="label">A thing using lines</td>
-				<td><LinkedChart data={ fakeData(30) } linked="table" uid="table-6" type="line" /></td>
-				<td><LinkedValue uid="table-6" empty={ Object.values(fakeData(30)).reduce((a, b) => a + b) }  /></td>
-			</tr>
+				<tr>
+					<td class="label">A thing using lines</td>
+					<td><LinkedChart data={ fakeData(30) } linked="table" uid="table-6" type="line" /></td>
+					<td><LinkedValue uid="table-6" empty={ Object.values(fakeData(30)).reduce((a, b) => a + b) }  /></td>
+				</tr>
+			</tbody>
 		</table>
 
 		<h2>Installation</h2>
