@@ -1,63 +1,156 @@
 <script>
-  import { createEventDispatcher, tick } from "svelte"
+  import { tick } from "svelte"
   import { hoveringKey, hoveringValue } from "$lib/stores/tinyLinkedCharts.js"
 
-  export let uid = (Math.random() + 1).toString(36).substring(7)
-  export let data = {}
-  export let labels = []
-  export let values = []
-  export let linked = ""
-  export let height = 40
-  export let width = 150
-  export let barMinWidth = 4
-  export let barMinHeight = 0
-  export let hideBarBelow = 0
-  export let grow = false
-  export let align = "right"
-  export let gap = 1
-  export let fill = "#ff3e00"
-  export let fadeOpacity = 0.5
-  export let hover = true
-  export let transition = 0
-  export let showValue = false
-  export let valueDefault = "&nbsp;"
-  export let valuePrepend = ""
-  export let valueAppend = ""
-  export let valuePosition = "static"
-  export let valueUndefined = 0
-  export let scaleMax = 0
-  export let scaleMin = 0
-  export let type = "bar"
-  export let lineColor = fill
-  export let tabindex = -1
-  export let dispatchEvents = false
-  export let preserveAspectRatio = false
-  export let clickHandler = (key, i) => null
+  /** @typedef {Object} OnValueUpdate
+  * @property {number | null} [value]
+  * @property {string} [uid]
+  * @property {string} [linkedKey]
+  * @property {HTMLElement | null} [valueElement]
+  */
 
-  const dispatch = createEventDispatcher()
+  /** @typedef {Object} OnClick
+   * @property {string} [key]
+   * @property {number} [index]
+   */
 
-  let valuePositionOffset = 0
-  let polyline = []
-  let valueElement
+  /** @typedef {Object} OnHover
+   * @property {string} uid,
+   * @property {string} key,
+   * @property {number} index,
+   * @property {string} linkedKey,
+   * @property {number | null} value,
+   * @property {HTMLElement} valueElement,
+   * @property {EventTarget | null} eventElement
+   */
 
-  $: dataLength = Object.keys(data).length
-  $: barWidth = grow ? getBarWidth(dataLength) : parseInt(barMinWidth)
-  $: highestValue = getHighestValue(data)
-  $: alignmentOffset = dataLength ? getAlignment() : 0
-  $: linkedKey = linked || (Math.random() + 1).toString(36).substring(7)
-  $: $hoveringValue[uid] = $hoveringKey[linkedKey] ? data[$hoveringKey[linkedKey]] : null
-  $: if (labels.length && values.length) data = Object.fromEntries(labels.map((_, i) => [labels[i], values[i]]))
-  $: if (valuePosition == "floating") valuePositionOffset = (parseInt(gap) + barWidth) * Object.keys(data).indexOf($hoveringKey[linkedKey]) + alignmentOffset
-  $: if (type == "line") polyline = getPolyLinePoints(data)
-  $: if (dispatchEvents) dispatch('value-update', { value: $hoveringValue[uid], uid, linkedKey, valueElement })
-  $: if (tabindex > 0) console.warn("Tabindex should not be higher than 0")
+  /** @typedef {Object} OnBlur
+   * @property {string} uid,
+   * @property {string} linkedKey,
+   * @property {HTMLElement} valueElement,
+   * @property {EventTarget | null} eventElement
+   */
 
+  /**
+   * @typedef {Object} Props
+   * @property {string} [uid]
+   * @property {Record<string, number>} [data]
+   * @property {string[]} [labels]
+   * @property {number[]} [values]
+   * @property {string} [linked]
+   * @property {number} [height]
+   * @property {number} [width]
+   * @property {number} [barMinWidth]
+   * @property {number} [barMinHeight]
+   * @property {number} [hideBarBelow]
+   * @property {boolean} [grow]
+   * @property {"left" | "right"} [align]
+   * @property {number} [gap]
+   * @property {string} [fill]
+   * @property {number} [fadeOpacity]
+   * @property {boolean} [hover]
+   * @property {number} [transition]
+   * @property {boolean} [showValue]
+   * @property {string} [valueDefault]
+   * @property {string} [valuePrepend]
+   * @property {string} [valueAppend]
+   * @property {"static" | "floating"} [valuePosition]
+   * @property {number} [valueUndefined]
+   * @property {number} [scaleMax]
+   * @property {number} [scaleMin]
+   * @property {"bar" | "line"} [type]
+   * @property {string} [lineColor]
+   * @property {-1 | 0} [tabindex]
+   * @property {boolean} [preserveAspectRatio]
+   * @property {(args: OnClick) => void} [onclick]
+   * @property {(args: OnValueUpdate) => void} [onvalueupdate]
+   * @property {(args: OnHover) => void} [onhover]
+   * @property {(args: OnBlur) => void} [onblur]
+   */
+
+  /** @type {Props & { [key: string]: any }} */
+  let {
+    uid = (Math.random() + 1).toString(36).substring(7),
+    data = $bindable({}),
+    labels = [],
+    values = [],
+    linked = "",
+    height = 40,
+    width = 150,
+    barMinWidth = 4,
+    barMinHeight = 0,
+    hideBarBelow = 0,
+    grow = false,
+    align = "right",
+    gap = 1,
+    fill = "#ff3e00",
+    fadeOpacity = 0.5,
+    hover = true,
+    transition = 0,
+    showValue = false,
+    valueDefault = "&nbsp;",
+    valuePrepend = "",
+    valueAppend = "",
+    valuePosition = "static",
+    valueUndefined = 0,
+    scaleMax = 0,
+    scaleMin = 0,
+    type = "bar",
+    lineColor = fill,
+    tabindex = -1,
+    preserveAspectRatio = false,
+    onclick = ({ key, index }) => null,
+    onvalueupdate = ({ value, uid, linkedKey, valueElement }) => null,
+    onhover = ({ uid, key, index, linkedKey, value, valueElement, eventElement }) => null,
+    onblur = ({ uid, linkedKey, valueElement, eventElement }) => null,
+    ...rest
+  } = $props()
+
+  let valuePositionOffset = $state(0)
+  /** @type {number[][]} */
+  let polyline = $state([])
+  let valueElement = $state()
+  let dataLength = $derived(Object.keys(data).length)
+  let barWidth = $derived(dataLength && grow ? getBarWidth() : barMinWidth)
+  let highestValue = $derived(data ? getHighestValue() : 0)
+  let alignmentOffset = $derived(dataLength ? getAlignment() : 0)
+  let linkedKey = $derived(linked || (Math.random() + 1).toString(36).substring(7))
+
+  $effect(() => {
+    if (labels.length && values.length) data = Object.fromEntries(labels.map((_, i) => [labels[i], values[i]]))
+  })
+
+  $effect(() => {
+    $hoveringValue[uid] = $hoveringKey[linkedKey] ? data[$hoveringKey[linkedKey]] : null
+  })
+
+  $effect(() => {
+    if (valuePosition === "floating") valuePositionOffset = (gap + barWidth) * Object.keys(data).indexOf($hoveringKey[linkedKey] || "") + alignmentOffset
+  })
+
+  $effect(() => {
+    if (type == "line") polyline = getPolyLinePoints(data)
+  })
+
+  $effect(() => {
+    onvalueupdate({ value: $hoveringValue[uid], uid, linkedKey, valueElement })
+  })
+
+  $effect(() => {
+    if (tabindex > 0) console.warn("tabindex should not be higher than 0")
+  })
+
+  /** @returns {number} */
   function getHighestValue() {
     if (scaleMax) return scaleMax
     if (dataLength) return Math.max(...Object.values(data))
     return 0
   }
 
+  /**
+	 * @param {number} value
+   * @returns {number}
+	 */
   function getHeight(value) {
     if (value < hideBarBelow || value < scaleMin) return 0
 
@@ -65,56 +158,68 @@
     const minValue = scaleMin || 0
 
     const scaledValue = (value - minValue) / (maxValue - minValue)
-    return Math.max(Math.ceil(scaledValue * parseInt(height)), barMinHeight)
+    return Math.max(Math.ceil(scaledValue * height), barMinHeight)
   }
 
+  /** @returns {number} */
   function getBarWidth() {
-    return Math.max((parseInt(width) - (dataLength * parseInt(gap))) / dataLength, parseInt(barMinWidth))
+    return Math.max((width - (dataLength * gap)) / dataLength, barMinWidth)
   }
 
+  /** @returns {number} */
   function getAlignment() {
     if (align == "left") return 0
-    return (parseInt(gap) + parseInt(width)) - ((parseInt(gap) + barWidth) * dataLength)
+    return (gap + width) - ((gap + barWidth) * dataLength)
   }
 
-  function getPolyLinePoints() {
+  /** @param {Record<string, number>} data */
+  function getPolyLinePoints(data) {
     let points = []
 
     for (let i = 0; i < Object.keys(data).length; i++) {
-      points.push([i * ((barWidth + parseInt(gap)) + (barWidth / (Object.keys(data).length))), height - getHeight(Object.values(data)[i])])
+      points.push([i * ((barWidth + gap) + (barWidth / (Object.keys(data).length))), height - getHeight(Object.values(data)[i])])
     }
 
     return points
   }
 
-  async function startHover(key, index) {
+  /**
+   * @param {MouseEvent | FocusEvent | TouchEvent} event
+	 * @param {string} key
+	 * @param {number} index
+	 */
+  async function startHover(event, key, index) {
     if (!hover) return
     $hoveringKey[linkedKey] = key
 
     await tick()
 
-    if (dispatchEvents) dispatch('hover', { uid, key, index, linkedKey, value: $hoveringValue[uid], valueElement, eventElement: event.target })
+    onhover({ uid, key, index, linkedKey, value: $hoveringValue[uid], valueElement, eventElement: event.target })
   }
 
-  async function endHover() {
+  /**
+	 * @param {FocusEvent} event
+	 */
+  async function endHover(event) {
     if (!hover) return
     $hoveringKey[linkedKey] = null
+    $hoveringValue[uid] = null
 
     await tick()
 
-    if (dispatchEvents) dispatch('blur', { uid, linkedKey, valueElement, eventElement: event.target })
+    onblur({ uid, linkedKey, valueElement, eventElement: event.target })
   }
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
 <svg
   {width}
   height={type == "line" ? height + barWidth / 2 : height}
   viewBox="0 0 {width } {height}"
   preserveAspectRatio={preserveAspectRatio ? "true" : "none"}
-  {...$$restProps}
-  on:mouseleave={endHover}
-  on:blur={endHover}>
+  onmouseleave={endHover}
+  onblur={endHover}
+  {...rest}>
 
   <g transform="translate({alignmentOffset}, 0)">
     {#if type == "line"}
@@ -128,29 +233,29 @@
           opacity={hover && $hoveringKey[linkedKey] && $hoveringKey[linkedKey] != key ? fadeOpacity : 1}
           fill={fill}
           width={barWidth}
-          height={type == "line" ? height : getHeight(value)}
-          x={(parseInt(gap) + barWidth) * i}
+          height={getHeight(value)}
+          x={(gap + barWidth) * i}
           y={(height - getHeight(value))} />
       {:else if type == "line"}
         <circle
           fill={hover && $hoveringKey[linkedKey] !== null && $hoveringKey[linkedKey] == key ? fill : "transparent"}
-          r={grow ? parseInt(barMinWidth) : barWidth / 2}
+          r={grow ? barMinWidth : barWidth / 2}
           cy={height - getHeight(value)}
-          cx={((parseInt(gap) + barWidth) + (barWidth / (Object.keys(data).length))) * i} />
+          cx={((gap + barWidth) + (barWidth / (Object.keys(data).length))) * i} />
       {/if}
 
-      <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-      <!-- svelte-ignore a11y-no-static-element-interactions -->
+      <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
       <rect
-        on:mouseover={() => startHover(key, i)}
-        on:focus={() => startHover(key, i)}
-        on:touchstart={() => startHover(key, i)}
-        on:click={() => clickHandler(key, i)}
-        on:keypress={() => clickHandler(key, i)}
+        onmouseover={event => startHover(event, key, i)}
+        onfocus={event => startHover(event, key, i)}
+        ontouchstart={event => startHover(event, key, i)}
+        onclick={() => onclick({ key, index: i })}
+        onkeypress={() => onclick({ key, index: i })}
         width={barWidth}
         height={height}
         fill="transparent"
-        x={(parseInt(gap) + barWidth) * i}
+        x={(gap + barWidth) * i}
         {tabindex} />
     {/each}
   </g>

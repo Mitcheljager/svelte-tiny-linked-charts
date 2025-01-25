@@ -1,12 +1,16 @@
 <script>
   import { hoveringValue } from "$lib/stores/tinyLinkedCharts.js"
 
-  export let uid
-  export let empty = "&nbsp;"
-  export let valueUndefined = 0
-  export let transform = (value) => value
+  /** @type {{ uid: string, empty?: string, valueUndefined?: number, transform?: (value: number) => number | string }} */
+  let {
+    uid,
+    empty = "&nbsp;",
+    valueUndefined = 0,
+    transform = (value) => value
+  } = $props()
 
-  $: value = $hoveringValue[uid]
+  /** @type {number | null} */
+  let value = $derived($hoveringValue[uid])
 </script>
 
 {#if uid in $hoveringValue && value !== null}

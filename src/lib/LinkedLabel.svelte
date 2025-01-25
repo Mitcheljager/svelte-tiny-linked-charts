@@ -1,11 +1,11 @@
 <script>
   import { hoveringKey } from "$lib/stores/tinyLinkedCharts.js"
 
-  export let linked
-  export let empty = "&nbsp;"
-  export let transform = (label) => label
+  /** @type {{ linked: string, empty?: string, transform?: (label: string) => string }} */
+  let { linked, empty = "&nbsp;", transform = (label = "") => label } = $props()
 
-  $: label = $hoveringKey[linked]
+  /** @type {string | null} */
+  let label = $derived($hoveringKey[linked])
 </script>
 
 {#if label}
