@@ -118,6 +118,8 @@
 			npm install --save <mark>svelte-tiny-linked-charts</mark>
 		</code>
 
+		<p>If you are using Svelte 4, use version ^1.0.0. Version 2 and above is reserved for Svelte 5. The props between Svelte 4 and 5 are almost the same, but there are some breaking changes.</p>
+
 		<p>Include the chart in your app.</p>
 
 		<code class="well">
@@ -139,7 +141,7 @@
 		</p>
 
 		<code class="well">
-			let data = &#123; <br>
+			let <mark>data</mark> = &#123; <br>
 			&nbsp; "2005-01-01": 25, <br>
 			&nbsp; "2005-01-02": 20, <br>
 			&nbsp; "2005-01-03": 18, <br>
@@ -155,7 +157,7 @@
 		<p>Or if you prefer supply the labels and values separately:</p>
 
 		<code class="well">
-			let labels = [ <br>
+			let <mark>labels</mark> = [ <br>
 			&nbsp; "2005-01-01", <br>
 			&nbsp; "2005-01-02", <br>
 			&nbsp; "2005-01-03", <br>
@@ -165,7 +167,7 @@
 		</code>
 
 		<code class="well">
-			let values = [ <br>
+			let <mark>values</mark> = [ <br>
 			&nbsp; 25, <br>
 			&nbsp; 20, <br>
 			&nbsp; 18, <br>

@@ -20,6 +20,8 @@ yarn add svelte-tiny-linked-charts --dev
 npm install svelte-tiny-linked-charts --save-dev
 ```
 
+If you are using Svelte 4, use version ^1.0.0. Version 2 is reserved for Svelte 5.
+
 Include the chart in your app.
 ```js
 import { LinkedChart, LinkedLabel, LinkedValue } from "svelte-tiny-linked-charts"
