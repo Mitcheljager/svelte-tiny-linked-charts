@@ -22,27 +22,27 @@ describe("LinkedChart.svelte", () => {
     const randomLength = Math.floor(Math.random() * 5) + 25
     const data = fakeData(randomLength)
 
-    render(LinkedChart, { data: data })
+    const { container } = render(LinkedChart, { data: data })
 
-    expect(document.querySelector("svg")).toBeTruthy()
-    expect(document.querySelectorAll("rect[tabindex]").length).toBe(randomLength)
+    expect(container.querySelector("svg")).toBeTruthy()
+    expect(container.querySelectorAll("rect[tabindex]").length).toBe(randomLength)
   })
 
   it("Should still render if labels and values are given instead of data", () => {
     const data = fakeData(20)
 
-    render(LinkedChart, { labels: Object.keys(data), values: Object.values(data) })
+    const { container } = render(LinkedChart, { labels: Object.keys(data), values: Object.values(data) })
 
-    expect(document.querySelector("svg")).toBeTruthy()
-    expect(document.querySelectorAll("rect[tabindex]").length).toBe(20)
+    expect(container.querySelector("svg")).toBeTruthy()
+    expect(container.querySelectorAll("rect[tabindex]").length).toBe(20)
   })
 
   it("Should show a value when showValue is enabled when a rect is hovered and no value when no longer hovered", async () => {
     const data = fakeData(20)
 
-    const { getByText } = render(LinkedChart, { data: data, showValue: true })
+    const { getByText, container } = render(LinkedChart, { data: data, showValue: true })
 
-    const elements = document.querySelectorAll("rect[tabindex]")
+    const elements = container.querySelectorAll("rect[tabindex]")
 
     await fireEvent.focus(elements[0])
     expect(getByText(data[0])).toBeTruthy()
@@ -50,23 +50,23 @@ describe("LinkedChart.svelte", () => {
     await fireEvent.focus(elements[10])
     expect(getByText(data[10])).toBeTruthy()
 
-    await fireEvent.blur(/** @type {SVGElement} */(document.querySelector("svg")))
+    await fireEvent.blur(/** @type {SVGElement} */(container.querySelector("svg")))
     expect(() => getByText(data[10])).toThrow()
   })
 
   it("Should show default text for value if showValue is enabled and valueDefault is set", async () => {
     const data = fakeData(20)
 
-    const { getByText } = render(LinkedChart, { data: data, showValue: true, valueDefault: "test" })
+    const { getByText } = render(LinkedChart, { data: data, showValue: true, valueDefault: "Some Label" })
 
-    expect(getByText("test")).toBeTruthy()
+    expect(getByText("Some Label")).toBeTruthy()
   })
 
   it("Should display a line if type is set to line", async () => {
     const data = fakeData(20)
 
-    render(LinkedChart, { data: data, type: "line" })
+    const { container } = render(LinkedChart, { data: data, type: "line" })
 
-    expect(document.querySelector("polyline")).toBeTruthy()
+    expect(container.querySelector("polyline")).toBeTruthy()
   })
 })
