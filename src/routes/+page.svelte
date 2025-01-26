@@ -7,6 +7,11 @@
 	let transitioningData = $state(fakeData(30))
 	let transitionColor = $state(50)
 
+	/** @type {Array<string | null>} */
+	let fillArrayChangingColors = $state([])
+	let fillArrayHueOffset = $state(0)
+	let fillArrayCurrentIndex = 0
+
 	const fillArrayData = fakeData(30, 100, 10)
 
 	onMount(() => {
@@ -14,6 +19,20 @@
 			transitioningData = fakeData(30)
 			transitionColor = Math.floor(Math.random() * 360)
 		}, 1000)
+
+		setInterval(() => {
+			fillArrayHueOffset -= 10
+
+			fillArrayCurrentIndex++
+			if (fillArrayCurrentIndex >= 30) fillArrayCurrentIndex = 0
+			fillArrayChangingColors = Array.from({ length: 30 }).map((_, i) => {
+				return i === fillArrayCurrentIndex ||
+           i === (fillArrayCurrentIndex - 1 + 30) % 30 ||
+           i === (fillArrayCurrentIndex + 1) % 30
+				? "currentColor"
+				: null
+			})
+		}, 50)
 	})
 
 	/**
@@ -73,37 +92,43 @@
 				<tr>
 					<td class="label">A thing</td>
 					<td width="150"><LinkedChart data={fakeData(30)} linked="table" uid="table-1" /></td>
-					<td><LinkedValue uid="table-1" empty={Object.values(fakeData(30)).reduce((a, b) => a + b).toString()} /></td>
+					<td><LinkedValue uid="table-1" empty={Object.values(fakeData(30)).reduce((a, b) => a + b).toLocaleString()} /></td>
 				</tr>
 
 				<tr>
 					<td class="label">Another thing</td>
 					<td width="150"><LinkedChart data={fakeData(30)} linked="table" uid="table-2" /></td>
-					<td><LinkedValue uid="table-2" empty={Object.values(fakeData(30)).reduce((a, b) => a + b).toString()} /></td>
+					<td><LinkedValue uid="table-2" empty={Object.values(fakeData(30)).reduce((a, b) => a + b).toLocaleString()} /></td>
 				</tr>
 
 				<tr>
 					<td class="label">A third thing</td>
 					<td width="150"><LinkedChart data={fakeData(30)} linked="table" uid="table-3" /></td>
-					<td><LinkedValue uid="table-3" empty={Object.values(fakeData(30)).reduce((a, b) => a + b).toString()}  /></td>
+					<td><LinkedValue uid="table-3" empty={Object.values(fakeData(30)).reduce((a, b) => a + b).toLocaleString()}  /></td>
 				</tr>
 
 				<tr>
 					<td class="label">An incomplete thing</td>
 					<td width="150"><LinkedChart data={fakeData(15)} linked="table" uid="table-4" /></td>
-					<td><LinkedValue uid="table-4" empty={Object.values(fakeData(15)).reduce((a, b) => a + b).toString()}  /></td>
+					<td><LinkedValue uid="table-4" empty={Object.values(fakeData(15)).reduce((a, b) => a + b).toLocaleString()}  /></td>
 				</tr>
 
 				<tr>
 					<td class="label">A changing thing</td>
 					<td width="150"><LinkedChart data={transitioningData} linked="table" uid="table-5" transition={100} fill="hsl({ transitionColor }, 60%, 50%)" /></td>
-					<td><LinkedValue uid="table-5" empty={Object.values(transitioningData).reduce((a, b) => a + b).toString()} /></td>
+					<td><LinkedValue uid="table-5" empty={Object.values(fakeData(30)).reduce((a, b) => a + b).toLocaleString()} /></td>
+				</tr>
+
+				<tr>
+					<td class="label">A varying thing</td>
+					<td width="150"><LinkedChart data={fillArrayData} fillArray={Object.values(fillArrayData).map(i => i > 60 ? "#49da9a" : i > 30 ? "#f7d038" : "#e6261f")} linked="table" uid="table-array" /></td>
+					<td><LinkedValue uid="table-array" empty={Object.values(fillArrayData).reduce((a, b) => a + b).toLocaleString()} /></td>
 				</tr>
 
 				<tr>
 					<td class="label">A thing using lines</td>
 					<td width="150"><LinkedChart data={fakeData(30)} linked="table" uid="table-6" type="line" /></td>
-					<td><LinkedValue uid="table-6" empty={Object.values(fakeData(30)).reduce((a, b) => a + b).toString()} /></td>
+					<td><LinkedValue uid="table-6" empty={Object.values(fakeData(30)).reduce((a, b) => a + b).toLocaleString()} /></td>
 				</tr>
 			</tbody>
 		</table>
@@ -549,8 +574,10 @@
 
 		<div>
 			<div class="chart"><LinkedChart data={fillArrayData} fillArray={Object.values(fillArrayData).map(i => i > 40 ? "#49da9a" : "#eb7532")} linked="link-array" /></div>
-			<div class="chart"><LinkedChart data={fakeData(30)} fillArray={[ ...Array(30).keys() ].map((_, i) => `hsl(${i * 10}, 55%, 50%)`)} linked="link-array" /></div>
-			<div class="chart"><LinkedChart data={fakeData(30)} fillArray={[ ...Array(30).keys() ].map((_, i) => `hsl(20, ${10 + i * 3}%, 50%)`)} linked="link-array" /></div>
+				<div class="chart"><LinkedChart data={fakeData(30)} fillArray={[ ...Array(30).keys() ].map((_, i) => `hsl(20, ${10 + i * 3}%, 50%)`)} linked="link-array" /></div>
+				<div class="chart"><LinkedChart data={fakeData(30)} fillArray={[ ...Array(30).keys() ].map((_, i) => `hsl(${i * 10}, 55%, 50%)`)} linked="link-array" /></div>
+					<div class="chart"><LinkedChart data={fakeData(30)} fillArray={[ ...Array(30).keys() ].map((_, i) => `hsl(${fillArrayHueOffset + i * 10}, 55%, 50%)`)} linked="link-array" /></div>
+				<div class="chart"><LinkedChart data={fakeData(30)} fillArray={fillArrayChangingColors} linked="link-array" /></div>
 		</div>
 	</div>
 
@@ -743,7 +770,10 @@
 			<code>lineColor</code> <code>fill</code> <div>Color of the line if used with type="line".</div>
 			<code>tabindex</code> <code>-1</code> <div>Sets the tabindex of each bar.</div>
       <code>preserveAspectRatio</code> <code>false</code> <div>Sets whether or not the SVG will preserve it's aspect ratio</div>
-			<code>clickHandler</code> <code>null</code> <div>Function that executes on click and returns the key and index for the clicked data.</div>
+			<code>onclick</code> <code>() =&gt; null</code> <div>Function that executes on click and returns the key and index for the clicked data.</div>
+			<code>onhover</code> <code>() =&gt; null</code> <div>Function that executes on hover of each bar.</div>
+			<code>onblur</code> <code>() =&gt; null</code> <div>Function that executes when focus leaves the chart.</div>
+			<code>onvalueupdate</code> <code>() =&gt; null</code> <div>Function that executes when a value in the chart updates.</div>
 		</div>
 	</div>
 
