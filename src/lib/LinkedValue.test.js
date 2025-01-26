@@ -22,4 +22,11 @@ describe("LinkedValue.svelte", () => {
     expect(queryByText("test")).not.toBeTruthy()
     expect(getByText(50)).toBeTruthy()
   })
+
+  it("Should transform value with given function", () => {
+    hoveringValue.set({ "some-uid": 50 })
+    const { getByText } = render(LinkedValue, { empty: "test", uid: "some-uid", transform: (/** @type {string} */ value) => value + "%" })
+
+    expect(getByText("50%")).toBeTruthy()
+  })
 })

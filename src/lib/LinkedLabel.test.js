@@ -23,4 +23,11 @@ describe("LinkedLabel.svelte", () => {
     expect(queryByText("test")).not.toBeTruthy()
     expect(getByText("Some label")).toBeTruthy()
   })
+
+  it("Should transform value with given function", () => {
+    hoveringKey.set({ "link-1": "Some label" })
+    const { getByText } = render(LinkedLabel, { empty: "test", linked: "link-1", transform: (/** @type {string} */ label) => label + " thing" })
+
+    expect(getByText("Some label thing")).toBeTruthy()
+  })
 })
