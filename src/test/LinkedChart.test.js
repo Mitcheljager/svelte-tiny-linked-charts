@@ -5,13 +5,15 @@ import LinkedChart from "$lib/LinkedChart.svelte"
 
 /**
  * @param {number} times
+ * @param {number} [min]
+ * @param {number} [max]
  */
-function fakeData(times) {
+function fakeData(times, min = 50, max = 100) {
   /** @type {Record<string, number>} */
   let data = {}
 
   for(let i = 0; i < times; i++) {
-    data[i] = Math.floor(Math.random() * 50) + 50
+    data[i] = Math.floor(Math.random() * (max - min)) + min
   }
 
   return data
@@ -227,5 +229,68 @@ describe("LinkedChart.svelte", () => {
       key: expect.any(String),
       index: expect.any(Number),
     })
+  })
+
+  it("Should use 0 as floor in bars by default", () => {
+    const data = { "1": 50, "2": 100 }
+    const { container } = render(LinkedChart, { data, height: 50 })
+
+    console.log(container.innerHTML)
+
+    const rect = /** @type {SVGRectElement} */ (container.querySelector("rect"))
+
+    expect(rect.getAttribute("height")).toBe("25")
+  })
+
+  it("Should use scaleMin as floor in bars if given", () => {
+    const data = { "1": 50, "2": 100 }
+    const { container } = render(LinkedChart, { data, height: 50, scaleMin: 50 })
+
+    const rect = /** @type {SVGRectElement} */ (container.querySelector("rect"))
+
+    expect(rect.getAttribute("height")).toBe("0")
+  })
+
+  it("Should use max value as ceiling in bars by default", () => {
+    const data = { "1": 25 }
+    const { container } = render(LinkedChart, { data, height: 50 })
+
+    const rect = /** @type {SVGRectElement} */ (container.querySelector("rect"))
+
+    expect(rect.getAttribute("height")).toBe("50")
+  })
+
+  it("Should use scaleMax as ceiling in bars if given", () => {
+    const data = { "1": 20 }
+    const { container } = render(LinkedChart, { data, height: 50, scaleMax: 100 })
+
+    const rect = /** @type {SVGRectElement} */ (container.querySelector("rect"))
+
+    expect(rect.getAttribute("height")).toBe("10")
+  })
+
+  it("Should not preserve aspect ratio by default", () => {
+    const { container } = render(LinkedChart, { data: {} })
+
+    const svg = /** @type {SVGElement} */ (container.querySelector("svg"))
+
+    expect(svg.getAttribute("preserveAspectRatio")).toBe("none")
+  })
+
+  it("Should preserve aspect ratio when prop is given", () => {
+    const { container } = render(LinkedChart, { data: {}, preserveAspectRatio: true })
+
+    const svg = /** @type {SVGElement} */ (container.querySelector("svg"))
+
+    expect(svg.getAttribute("preserveAspectRatio")).toBe("true")
+  })
+
+  it("Should include any rest props on the svg", () => {
+    const { container } = render(LinkedChart, { data: {}, "data-thing": "Data value", "aria-label": "Some label" })
+
+    const svg = /** @type {SVGElement} */ (container.querySelector("svg"))
+
+    expect(svg.getAttribute("data-thing")).toBe("Data value")
+    expect(svg.getAttribute("aria-label")).toBe("Some label")
   })
 })
