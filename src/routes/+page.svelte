@@ -621,20 +621,6 @@
 
 	<div class="block">
 		<div class="description">
-			To improve accessibility you can set "tabindex=0", allowing navigating to each data point using the keyboard.
-
-			<code>
-				&lt;LinkedChart &#123;data&#125; <mark>tabindex</mark>="0" /&gt; <br>
-			</code>
-		</div>
-
-		<div>
-			<div class="chart"><LinkedChart data={fakeData(30)} linked="link-10" showValue valuePosition="floating" tabindex={0} /></div>
-		</div>
-	</div>
-
-	<div class="block">
-		<div class="description">
 			<p>Instead of bars you can also opt for a line-chart using "type=line". "lineColor" can be used to color the line, "fill" to color the points. This can have all of the bar properties as well.</p>
 
 			<code>
@@ -652,6 +638,34 @@
 			<div class="chart"><LinkedChart data={fakeData(30)} linked="link-9" type="line" /></div>
 			<div class="chart"><LinkedChart data={fakeData(30)} linked="link-9" type="line" /></div>
 			<div class="chart"><LinkedChart data={fakeData(30)} linked="link-9" type="line" lineColor="#4355db" fill="var(--text-color)" showValue valuePosition="floating" /></div>
+		</div>
+	</div>
+
+	<h2>Accessibility</h2>
+
+	<div class="block">
+		<div class="description">
+			To improve accessibility you can set <code class="inline">tabindex=0</code>, allowing navigating to each data point using the keyboard. When this is passed, each bar will have a title element describing it's label and value <em>(e.g. 2005-04-12: 76)</em>.
+
+			<code>
+				&lt;LinkedChart &#123;data&#125; <mark>tabindex</mark>="0" /&gt; <br>
+			</code>
+
+			<p>Additionally, you can provide a <code class="inline">title</code> and <code class="inline">description</code>. Both are used to describe the chart. When the chart is interactive, you should consider explaining the interaction in the description.</p>
+
+			<code>
+				&lt;LinkedChart &#123;data&#125; <mark>title</mark>="Monthly things chart" /&gt; <br>
+			</code>
+
+			<code>
+				&lt;LinkedChart &#123;data&#125; <mark>description</mark>="A bar chart showing monthly things; A varying trend is shown with data points for each day." /&gt; <br>
+			</code>
+
+			<p>Providing a title and description is crucial for all users to be able to understand your chart when using <code class="inline">tabindex=0</code>.</p>
+		</div>
+
+		<div>
+			<div class="chart"><LinkedChart data={fakeData(30)} linked="link-10" showValue valuePosition="floating" tabindex={0} title="Monthly things chart" description="A bar chart showing monthly things; A varying trend is shown with data points for each day." /></div>
 		</div>
 	</div>
 
@@ -769,8 +783,10 @@
 			<code>scaleMax</code> <code>0</code> <div>Use this to overwrite the default value floor of 0.</div>
 			<code>type</code> <code>bar</code> <div>Can be set to "line" to display a line chart instead.</div>
 			<code>lineColor</code> <code>fill</code> <div>Color of the line if used with type="line".</div>
-			<code>tabindex</code> <code>-1</code> <div>Sets the tabindex of each bar.</div>
-      <code>preserveAspectRatio</code> <code>false</code> <div>Sets whether or not the SVG will preserve it's aspect ratio</div>
+      <code>preserveAspectRatio</code> <code>false</code> <div>Sets whether or not the SVG will preserve it's aspect ratio.</div>
+			<code>tabindex</code> <code>-1</code> <div>Sets the tabindex of each bar. When a tabindex of 0 is given, each bar will contain a title that describes the bar's label and value.</div>
+			<code>title</code> <code>""</code> <div>Title that describes the chart for screen readers.</div>
+			<code>description</code> <code>""</code> <div>Description that describes the chart for screen readers.</div>
 			<code>onclick</code> <code>() =&gt; null</code> <div>Function that executes on click and returns the key and index for the clicked data.</div>
 			<code>onhover</code> <code>() =&gt; null</code> <div>Function that executes on hover of each bar.</div>
 			<code>onblur</code> <code>() =&gt; null</code> <div>Function that executes when focus leaves the chart.</div>

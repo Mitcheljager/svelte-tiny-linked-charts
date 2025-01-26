@@ -308,4 +308,66 @@ describe("LinkedChart.svelte", () => {
     expect(svg.getAttribute("data-thing")).toBe("Data value")
     expect(svg.getAttribute("aria-label")).toBe("Some label")
   })
+
+  it("Should set tabindex to given value", () => {
+    const { container } = render(LinkedChart, { data: fakeData(30), tabindex: 0 })
+
+    const rects = /** @type {SVGRectElement[]} */ (Array.from(container.querySelectorAll("rect[tabindex]")))
+
+    expect(rects.every(rect => rect.getAttribute("tabindex") === "0")).toBeTruthy()
+  })
+
+  it("Should add title element in each interactable bar when tabindex is 0", () => {
+    const data = fakeData(30)
+    const { container } = render(LinkedChart, { data, tabindex: 0 })
+
+    const rects = /** @type {SVGRectElement[]} */ (Array.from(container.querySelectorAll("rect[tabindex]")))
+
+    expect(rects.every(rect => rect.querySelector("title"))).toBeTruthy()
+    expect(rects[0].querySelector("title")?.innerHTML).toBe(`${Object.keys(data)[0]}: ${Object.values(data)[0]}`)
+    expect(rects[5].querySelector("title")?.innerHTML).toBe(`${Object.keys(data)[5]}: ${Object.values(data)[5]}`)
+  })
+
+  it("Should not add title element in each interactable bar when tabindex is not set", () => {
+    const data = fakeData(30)
+    const { container } = render(LinkedChart, { data })
+
+    const rects = /** @type {SVGRectElement[]} */ (Array.from(container.querySelectorAll("rect[tabindex]")))
+
+    expect(rects.every(rect => !rect.querySelector("title"))).toBeTruthy()
+  })
+
+  it("Should add title element in svg when title is given", () => {
+    const { container } = render(LinkedChart, { data: {}, title: "Some title" })
+
+    const svg = /** @type {SVGElement} */ (container.querySelector("svg"))
+
+    expect(svg.getAttribute("aria-labelledby")).toBeTruthy()
+    expect(svg.querySelector("title")?.innerHTML).toBe("Some title")
+  })
+
+  it("Should not add title element in svg when no title is given", () => {
+    const { container } = render(LinkedChart, { data: {} })
+
+    const svg = /** @type {SVGElement} */ (container.querySelector("svg"))
+
+    expect(svg.getAttribute("aria-labelledby")).not.toBeTruthy()
+    expect(svg.querySelector("title")).not.toBeTruthy()
+  })
+
+  it("Should add desc element in svg when description is given", () => {
+    const { container } = render(LinkedChart, { data: {}, description: "Some description" })
+
+    const svg = /** @type {SVGElement} */ (container.querySelector("svg"))
+
+    expect(svg.querySelector("desc")?.innerHTML).toBe("Some description")
+  })
+
+  it("Should not add desc element in svg when no description is given", () => {
+    const { container } = render(LinkedChart, { data: {} })
+
+    const svg = /** @type {SVGElement} */ (container.querySelector("svg"))
+
+    expect(svg.querySelector("desc")).not.toBeTruthy()
+  })
 })

@@ -61,8 +61,10 @@
    * @property {number} [scaleMin] Use this to overwrite the default value floor of 0.
    * @property {"bar" | "line"} [type] Can be set to "line" to display a line chart instead.
    * @property {string} [lineColor] Color of the line if used with type="line".
-   * @property {-1 | 0} [tabindex] Sets the tabindex of each bar.
-   * @property {boolean} [preserveAspectRatio]  Sets whether or not the SVG will preserve it's aspect ratio
+   * @property {boolean} [preserveAspectRatio]  Sets whether or not the SVG will preserve it's aspect ratio.
+   * @property {-1 | 0} [tabindex] Sets the tabindex of each bar. When a tabindex of 0 is given, each bar will contain a title that describes the bar's label and value.
+   * @property {string} [title] Title that describes the chart for screen readers.
+	 * @property {string} [description] Description that describes the chart for screen readers.
    * @property {(args: OnClick) => void} [onclick] Function that executes on click and returns the key and index for the clicked data.
    * @property {(args: OnValueUpdate) => void} [onvalueupdate] Function that executes when a value in the chart updates.
    * @property {(args: OnHover) => void} [onhover] Function that executes on hover of each bar, also fires on tab focus.
@@ -99,8 +101,10 @@
     scaleMin = 0,
     type = "bar",
     lineColor = fill,
-    tabindex = -1,
     preserveAspectRatio = false,
+    tabindex = -1,
+    title = "",
+    description = "",
     onclick = ({ key, index }) => null,
     onvalueupdate = ({ value, uid, linkedKey, valueElement }) => null,
     onhover = ({ uid, key, index, linkedKey, value, valueElement, eventElement }) => null,
@@ -221,7 +225,16 @@
   preserveAspectRatio={preserveAspectRatio ? "true" : "none"}
   onmouseleave={endHover}
   onblur={endHover}
+  aria-labelledby={title ? `${uid}-title` : null}
   {...rest}>
+
+  {#if title}
+    <title id="{uid}-title">{title}</title>
+  {/if}
+
+  {#if description}
+    <desc>{description}</desc>
+  {/if}
 
   <g transform="translate({alignmentOffset}, 0)">
     {#if type == "line"}
@@ -258,7 +271,11 @@
         height={height}
         fill="transparent"
         x={(gap + barWidth) * i}
-        {tabindex} />
+        {tabindex}>
+        {#if tabindex !== -1}
+          <title>{key}: {value}</title>
+        {/if}
+      </rect>
     {/each}
   </g>
 </svg>
