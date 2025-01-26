@@ -47,6 +47,7 @@
    * @property {"left" | "right"} [align]
    * @property {number} [gap]
    * @property {string} [fill]
+   * @property {string[]} [fillArray]
    * @property {number} [fadeOpacity]
    * @property {boolean} [hover]
    * @property {number} [transition]
@@ -84,6 +85,7 @@
     align = "right",
     gap = 1,
     fill = "#ff3e00",
+    fillArray = [],
     fadeOpacity = 0.5,
     hover = true,
     transition = 0,
@@ -231,14 +233,14 @@
         <rect
           style={transition ? `transition: all ${transition}ms` : null}
           opacity={hover && $hoveringKey[linkedKey] && $hoveringKey[linkedKey] != key ? fadeOpacity : 1}
-          fill={fill}
+          fill={fillArray[i] || fill}
           width={barWidth}
           height={getHeight(value)}
           x={(gap + barWidth) * i}
           y={(height - getHeight(value))} />
       {:else if type == "line"}
         <circle
-          fill={hover && $hoveringKey[linkedKey] !== null && $hoveringKey[linkedKey] == key ? fill : "transparent"}
+          fill={hover && $hoveringKey[linkedKey] !== null && $hoveringKey[linkedKey] == key ? (fillArray[i] || fill) : "transparent"}
           r={grow ? barMinWidth : barWidth / 2}
           cy={height - getHeight(value)}
           cx={((gap + barWidth) + (barWidth / (Object.keys(data).length))) * i} />

@@ -7,6 +7,8 @@
 	let transitioningData = $state(fakeData(30))
 	let transitionColor = $state(50)
 
+	const fillArrayData = fakeData(30, 100, 10)
+
 	onMount(() => {
 		setInterval(() => {
 			transitioningData = fakeData(30)
@@ -533,6 +535,25 @@
 		</div>
 	</div>
 
+	<div class="block" id="fill-array">
+		<div class="description">
+			An array can be passed to color each bar individually. This supports the same values as the <code class="inline">fill</code> property above.
+			Bars will be filled matching the index of the bar, falling back to the given <code class="inline">fill</code> when not given.
+			For instance; In an array of <code class="inline">[null, "red"]</code>, all items will use the given <code class="inline">fill</code> color, except for the second bar.
+
+			<code>
+				&lt;LinkedChart <mark>fillArray</mark>=&#123;data.map(i =&gt; i &gt; 40 ? "green" : "red")&#125; /&gt; <br>
+				&lt;LinkedChart <mark>fillArray</mark>=&#123;data.map(i =&gt; `hsl($&#123;i * 10&#125;, 55%, 50%)`)&#125; /&gt;
+			</code>
+		</div>
+
+		<div>
+			<div class="chart"><LinkedChart data={fillArrayData} fillArray={Object.values(fillArrayData).map(i => i > 40 ? "#49da9a" : "#eb7532")} linked="link-array" /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} fillArray={[ ...Array(30).keys() ].map((_, i) => `hsl(${i * 10}, 55%, 50%)`)} linked="link-array" /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} fillArray={[ ...Array(30).keys() ].map((_, i) => `hsl(20, ${10 + i * 3}%, 50%)`)} linked="link-array" /></div>
+		</div>
+	</div>
+
 	<div class="block">
 		<div class="description">
 			The opacity of faded out bars can be adjusted using "fadeOpacity".
@@ -706,6 +727,7 @@
 			<code>align</code> <code>right</code> <div>The side the bars should align to when they do not completely fill out the chart.</div>
 			<code>gap</code> <code>1</code> <div>Gap between the bars in pixels.</div>
 			<code>fill</code> <code>#ff3e00</code> <div>Color of the bars, can be any valid CSS color.</div>
+			<code>fillArray</code> <code>[]</code> <div>Array of colors for each individual bar.</div>
 			<code>fadeOpacity</code> <code>0.5</code> <div>The opacity the faded out bars should display in.</div>
 			<code>hover</code> <code>true</code> <div>Boolean whether or not this chart can be hovered at all.</div>
 			<code>transition</code> <code>0</code> <div>Transition the chart between different stats. Value is time in milliseconds.</div>
@@ -801,6 +823,10 @@
 		color: var(--text-color-light);
 		font-size: .75rem;
 		line-height: 1.5em;
+	}
+
+	code.inline {
+		display: inline;
 	}
 
 	mark {

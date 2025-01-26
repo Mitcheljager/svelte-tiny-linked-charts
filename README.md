@@ -90,6 +90,7 @@ grow | false | Whether or not the bar should grow to fill out the full width of 
 align | right | The side the bars should align to when they do not completely fill out the chart.
 gap | 1 | Gap between the bars in pixels.
 fill | #ff3e00 | Color of the bars, can be any valid CSS color.
+fillArray | [] | Array of colors for each individual bar.
 fadeOpacity | 0.5 | The opacity the faded out bars should display in.
 hover | true | Boolean whether or not this chart can be hovered at all.
 transition | 0 | Transition the chart between different stats. Value is time in milliseconds.

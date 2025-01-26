@@ -108,6 +108,23 @@ describe("LinkedChart.svelte", () => {
     expect(container.querySelector("rect")?.getAttribute("fill")).toBe("#ff00ff")
   })
 
+  it("Should use given fillArray color as color for bars", () => {
+    const data = fakeData(20)
+    const { container } = render(LinkedChart, { data, fillArray: ["red", "blue"] })
+
+    expect(container.querySelectorAll("rect[y]")[0]?.getAttribute("fill")).toBe("red")
+    expect(container.querySelectorAll("rect[y]")[1]?.getAttribute("fill")).toBe("blue")
+  })
+
+  it("Should fallback to fill color if fillArray does not contain value for bar index", () => {
+    const data = fakeData(20)
+    const { container } = render(LinkedChart, { data, fill: "green", fillArray: ["red", null, "blue"] })
+
+    expect(container.querySelectorAll("rect[y]")[0]?.getAttribute("fill")).toBe("red")
+    expect(container.querySelectorAll("rect[y]")[1]?.getAttribute("fill")).toBe("green")
+    expect(container.querySelectorAll("rect[y]")[2]?.getAttribute("fill")).toBe("blue")
+  })
+
   it("Should render bars with minimum given width when barMinWidth is given", () => {
     const data = fakeData(20)
     const { container } = render(LinkedChart, { data, barMinWidth: 5 })
@@ -234,8 +251,6 @@ describe("LinkedChart.svelte", () => {
   it("Should use 0 as floor in bars by default", () => {
     const data = { "1": 50, "2": 100 }
     const { container } = render(LinkedChart, { data, height: 50 })
-
-    console.log(container.innerHTML)
 
     const rect = /** @type {SVGRectElement} */ (container.querySelector("rect"))
 
