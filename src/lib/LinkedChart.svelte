@@ -33,40 +33,40 @@
 
   /**
    * @typedef {Object} Props
-   * @property {string} [uid]
-   * @property {Record<string, number>} [data]
-   * @property {string[]} [labels]
-   * @property {number[]} [values]
-   * @property {string} [linked]
-   * @property {number} [height]
-   * @property {number} [width]
-   * @property {number} [barMinWidth]
-   * @property {number} [barMinHeight]
-   * @property {number} [hideBarBelow]
-   * @property {boolean} [grow]
-   * @property {"left" | "right"} [align]
-   * @property {number} [gap]
-   * @property {string} [fill]
-   * @property {string[]} [fillArray]
-   * @property {number} [fadeOpacity]
-   * @property {boolean} [hover]
-   * @property {number} [transition]
-   * @property {boolean} [showValue]
-   * @property {string} [valueDefault]
-   * @property {string} [valuePrepend]
-   * @property {string} [valueAppend]
-   * @property {"static" | "floating"} [valuePosition]
-   * @property {number} [valueUndefined]
-   * @property {number} [scaleMax]
-   * @property {number} [scaleMin]
-   * @property {"bar" | "line"} [type]
-   * @property {string} [lineColor]
-   * @property {-1 | 0} [tabindex]
-   * @property {boolean} [preserveAspectRatio]
-   * @property {(args: OnClick) => void} [onclick]
-   * @property {(args: OnValueUpdate) => void} [onvalueupdate]
-   * @property {(args: OnHover) => void} [onhover]
-   * @property {(args: OnBlur) => void} [onblur]
+   * @property {string} [uid] Unique ID to link this chart to a LinkedValue component with the same uid.
+   * @property {Record<string, number>} [data] Data that will be displayed in the chart supplied in key:value object. Key should be a string, value a number.
+   * @property {string[]} [labels] Labels supplied separately, to be used together with `values` property.
+   * @property {number[]} [values] Values supplied separately, to be used together with `labels` property.
+   * @property {string} [linked] Key to link this chart to other charts with the same key.
+   * @property {number} [height] Height of the chart in pixels.
+   * @property {number} [width] Width of the chart in pixels.
+   * @property {number} [barMinWidth] Width of the bars in the chart in pixels.
+   * @property {number} [barMinHeight] Minimum height of the bars in the chart in pixels.
+   * @property {number} [hideBarBelow] Bars below this value will be hidden, showing as 0 height.
+   * @property {boolean} [grow] Whether or not the bar should grow to fill out the full width of the chart.
+   * @property {"left" | "right"} [align] The side the bars should align to when they do not completely fill out the chart.
+   * @property {number} [gap] Gap between the bars in pixels.
+   * @property {string} [fill] Color of the bars, can be any valid CSS color.
+   * @property {Array<string | null>} [fillArray] Array of colors for each individual bar.
+   * @property {number} [fadeOpacity] The opacity the faded out bars should display in.
+   * @property {boolean} [hover] Boolean whether or not this chart can be hovered at all.
+   * @property {number} [transition] Transition the chart between different stats. Value is time in milliseconds.
+   * @property {boolean} [showValue] Boolean whether or not a value will be shown.
+   * @property {string} [valueDefault] Default value when not hovering.
+   * @property {string} [valuePrepend] String to prepend the value.
+   * @property {string} [valueAppend] String to append to the value.
+   * @property {number} [valueUndefined] For when the hovering value returns undefined.
+   * @property {"static" | "floating"} [valuePosition] Can be set to "floating" to follow the position of the hover.
+   * @property {number} [scaleMax] Use this to overwrite the automatic scale set to the highest value in your array.
+   * @property {number} [scaleMin] Use this to overwrite the default value floor of 0.
+   * @property {"bar" | "line"} [type] Can be set to "line" to display a line chart instead.
+   * @property {string} [lineColor] Color of the line if used with type="line".
+   * @property {-1 | 0} [tabindex] Sets the tabindex of each bar.
+   * @property {boolean} [preserveAspectRatio]  Sets whether or not the SVG will preserve it's aspect ratio
+   * @property {(args: OnClick) => void} [onclick] Function that executes on click and returns the key and index for the clicked data.
+   * @property {(args: OnValueUpdate) => void} [onvalueupdate] Function that executes when a value in the chart updates.
+   * @property {(args: OnHover) => void} [onhover] Function that executes on hover of each bar, also fires on tab focus.
+   * @property {(args: OnBlur) => void} [onblur] Function that executes when hover or focus leaves the chart.
    */
 
   /** @type {Props & { [key: string]: any }} */
