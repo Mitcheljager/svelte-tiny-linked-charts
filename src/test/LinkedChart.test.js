@@ -1,5 +1,5 @@
-import { fireEvent, render } from '@testing-library/svelte'
-import { describe, expect, it, vi } from 'vitest'
+import { fireEvent, render } from "@testing-library/svelte"
+import { describe, expect, it, vi } from "vitest"
 
 import LinkedChart from "$lib/LinkedChart.svelte"
 
@@ -84,7 +84,7 @@ describe("LinkedChart.svelte", () => {
 
   it("Should show value as floating when valuePosition is given as floating", async () => {
     const data = fakeData(20)
-    const { getByText, container } = render(LinkedChart, { data, showValue: true, valuePosition: "floating" })
+    const { container } = render(LinkedChart, { data, showValue: true, valuePosition: "floating" })
 
     const element = container.querySelector(".tiny-linked-charts-value")
     const rect = /** @type {SVGElement} */ (container.querySelector(".tiny-linked-charts-value"))
@@ -227,7 +227,7 @@ describe("LinkedChart.svelte", () => {
 
     expect(onclick).toBeCalledWith({
       key: expect.any(String),
-      index: expect.any(Number),
+      index: expect.any(Number)
     })
   })
 

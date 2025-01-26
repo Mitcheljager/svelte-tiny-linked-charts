@@ -268,6 +268,7 @@
       <span bind:this={valueElement}>{$hoveringValue[uid] || valueUndefined}</span>
       {valueAppend}
     {:else}
+      <!-- eslint-disable-next-line svelte/no-at-html-tags -->
       {@html valueDefault}
     {/if}
   </div>

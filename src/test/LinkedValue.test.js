@@ -1,8 +1,8 @@
-import { render } from '@testing-library/svelte'
-import { afterEach, describe, expect, it } from 'vitest'
+import { render } from "@testing-library/svelte"
+import { afterEach, describe, expect, it } from "vitest"
 
 import LinkedValue from "$lib/LinkedValue.svelte"
-import { hoveringValue } from '$lib/stores/tinyLinkedCharts.js'
+import { hoveringValue } from "$lib/stores/tinyLinkedCharts.js"
 
 describe("LinkedValue.svelte", () => {
   afterEach(() => {

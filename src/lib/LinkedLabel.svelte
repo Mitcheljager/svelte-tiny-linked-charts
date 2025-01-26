@@ -11,5 +11,6 @@
 {#if label}
   {transform(label)}
 {:else}
+  <!-- eslint-disable-next-line svelte/no-at-html-tags -->
   {@html empty}
 {/if}

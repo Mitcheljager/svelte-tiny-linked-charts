@@ -16,5 +16,6 @@
 {#if uid in $hoveringValue && value !== null}
   {transform(value) || valueUndefined}
 {:else}
+  <!-- eslint-disable-next-line svelte/no-at-html-tags -->
   {@html empty}
 {/if}
