@@ -801,7 +801,7 @@
 			<strong>Property</strong> <strong>Default</strong> <strong>Description</strong>
 			<code>linked</code> <code></code> <div>Key to link this label to charts with the same key.</div>
 			<code>empty</code> <code>&amp;nbsp;</code> <div>String that will be displayed when no bar is being hovered.</div>
-			<code>transform</code> <code>(label) => label</code> <div>Transform the given label to format it differently from how it was supplied.</div>
+			<code>transform</code> <code>(label) =&gt; label</code> <div>Transform the given label to format it differently from how it was supplied.</div>
 		</div>
 	</div>
 
@@ -813,7 +813,7 @@
 			<code>uid</code> <code></code> <div>Unique ID to link this value to a chart with the same uid.</div>
 			<code>empty</code> <code>&amp;nbsp;</code> <div>String that will be displayed when no bar is being hovered.</div>
 			<code>valueUndefined</code> <code>0</code> <div>For when the hovering value returns undefined.</div>
-			<code>transform</code> <code>(value) => value</code> <div>Transform the given value to format it differently from how it was supplied.</div>
+			<code>transform</code> <code>(value) =&gt; value</code> <div>Transform the given value to format it differently from how it was supplied.</div>
 		</div>
 	</div>
 
