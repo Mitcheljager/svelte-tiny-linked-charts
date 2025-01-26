@@ -562,6 +562,7 @@
 
 	<div class="block" id="fill-array">
 		<div class="description">
+			<em>(From version 2.1.0)</em><br>
 			An array can be passed to color each bar individually. This supports the same values as the <code class="inline">fill</code> property above.
 			Bars will be filled matching the index of the bar, falling back to the given <code class="inline">fill</code> when not given.
 			For instance; In an array of <code class="inline">[null, "red"]</code>, all items will use the given <code class="inline">fill</code> color, except for the second bar.
