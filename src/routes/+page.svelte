@@ -651,7 +651,7 @@
 				&lt;LinkedChart &#123;data&#125; <mark>tabindex</mark>="0" /&gt; <br>
 			</code>
 
-			<p>Additionally, you can provide a <code class="inline">title</code> and <code class="inline">description</code>. Both are used to describe the chart. When the chart is interactive, you should consider explaining the interaction in the description.</p>
+			<p><em>(From version 2.2.0)</em><br>Additionally, you can provide a <code class="inline">title</code> and <code class="inline">description</code>. Both are used to describe the chart. When the chart is interactive, you should consider explaining the interaction in the description.</p>
 
 			<code>
 				&lt;LinkedChart &#123;data&#125; <mark>title</mark>="Monthly things chart" /&gt; <br>
