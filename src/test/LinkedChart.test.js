@@ -1,5 +1,5 @@
 import { fireEvent, render } from '@testing-library/svelte'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import LinkedChart from "$lib/LinkedChart.svelte"
 
@@ -21,8 +21,7 @@ describe("LinkedChart.svelte", () => {
   it("Should render rect elements equal to length of data given", () => {
     const randomLength = Math.floor(Math.random() * 5) + 25
     const data = fakeData(randomLength)
-
-    const { container } = render(LinkedChart, { data: data })
+    const { container } = render(LinkedChart, { data })
 
     expect(container.querySelector("svg")).toBeTruthy()
     expect(container.querySelectorAll("rect[tabindex]").length).toBe(randomLength)
@@ -30,7 +29,6 @@ describe("LinkedChart.svelte", () => {
 
   it("Should still render if labels and values are given instead of data", () => {
     const data = fakeData(20)
-
     const { container } = render(LinkedChart, { labels: Object.keys(data), values: Object.values(data) })
 
     expect(container.querySelector("svg")).toBeTruthy()
@@ -39,8 +37,7 @@ describe("LinkedChart.svelte", () => {
 
   it("Should show a value when showValue is enabled when a rect is hovered and no value when no longer hovered", async () => {
     const data = fakeData(20)
-
-    const { getByText, container } = render(LinkedChart, { data: data, showValue: true })
+    const { getByText, container } = render(LinkedChart, { data, showValue: true })
 
     const elements = container.querySelectorAll("rect[tabindex]")
 
@@ -54,19 +51,181 @@ describe("LinkedChart.svelte", () => {
     expect(() => getByText(data[10])).toThrow()
   })
 
-  it("Should show default text for value if showValue is enabled and valueDefault is set", async () => {
+  it("Should show valuePrepend before value when hovered", async () => {
     const data = fakeData(20)
+    const { getByText, container } = render(LinkedChart, { data, showValue: true, valuePrepend: "Some prepend" })
 
-    const { getByText } = render(LinkedChart, { data: data, showValue: true, valueDefault: "Some Label" })
+    const rect = /** @type {SVGRectElement} */ (container.querySelector("rect[tabindex]"))
+
+    await fireEvent.mouseOver(rect)
+
+    expect(getByText("Some prepend")).toBeTruthy()
+  })
+
+  it("Should show valueAppend after value when hovered", async () => {
+    const data = fakeData(20)
+    const { getByText, container } = render(LinkedChart, { data, showValue: true, valueAppend: "Some append" })
+
+    const rect = /** @type {SVGRectElement} */ (container.querySelector("rect[tabindex]"))
+
+    await fireEvent.mouseOver(rect)
+
+    expect(getByText("Some append")).toBeTruthy()
+  })
+
+  it("Should show default text for value if showValue is enabled and valueDefault is set", () => {
+    const data = fakeData(20)
+    const { getByText } = render(LinkedChart, { data, showValue: true, valueDefault: "Some Label" })
 
     expect(getByText("Some Label")).toBeTruthy()
   })
 
-  it("Should display a line if type is set to line", async () => {
+  it("Should show value as floating when valuePosition is given as floating", async () => {
     const data = fakeData(20)
+    const { getByText, container } = render(LinkedChart, { data, showValue: true, valuePosition: "floating" })
 
-    const { container } = render(LinkedChart, { data: data, type: "line" })
+    const element = container.querySelector(".tiny-linked-charts-value")
+    const rect = /** @type {SVGElement} */ (container.querySelector(".tiny-linked-charts-value"))
+
+    await fireEvent.mouseOver(rect)
+
+    expect(element?.getAttribute("style")).toContain("position: absolute; transform: translateX")
+  })
+
+  it("Should display a line if type is set to line", () => {
+    const data = fakeData(20)
+    const { container } = render(LinkedChart, { data, type: "line" })
 
     expect(container.querySelector("polyline")).toBeTruthy()
+  })
+
+  it("Should use given fill color as color for bars", () => {
+    const data = fakeData(20)
+    const { container } = render(LinkedChart, { data, fill: "#ff00ff" })
+
+    expect(container.querySelector("rect")?.getAttribute("fill")).toBe("#ff00ff")
+  })
+
+  it("Should render bars with minimum given width when barMinWidth is given", () => {
+    const data = fakeData(20)
+    const { container } = render(LinkedChart, { data, barMinWidth: 5 })
+
+    expect(container.querySelector("rect")?.getAttribute("width")).toBe("5")
+  })
+
+  it("Should render bars to fill out width of the container when grow prop is given", () => {
+    const data = fakeData(5)
+    const { container } = render(LinkedChart, { data, width: 100, grow: true, gap: 0 })
+
+    expect(container.querySelector("rect")?.getAttribute("width")).toBe("20")
+  })
+
+  it("Should render bars to fill out width when grow is given and account for the gap size when given", () => {
+    const data = fakeData(5)
+    const { container } = render(LinkedChart, { data, width: 100, grow: true, gap: 5 })
+
+    expect(container.querySelector("rect")?.getAttribute("width")).toBe("15")
+  })
+
+  it("Should change styling of bars on hover when hovered", async () => {
+    const data = fakeData(5)
+    const { container } = render(LinkedChart, { data })
+
+    const barRects = container.querySelectorAll("rect:not([tabindex])")
+    const hoverableRects = container.querySelectorAll("rect[tabindex]")
+
+    await fireEvent.mouseOver(hoverableRects[1])
+
+    expect(barRects[2]?.getAttribute("opacity")).not.toBe("1")
+  })
+
+  it("Should change styling of bars to given fadeOpacity prop when hovered", async () => {
+    const data = fakeData(5)
+    const { container } = render(LinkedChart, { data, fadeOpacity: 0.1 })
+
+    const barRects = container.querySelectorAll("rect:not([tabindex])")
+    const hoverableRects = container.querySelectorAll("rect[tabindex]")
+
+    await fireEvent.mouseOver(hoverableRects[1])
+
+    expect(barRects[2]?.getAttribute("opacity")).toBe("0.1")
+  })
+
+  it("Should not change styling of bars on hover when hover is false", async () => {
+    const data = fakeData(5)
+    const { container } = render(LinkedChart, { data, hover: false })
+
+    const barRects = container.querySelectorAll("rect:not([tabindex])")
+    const hoverableRects = container.querySelectorAll("rect[tabindex]")
+
+    await fireEvent.mouseOver(hoverableRects[1])
+
+    expect(barRects[2]?.getAttribute("opacity")).toBe("1")
+  })
+
+  it("Should render with given height prop", () => {
+    const data = fakeData(5)
+    const { container } = render(LinkedChart, { data, height: 20 })
+
+    expect(container.querySelector("svg")?.getAttribute("height")).toBe("20")
+  })
+
+  it("Should render with given width prop", () => {
+    const data = fakeData(5)
+    const { container } = render(LinkedChart, { data, width: 200 })
+
+    expect(container.querySelector("svg")?.getAttribute("width")).toBe("200")
+  })
+
+  it("Should fire given onhover function when hovering bars", async () => {
+    const data = fakeData(5)
+    const onhover = vi.fn()
+    const { container } = render(LinkedChart, { data, onhover })
+
+    const rect = /** @type {SVGRectElement} */ (container.querySelector("rect[tabindex]"))
+
+    await fireEvent.mouseOver(rect)
+
+    expect(onhover).toBeCalledWith({
+      eventElement: expect.any(SVGRectElement),
+      index: 0,
+      key: "0",
+      linkedKey: expect.any(String),
+      uid: expect.any(String),
+      value: expect.any(Number),
+      valueElement: undefined
+    })
+  })
+
+  it("Should fire given onblur function when exiting hover of svg", async () => {
+    const data = fakeData(5)
+    const onblur = vi.fn()
+    const { container } = render(LinkedChart, { data, onblur })
+
+    const svg = /** @type {SVGElement} */ (container.querySelector("svg"))
+
+    await fireEvent.mouseLeave(svg)
+
+    expect(onblur).toBeCalledWith({
+      eventElement: expect.any(SVGElement),
+      linkedKey: expect.any(String),
+      uid: expect.any(String),
+      valueElement: undefined
+    })
+  })
+
+  it("Should fire given onclick function when clicking bars", async () => {
+    const data = fakeData(5)
+    const onclick = vi.fn()
+    const { container } = render(LinkedChart, { data, onclick })
+
+    const rect = /** @type {SVGRectElement} */ (container.querySelector("rect[tabindex]"))
+
+    await fireEvent.click(rect)
+
+    expect(onclick).toBeCalledWith({
+      key: expect.any(String),
+      index: expect.any(Number),
+    })
   })
 })
