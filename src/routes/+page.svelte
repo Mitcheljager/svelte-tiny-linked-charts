@@ -697,15 +697,21 @@
 			</div>
 
 			<code class="well">
-				&lt;LinkedChart <br>
-				&nbsp; <mark>onhover</mark>=&#123;(&#123; <mark>value</mark> &#125;) =&gt; &#123; <br>
-				&nbsp;&nbsp;&nbsp	const element = document.querySelector("[data-role='currency']") <br>
+				&lt;script&gt;<br>
+					&nbsp;&nbsp;function <mark>onhover</mark>(&#123; <mark>value</mark> &#125;) &#123;<br>
+						&nbsp;&nbsp;&nbsp	const element = document.querySelector("[data-role='currency']") <br>
+						<br>
+						&nbsp;&nbsp;&nbsp element.innerHTML = (<mark>value</mark> || 0 / 100).toLocaleString("en-US", &#123; <br>
+						&nbsp;&nbsp;&nbsp&nbsp;&nbsp; style: "currency", currency: "USD"<br>
+						&nbsp;&nbsp;&nbsp &#125;) <br>
+					&nbsp;&nbsp;&#125; <br>
+					<br>
+					&nbsp;&nbsp;function <mark>blur</mark>() &#123; <br>
+						&nbsp;&nbsp;&nbsp;&nbsp;document.querySelector("[data-role='currency']").innerHTML = "&nbsp;"&#125; <br>
+					&nbsp;&nbsp;&#125; <br>
+				&lt;/script&gt; <br>
 				<br>
-				&nbsp;&nbsp;&nbsp element.innerHTML = (<mark>value</mark> || 0 / 100).toLocaleString("en-US", &#123; <br>
-				&nbsp;&nbsp;&nbsp&nbsp;&nbsp; style: "currency", currency: "USD"<br>
-				&nbsp;&nbsp;&nbsp &#125;) <br>
-				&nbsp; &#125;&#125; <br>
-				&nbsp; <mark>onblur</mark>=&#123;() =&gt; document.querySelector("[data-role='currency']").innerHTML = "&nbsp;"&#125; /&gt;<br>
+				&lt;LinkedChart &#123;<mark>onhover</mark>&#125; <mark>onblur</mark>=&#123;() /&gt;<br>
 				<br>
 				&lt;span data-role="currency"&gt;&lt;/span&gt;
 			</code>
