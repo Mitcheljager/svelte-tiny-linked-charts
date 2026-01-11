@@ -658,7 +658,7 @@
 			</code>
 
 			<code>
-				&lt;LinkedChart &#123;data&#125; <mark>description</mark>="A bar chart showing monthly things; A varying trend is shown with data points for each day." /&gt; <br>
+				&lt;LinkedChart &#123;data&#125; <mark>description</mark>="A bar chart showing monthly things. A varying trend is shown with data points for each day." /&gt; <br>
 			</code>
 
 			<p>Providing a title and description is crucial for all users to be able to understand your chart when using <code class="inline">tabindex=0</code>.</p>
