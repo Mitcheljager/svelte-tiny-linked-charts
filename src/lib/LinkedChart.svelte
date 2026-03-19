@@ -242,7 +242,7 @@
   <g transform="translate({alignmentOffset}, 0)">
     {#if type == "line"}
       {#if lineFill && lineFill !== "transparent"}
-        <polyline points={[...polyline, [polyline[polyline.length - 1]?.[0], height], [0, height]].join(" ")} fill={lineFill} />
+        <polygon points={[...polyline, [polyline[polyline.length - 1]?.[0], height], [0, height]].join(" ")} fill={lineFill} />
       {/if}
 
       <polyline points={polyline.join(" ")} stroke={lineColor} stroke-width={lineWidth} fill="transparent" />

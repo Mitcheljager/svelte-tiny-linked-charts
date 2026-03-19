@@ -133,7 +133,7 @@
 
 				<tr>
 					<td class="label">A thing using an area</td>
-					<td width="150"><LinkedChart data={fakeData(30, 100, 50)} scaleMax={105} linked="table" uid="table-7" type="line" lineFill="#ff3e0033" lineWidth={2} lineDotRadius={3} /></td>
+					<td width="150"><LinkedChart data={fakeData(30)} scaleMax={105} linked="table" uid="table-7" type="line" lineFill="#ff3e0033" lineWidth={2} lineDotRadius={3} /></td>
 					<td><LinkedValue uid="table-7" empty={Object.values(fakeData(30)).reduce((a, b) => a + b).toLocaleString()} /></td>
 				</tr>
 			</tbody>
@@ -663,9 +663,9 @@
 		</div>
 
 		<div>
-			<div class="chart"><LinkedChart data={fakeData(30, 100, 50)} scaleMax={120} linked="link-line-width" type="line" lineWidth={5} lineDotRadius={6} /></div>
-			<div class="chart"><LinkedChart data={fakeData(30, 100, 50)} scaleMax={105} linked="link-line-width" type="line" lineWidth={2} lineDotRadius={4} /></div>
-			<div class="chart"><LinkedChart data={fakeData(30, 100, 50)} scaleMax={105} linked="link-line-width" type="line" lineWidth={0.5} /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} scaleMax={120} linked="link-line-width" type="line" lineWidth={5} lineDotRadius={6} /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} scaleMax={105} linked="link-line-width" type="line" lineWidth={2} lineDotRadius={4} /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} scaleMax={105} linked="link-line-width" type="line" lineWidth={0.5} /></div>
 		</div>
 	</div>
 
@@ -686,9 +686,9 @@
 		</div>
 
 		<div>
-			<div class="chart"><LinkedChart data={fakeData(30)} linked="link-line-fill" type="line" lineFill="var(--primary)" /></div>
-			<div class="chart"><LinkedChart data={fakeData(30)} linked="link-line-fill" type="line" lineFill="#ff3e0033" /></div>
-			<div class="chart"><LinkedChart data={fakeData(30)} linked="link-line-fill" type="line" lineColor="#4355db" fill="var(--text-color" lineFill="#ffffff11" /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} scaleMax={105} linked="link-line-fill" type="line" lineFill="var(--primary)" /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} scaleMax={105} linked="link-line-fill" type="line" lineFill="#ff3e0033" /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} scaleMax={105} linked="link-line-fill" type="line" lineColor="#4355db" fill="var(--text-color" lineFill="#ffffff11" /></div>
 		</div>
 	</div>
 
