@@ -192,6 +192,8 @@
       points.push([i * ((barWidth + gap) + (barWidth / (Object.keys(data).length))), height - getHeight(Object.values(data)[i])])
     }
 
+    points[points.length - 1][0] = width
+
     return points
   }
 
@@ -265,8 +267,8 @@
         <circle
           fill={hover && $hoveringKey[linkedKey] !== null && $hoveringKey[linkedKey] == key ? (fillArray[i] || fill) : "transparent"}
           r={lineDotRadius || (grow ? barMinWidth : barWidth / 2)}
-          cy={height - getHeight(value)}
-          cx={((gap + barWidth) + (barWidth / (Object.keys(data).length))) * i} />
+          cy={polyline?.[i]?.[1]}
+          cx={polyline?.[i]?.[0]} />
       {/if}
 
       <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
