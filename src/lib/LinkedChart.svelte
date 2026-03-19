@@ -192,7 +192,7 @@
       points.push([i * ((barWidth + gap) + (barWidth / (Object.keys(data).length))), height - getHeight(Object.values(data)[i])])
     }
 
-    points[points.length - 1][0] = width
+    if (align === "right") points[points.length - 1][0] = width
 
     return points
   }
@@ -247,7 +247,7 @@
   <g transform="translate({alignmentOffset}, 0)">
     {#if type == "line"}
       {#if lineFill && lineFill !== "transparent"}
-        <polyline points={[...polyline, [width, height], [0, height]].join(" ")} fill={lineFill} />
+        <polyline points={[...polyline, [polyline[polyline.length - 1]?.[0], height], [0, height]].join(" ")} fill={lineFill} />
       {/if}
 
       <polyline points={polyline.join(" ")} stroke={lineColor} stroke-width={lineWidth} fill="transparent" />
