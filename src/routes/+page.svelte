@@ -657,7 +657,7 @@
 				&lt;LinkedChart <br>
 				&nbsp; &#123;data&#125; <br>
 				&nbsp; <mark>type</mark>="line" <br>
-				&nbsp; <mark>lineWidth</mark>=&#123;5&#125;
+				&nbsp; <mark>lineWidth</mark>=&#123;5&#125; <br>
 				&nbsp; <mark>lineDotRadius</mark>=&#123;6&#125; /&gt;
 			</code>
 		</div>
