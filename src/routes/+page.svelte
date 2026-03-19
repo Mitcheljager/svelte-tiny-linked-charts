@@ -676,7 +676,6 @@
 				A line chart can optionally have a fill area.
 			</p>
 			<code>
-				&lt;LinkedChart &#123;data&#125; type="line" /&gt; <br>
 				&lt;LinkedChart <br>
 				&nbsp; &#123;data&#125; <br>
 				&nbsp; <mark>type</mark>="line" <br>
@@ -688,7 +687,28 @@
 		<div>
 			<div class="chart"><LinkedChart data={fakeData(30)} scaleMax={105} linked="link-line-fill" type="line" lineFill="var(--primary)" /></div>
 			<div class="chart"><LinkedChart data={fakeData(30)} scaleMax={105} linked="link-line-fill" type="line" lineFill="#ff3e0033" /></div>
-			<div class="chart"><LinkedChart data={fakeData(30)} scaleMax={105} linked="link-line-fill" type="line" lineColor="#4355db" fill="var(--text-color" lineFill="#ffffff11" /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} scaleMax={105} linked="link-line-fill" type="line" lineColor="#4355db" fill="var(--text-color)" lineFill="#ffffff11" /></div>
+		</div>
+	</div>
+
+	<div class="block">
+		<div class="description">
+			<p>
+				<em>(From version 2.4.0)</em><br>
+				A line chart's fill area can optionally use a gradient using <code class="inline">lineFillGradient</code>. This is an array of colors.
+			</p>
+			<code>
+				&lt;LinkedChart <br>
+				&nbsp; &#123;data&#125; <br>
+				&nbsp; <mark>type</mark>="line" <br>
+				&nbsp; <mark>lineFillGradient</mark>=&#123;["var(--primary)", "transparent"]&#125; /&gt;
+			</code>
+		</div>
+
+		<div>
+			<div class="chart"><LinkedChart data={fakeData(30)} scaleMax={105} linked="link-line-gradient" type="line" lineFillGradient={["var(--primary)", "transparent"]} /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} scaleMax={105} linked="link-line-gradient" type="line" lineColor="deeppink" fill="white" lineFillGradient={["purple", "rebeccapurple", "darkslateblue"]} /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} scaleMax={105} linked="link-line-gradient" type="line" lineColor="#4355db" fill="var(--text-color)" lineFillGradient={["#4355db55", "#4355db55", "transparent"]} /></div>
 		</div>
 	</div>
 
@@ -702,7 +722,7 @@
 				&lt;LinkedChart &#123;data&#125; <mark>tabindex</mark>="0" /&gt; <br>
 			</code>
 
-			<p><em>(From version 2.3.0)</em><br>Additionally, you can provide a <code class="inline">title</code> and <code class="inline">description</code>. Both are used to describe the chart. When the chart is interactive, you should consider explaining the interaction in the description.</p>
+			<p><em>(From version 2.2.0)</em><br>Additionally, you can provide a <code class="inline">title</code> and <code class="inline">description</code>. Both are used to describe the chart. When the chart is interactive, you should consider explaining the interaction in the description.</p>
 
 			<code>
 				&lt;LinkedChart &#123;data&#125; <mark>title</mark>="Monthly things chart" /&gt; <br>
@@ -841,6 +861,7 @@
 			<code>type</code> <code>bar</code> <div>Can be set to "line" to display a line chart instead.</div>
 			<code>lineColor</code> <code>fill</code> <div>Color of the line if used with type="line".</div>
 			<code>lineFill</code> <code>transparent</code> <div>Color of the fill area if used with type="line".</div>
+			<code>lineFillGradient</code> <code>null</code> <div>Gradient stops of fill area if used with type="line", each value being a stop for any css color.</div>
 			<code>lineWidth</code> <code>1</code> <div>Width of the line if used with type="line".</div>
 			<code>lineDotRadius</code> <code>0 (derived)</code> <div>The size of the dot when hovering a line if used with type="line".</div>
       <code>preserveAspectRatio</code> <code>false</code> <div>Sets whether or not the SVG will preserve it's aspect ratio.</div>

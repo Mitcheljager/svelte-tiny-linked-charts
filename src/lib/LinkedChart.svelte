@@ -62,6 +62,7 @@
    * @property {"bar" | "line"} [type] Can be set to "line" to display a line chart instead.
    * @property {string} [lineColor] Color of the line if used with type="line".
    * @property {string} [lineFill] Color of the fill area if used with type="line".
+   * @property {string[] | null} [lineFillGradient] Gradient stops of fill area if used with type="line", each value being a stop for any css color.
    * @property {number} [lineWidth] Width of the line if used with type="line".
    * @property {number} [lineDotRadius] The size of the dot when hovering a line if used with type="line".
    * @property {boolean} [preserveAspectRatio]  Sets whether or not the SVG will preserve it's aspect ratio.
@@ -105,6 +106,7 @@
     type = "bar",
     lineColor = fill,
     lineFill = "transparent",
+    lineFillGradient = null,
     lineWidth = 1,
     lineDotRadius = 0,
     preserveAspectRatio = false,
@@ -239,10 +241,20 @@
     <desc>{description}</desc>
   {/if}
 
+  {#if lineFillGradient}
+    <defs>
+      <linearGradient id="chart-{uid}-gradient" x1="0" x2="0" y1="0" y2="1">
+        {#each lineFillGradient as color, index}
+          <stop offset="{100 / (lineFillGradient.length - 1) * index}%" stop-color={color} />
+        {/each}
+      </linearGradient>
+    </defs>
+  {/if}
+
   <g transform="translate({alignmentOffset}, 0)">
     {#if type == "line"}
-      {#if lineFill && lineFill !== "transparent"}
-        <polygon points={[...polyline, [polyline[polyline.length - 1]?.[0], height], [0, height]].join(" ")} fill={lineFill} />
+      {#if (lineFill && lineFill !== "transparent") || lineFillGradient}
+        <polygon points={[...polyline, [polyline[polyline.length - 1]?.[0], height], [0, height]].join(" ")} fill={lineFillGradient ? `url(#chart-${uid}-gradient)` : lineFill} />
       {/if}
 
       <polyline points={polyline.join(" ")} stroke={lineColor} stroke-width={lineWidth} fill="transparent" />
