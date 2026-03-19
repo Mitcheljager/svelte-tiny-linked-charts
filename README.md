@@ -104,6 +104,9 @@ scaleMax | 0 | Use this to overwrite the automatic scale set to the highest valu
 scaleMax | 0 | Use this to overwrite the default value floor of 0.
 type | bar | Can be set to "line" to display a line chart instead.
 lineColor | fill | Color of the line if used with type="line".
+lineFill | transparent | Color of the fill area if used with type="line".
+lineWidth | 1 | Width of the line if used with type="line".
+lineDotRadius | 0 (derived) | The size of the dot when hovering a line if used with type="line".
 preserveAspectRatio | false | Sets whether or not the SVG will preserve it's aspect ratio.
 tabindex | -1 | Sets the tabindex of each bar. When a tabindex of 0 is given, each bar will contain a title that describes the bar's label and value.
 title | "" | Title that describes the chart for screen readers.

@@ -61,6 +61,9 @@
    * @property {number} [scaleMin] Use this to overwrite the default value floor of 0.
    * @property {"bar" | "line"} [type] Can be set to "line" to display a line chart instead.
    * @property {string} [lineColor] Color of the line if used with type="line".
+   * @property {string} [lineFill] Color of the fill area if used with type="line".
+   * @property {number} [lineWidth] Width of the line if used with type="line".
+   * @property {number} [lineDotRadius] The size of the dot when hovering a line if used with type="line".
    * @property {boolean} [preserveAspectRatio]  Sets whether or not the SVG will preserve it's aspect ratio.
    * @property {-1 | 0} [tabindex] Sets the tabindex of each bar. When a tabindex of 0 is given, each bar will contain a title that describes the bar's label and value.
    * @property {string} [title] Title that describes the chart for screen readers.
@@ -101,6 +104,9 @@
     scaleMin = 0,
     type = "bar",
     lineColor = fill,
+    lineFill = "transparent",
+    lineWidth = 1,
+    lineDotRadius = 0,
     preserveAspectRatio = false,
     tabindex = -1,
     title = "",
@@ -238,7 +244,11 @@
 
   <g transform="translate({alignmentOffset}, 0)">
     {#if type == "line"}
-      <polyline points={polyline.join(" ")} stroke={lineColor} fill="transparent" />
+      {#if lineFill && lineFill !== "transparent"}
+        <polyline points={[...polyline, [width, height], [0, height]].join(" ")} fill={lineFill} />
+      {/if}
+
+      <polyline points={polyline.join(" ")} stroke={lineColor} stroke-width={lineWidth} fill="transparent" />
     {/if}
 
     {#each Object.entries(data) as [key, value], i}
@@ -254,7 +264,7 @@
       {:else if type == "line"}
         <circle
           fill={hover && $hoveringKey[linkedKey] !== null && $hoveringKey[linkedKey] == key ? (fillArray[i] || fill) : "transparent"}
-          r={grow ? barMinWidth : barWidth / 2}
+          r={lineDotRadius || (grow ? barMinWidth : barWidth / 2)}
           cy={height - getHeight(value)}
           cx={((gap + barWidth) + (barWidth / (Object.keys(data).length))) * i} />
       {/if}

@@ -130,6 +130,12 @@
 					<td width="150"><LinkedChart data={fakeData(30)} linked="table" uid="table-6" type="line" /></td>
 					<td><LinkedValue uid="table-6" empty={Object.values(fakeData(30)).reduce((a, b) => a + b).toLocaleString()} /></td>
 				</tr>
+
+				<tr>
+					<td class="label">A thing using an area</td>
+					<td width="150"><LinkedChart data={fakeData(30, 100, 50)} scaleMax={105} linked="table" uid="table-7" type="line" lineFill="#ff3e0033" lineWidth={2} lineDotRadius={3} /></td>
+					<td><LinkedValue uid="table-7" empty={Object.values(fakeData(30)).reduce((a, b) => a + b).toLocaleString()} /></td>
+				</tr>
 			</tbody>
 		</table>
 
@@ -641,6 +647,51 @@
 		</div>
 	</div>
 
+	<div class="block">
+		<div class="description">
+			<p>
+				<em>(From version 2.2.0)</em><br>
+				The width of the line is controlled using the <code class="inline">lineWidth</code> property. The size of the dot can be controlled using <code class="inline">lineDotRadius</code>.
+			</p>
+			<code>
+				&lt;LinkedChart <br>
+				&nbsp; &#123;data&#125; <br>
+				&nbsp; <mark>type</mark>="line" <br>
+				&nbsp; <mark>lineWidth</mark>=&#123;5&#125;
+				&nbsp; <mark>lineDotRadius</mark>=&#123;6&#125; /&gt;
+			</code>
+		</div>
+
+		<div>
+			<div class="chart"><LinkedChart data={fakeData(30, 100, 50)} scaleMax={120} linked="link-line-width" type="line" lineWidth={5} lineDotRadius={6} /></div>
+			<div class="chart"><LinkedChart data={fakeData(30, 100, 50)} scaleMax={105} linked="link-line-width" type="line" lineWidth={2} lineDotRadius={4} /></div>
+			<div class="chart"><LinkedChart data={fakeData(30, 100, 50)} scaleMax={105} linked="link-line-width" type="line" lineWidth={0.5} /></div>
+		</div>
+	</div>
+
+	<div class="block">
+		<div class="description">
+			<p>
+				<em>(From version 2.2.0)</em><br>
+				A line chart can optionally have a fill area.
+			</p>
+			<code>
+				&lt;LinkedChart &#123;data&#125; type="line" /&gt; <br>
+				&lt;LinkedChart <br>
+				&nbsp; &#123;data&#125; <br>
+				&nbsp; <mark>type</mark>="line" <br>
+				&nbsp; <mark>lineColor</mark>="#4355db" <br>
+				&nbsp; <mark>lineFill</mark>="#4355db55" /&gt;
+			</code>
+		</div>
+
+		<div>
+			<div class="chart"><LinkedChart data={fakeData(30)} linked="link-line-fill" type="line" lineFill="var(--primary)" /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} linked="link-line-fill" type="line" lineFill="#ff3e0033" /></div>
+			<div class="chart"><LinkedChart data={fakeData(30)} linked="link-line-fill" type="line" lineColor="#4355db" fill="var(--text-color" lineFill="#ffffff11" /></div>
+		</div>
+	</div>
+
 	<h2>Accessibility</h2>
 
 	<div class="block">
@@ -789,6 +840,9 @@
 			<code>scaleMax</code> <code>0</code> <div>Use this to overwrite the default value floor of 0.</div>
 			<code>type</code> <code>bar</code> <div>Can be set to "line" to display a line chart instead.</div>
 			<code>lineColor</code> <code>fill</code> <div>Color of the line if used with type="line".</div>
+			<code>lineFill</code> <code>transparent</code> <div>Color of the fill area if used with type="line".</div>
+			<code>lineWidth</code> <code>1</code> <div>Width of the line if used with type="line".</div>
+			<code>lineDotRadius</code> <code>0 (derived)</code> <div>The size of the dot when hovering a line if used with type="line".</div>
       <code>preserveAspectRatio</code> <code>false</code> <div>Sets whether or not the SVG will preserve it's aspect ratio.</div>
 			<code>tabindex</code> <code>-1</code> <div>Sets the tabindex of each bar. When a tabindex of 0 is given, each bar will contain a title that describes the bar's label and value.</div>
 			<code>title</code> <code>""</code> <div>Title that describes the chart for screen readers.</div>
