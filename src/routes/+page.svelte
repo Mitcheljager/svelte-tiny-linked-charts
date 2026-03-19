@@ -650,7 +650,7 @@
 	<div class="block">
 		<div class="description">
 			<p>
-				<em>(From version 2.2.0)</em><br>
+				<em>(From version 2.3.0)</em><br>
 				The width of the line is controlled using the <code class="inline">lineWidth</code> property. The size of the dot can be controlled using <code class="inline">lineDotRadius</code>.
 			</p>
 			<code>
@@ -672,7 +672,7 @@
 	<div class="block">
 		<div class="description">
 			<p>
-				<em>(From version 2.2.0)</em><br>
+				<em>(From version 2.3.0)</em><br>
 				A line chart can optionally have a fill area.
 			</p>
 			<code>
@@ -702,7 +702,7 @@
 				&lt;LinkedChart &#123;data&#125; <mark>tabindex</mark>="0" /&gt; <br>
 			</code>
 
-			<p><em>(From version 2.2.0)</em><br>Additionally, you can provide a <code class="inline">title</code> and <code class="inline">description</code>. Both are used to describe the chart. When the chart is interactive, you should consider explaining the interaction in the description.</p>
+			<p><em>(From version 2.3.0)</em><br>Additionally, you can provide a <code class="inline">title</code> and <code class="inline">description</code>. Both are used to describe the chart. When the chart is interactive, you should consider explaining the interaction in the description.</p>
 
 			<code>
 				&lt;LinkedChart &#123;data&#125; <mark>title</mark>="Monthly things chart" /&gt; <br>
