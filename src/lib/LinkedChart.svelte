@@ -119,14 +119,13 @@
   } = $props()
 
   let valuePositionOffset = $state(0)
-  /** @type {number[][]} */
-  let polyline = $state([])
   let valueElement = $state()
   let dataLength = $derived(Object.keys(data).length)
   let barWidth = $derived(dataLength && grow ? getBarWidth() : barMinWidth)
   let highestValue = $derived(data ? getHighestValue() : 0)
   let alignmentOffset = $derived(dataLength ? getAlignment() : 0)
   let linkedKey = $derived(linked || (Math.random() + 1).toString(36).substring(7))
+  let polyline = $derived(type === "line" ? getPolylinePoints(data) : [])
 
   $effect(() => {
     if (labels.length && values.length) data = Object.fromEntries(labels.map((_, i) => [labels[i], values[i]]))
@@ -138,10 +137,6 @@
 
   $effect(() => {
     if (valuePosition === "floating") valuePositionOffset = (gap + barWidth) * Object.keys(data).indexOf($hoveringKey[linkedKey] || "") + alignmentOffset
-  })
-
-  $effect(() => {
-    if (type == "line") polyline = getPolyLinePoints(data)
   })
 
   $effect(() => {
@@ -185,7 +180,7 @@
   }
 
   /** @param {Record<string, number>} data */
-  function getPolyLinePoints(data) {
+  function getPolylinePoints(data) {
     let points = []
 
     for (let i = 0; i < Object.keys(data).length; i++) {
